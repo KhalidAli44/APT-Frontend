@@ -1,12 +1,12 @@
-.home 
-{
+.home {
     display: flex; /* Sets the display type to flex */
-    justify-content: center; /* Centers the content horizontally */
-    align-items: center; /* Centers the content vertically */
-    min-height: 100vh; /* Sets the minimum height to the full viewport height */
+    flex-direction: column; /* Stacks the children vertically */
+    align-items: center; /* Centers the children horizontally */
     font-family: Arial, sans-serif;
     color: #333;
     padding: 20px;
+    width: 100%; /* Ensures the home component takes up the full width */
+    box-sizing: border-box; /* Ensures padding is included in the width */
 }
 /* This styles the header section of the home component */
 header {
