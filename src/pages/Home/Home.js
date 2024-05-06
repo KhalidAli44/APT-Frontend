@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import axios from 'axios';
 import './Home.css';
 
 const Home = () => {
@@ -15,8 +14,12 @@ const Home = () => {
 
     const fetchDocuments = async () => {
         try {
-            const response = await axios.get(`https://apt-backend.onrender.com/documents/${username}`);
-            setDocuments(response.data);
+            const response = await fetch(`https://apt-backend.onrender.com/documents/${username}`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch documents');
+            }
+            const data = await response.json();
+            setDocuments(data);
         } catch (error) {
             console.error('Error fetching documents:', error);
         }
