@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import './Home.css';
 
@@ -6,8 +6,35 @@ const Home = () => {
     const location = useLocation();
     const username = new URLSearchParams(location.search).get('username');
 
+    const [documents, setDocuments] = useState([]);
+
+    useEffect(() => {
+        fetchDocuments();
+    }, []);
+
+    const fetchDocuments = async () => {
+        try {
+            const response = await axios.get(`https://apt-backend.onrender.com/documents/${username}`);
+            setDocuments(response.data);
+        } catch (error) {
+            console.error('Error fetching documents:', error);
+        }
+    };
+
     return (
-        <div><h1>Hi, {username}</h1></div>
+        <div className="home">
+      <header>
+        <h1>Welcome, {username}!</h1>
+      </header>
+        <section className="document-list">
+          <h2>My Documents</h2>
+          <ul>
+            {documents.map(document => (
+              <li key={document.id}>{document.filename}</li>
+            ))}
+          </ul>
+        </section>
+        </div>
     );
 };
 
