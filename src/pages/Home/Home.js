@@ -36,19 +36,25 @@ const Home = () => {
                 body: JSON.stringify({
                     filename: filename,
                     author: username,
-                    content: '' // You can provide default content or leave it empty
+                    content: ''
                 })
             });
             if (!response.ok) {
                 throw new Error('Failed to create document');
             }
             const createdDocument = await response.json();
-            setDocuments([...documents, createdDocument]); // Add the newly created document to the list
-            setFilename(''); // Clear the filename input field after creating the document
+            setDocuments([...documents, createdDocument]);
+            setFilename(''); 
         } catch (error) {
             console.error('Error creating document:', error);
         }
     };
+
+    const handleDocumentClick = (document) => {
+        const queryString = `?username=${username}&documentId=${document.id}&filename=${encodeURIComponent(document.filename)}&author=${encodeURIComponent(document.author)}&content=${encodeURIComponent(document.content)}`;
+        window.location.href = `/TextEditor${queryString}`;
+    };
+    
 
     return (
         <div className="home">
@@ -59,7 +65,9 @@ const Home = () => {
                 <h2>My Documents</h2>
                 <ul>
                     {documents.map(document => (
-                        <li key={document.id}>{document.filename}</li>
+                        <li key={document.id} onClick={() => handleDocumentClick(document)}>
+                            {document.filename}
+                        </li>
                     ))}
                 </ul>
             </section>
