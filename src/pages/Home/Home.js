@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 import './Home.css';
 
 const Home = () => {
@@ -10,7 +11,7 @@ const Home = () => {
 
     useEffect(() => {
         fetchDocuments();
-    }, []);
+    }, [username]);
 
     const fetchDocuments = async () => {
         try {
