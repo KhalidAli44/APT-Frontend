@@ -73,6 +73,9 @@ header h1 {
     padding: 10px;
     border-bottom: 1px solid #f8f9fa;
     height: 50px; /* Sets the height of the list items */
+    display: flex; /* New */
+    justify-content: center; /* New */
+    align-items: center; /* New */
 }
 
 /* This styles the last list item in the document list */
