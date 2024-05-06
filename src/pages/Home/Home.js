@@ -1,31 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import './Home.css';
 
 const Home = () => {
     const location = useLocation();
-    const [documents, setDocuments] = React.useState([]);
+    const username = new URLSearchParams(location.search).get('username');
 
-    // Function to add a new document
-    const addDocument = () => {
-        // Logic to create a new document and add it to the list of documents
-        const newDocument = {
-            id: Date.now(), // Generate a unique ID for the document
-            title: "Untitled Document",
-            content: ""
-        };
-        setDocuments([...documents, newDocument]);
+    const [documents, setDocuments] = useState([]);
+
+    useEffect(() => {
+        fetchDocuments();
+    }, []);
+
+    const fetchDocuments = async () => {
+        try {
+            const response = await axios.get(`https://apt-backend.onrender.com/documents/${username}`);
+            setDocuments(response.data);
+        } catch (error) {
+            console.error('Error fetching documents:', error);
+        }
     };
 
     return (
-        <div className="home-container">
-            <h1>Welcome to the Text Editor</h1>
-            <button onClick={addDocument}>Add New Document</button>
-            <ul>
-                {documents.map((document) => (
-                    <li key={document.id}>{document.title}</li>
-                ))}
-            </ul>
+        <div className="home">
+      <header>
+        <h1>Welcome, {username}!</h1>
+      </header>
+        <section className="document-list">
+          <h2>My Documents</h2>
+          <ul>
+            {documents.map(document => (
+              <li key={document.id}>{document.filename}</li>
+            ))}
+          </ul>
+        </section>
         </div>
     );
 };
