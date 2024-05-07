@@ -16,7 +16,7 @@ const Home = () => {
     useEffect(() => {
         fetchDocuments();
         fetchSharedDocuments();
-    }, [username]);
+    }, [username, selectedDocument]);
 
     const fetchDocuments = async () => {
         try {
@@ -109,6 +109,30 @@ const Home = () => {
         }
     };
 
+    const handleDeleteDocument = async () => {
+        if (!selectedDocument) {
+            console.error('Please select a document.');
+            return;
+        }
+
+        try {
+            const response = await fetch(`https://apt-backend.onrender.com/documents/${selectedDocument.id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (!response.ok) {
+                throw new Error('Failed to delete document');
+            }
+            setSelectedDocument(null);
+            console.log('Document deleted successfully');
+        } catch (error) {
+            console.error('Error deleting document:', error);
+        }
+    };
+
+
     return (
         <div className="home">
             <header>
@@ -169,6 +193,9 @@ const Home = () => {
                     Can Edit
                 </label>
                 <button onClick={handleSendDocument}>Send Document</button>
+            </section>
+            <section>
+                <button onClick={handleDeleteDocument}>Delete Document</button>
             </section>
         </div>
     );
