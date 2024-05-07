@@ -7,10 +7,15 @@ const Home = () => {
     const username = new URLSearchParams(location.search).get('username');
 
     const [documents, setDocuments] = useState([]);
+    const [sharedDocuments, setSharedDocuments] = useState([]);
     const [filename, setFilename] = useState('');
+    const [selectedDocument, setSelectedDocument] = useState(null);
+    const [usernameInput, setUsernameInput] = useState('');
+    const [canEdit, setCanEdit] = useState(false);
 
     useEffect(() => {
         fetchDocuments();
+        fetchSharedDocuments();
     }, [username]);
 
     const fetchDocuments = async () => {
@@ -23,6 +28,19 @@ const Home = () => {
             setDocuments(data);
         } catch (error) {
             console.error('Error fetching documents:', error);
+        }
+    };
+
+    const fetchSharedDocuments = async () => {
+        try {
+            const response = await fetch(`https://apt-backend.onrender.com/shared/${username}`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch shared documents');
+            }
+            const data = await response.json();
+            setSharedDocuments(data);
+        } catch (error) {
+            console.error('Error fetching shared documents:', error);
         }
     };
 
@@ -44,32 +62,80 @@ const Home = () => {
             }
             const createdDocument = await response.json();
             setDocuments([...documents, createdDocument]);
-            setFilename(''); 
+            setFilename('');
         } catch (error) {
             console.error('Error creating document:', error);
         }
     };
 
     const handleDocumentClick = (document) => {
-        const queryString = `?username=${username}&documentId=${document.id}&filename=${encodeURIComponent(document.filename)}&author=${encodeURIComponent(document.author)}&content=${encodeURIComponent(document.content)}`;
-        window.location.href = `/TextEditor${queryString}`;
+        setSelectedDocument(document);
     };
-    
+
+    const handleSendDocument = async () => {
+        if (!selectedDocument || !usernameInput) {
+            console.error('Please select a document and enter a username.');
+            return;
+        }
+
+        try {
+            const response = await fetch('https://apt-backend.onrender.com/shared', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: usernameInput,
+                    documentId: selectedDocument.id,
+                    canEdit: canEdit
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to send document');
+            }
+
+            // Reset selected document, username input, and canEdit after successful send
+            setSelectedDocument(null);
+            setUsernameInput('');
+            setCanEdit(false);
+        } catch (error) {
+            console.error('Error sending document:', error);
+        }
+    };
 
     return (
         <div className="home">
             <header>
                 <h1>Welcome, {username}!</h1>
             </header>
-            <section className="document-list">
-                <h2>My Documents</h2>
-                <ul>
-                    {documents.map(document => (
-                        <li key={document.id} onClick={() => handleDocumentClick(document)}>
-                            {document.filename}
-                        </li>
-                    ))}
-                </ul>
+            <section className="document-list-container">
+                <section className="document-list">
+                    <h2>My Documents</h2>
+                    <ul>
+                        {documents.map(document => (
+                            <li key={document.id}>
+                                <input
+                                    type="radio"
+                                    name="document"
+                                    checked={selectedDocument && selectedDocument.id === document.id}
+                                    onChange={() => handleDocumentClick(document)}
+                                />
+                                <span onClick={() => handleDocumentClick(document)}>{document.filename}</span>
+                            </li>
+                        ))}
+                    </ul>
+                </section>
+                <section className="shared-document-list">
+                    <h2>Shared with Me</h2>
+                    <ul>
+                        {sharedDocuments.map(document => (
+                            <li key={document.id} onClick={() => handleDocumentClick(document)}>
+                                {document.filename}
+                            </li>
+                        ))}
+                    </ul>
+                </section>
             </section>
             <section className="create-document">
                 <h2>Create New Document</h2>
@@ -81,10 +147,26 @@ const Home = () => {
                 />
                 <button onClick={handleCreateDocument}>Create Document</button>
             </section>
+            <section className="send-document">
+                <h2>Send Document</h2>
+                <input
+                    type="text"
+                    placeholder="Enter username"
+                    value={usernameInput}
+                    onChange={(e) => setUsernameInput(e.target.value)}
+                />
+                <label>
+                    <input
+                        type="checkbox"
+                        checked={canEdit}
+                        onChange={() => setCanEdit(!canEdit)}
+                    />
+                    Can Edit
+                </label>
+                <button onClick={handleSendDocument}>Send Document</button>
+            </section>
         </div>
-
     );
 };
-
 
 export default Home;

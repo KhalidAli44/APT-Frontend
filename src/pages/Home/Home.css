@@ -1,81 +1,64 @@
-/* This styles the entire home component */
+/* Container styles */
 .home {
-    display: flex; /* Sets the display type to flex */
-    flex-direction: column; /* Stacks the children vertically */
-    align-items: center; /* Centers the children horizontally */
-    font-family: Arial, sans-serif;
-    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding: 20px;
-    width: 100%; /* Ensures the home component takes up the full width */
-    box-sizing: border-box; /* Ensures padding is included in the width */
-}
-
-/* This styles the header section of the home component */
-header {
-    width: 80%; /* Reduces the width to 80% for a cleaner look */
-    background-color: #f8f9fa;
-    padding: 20px;
+  }
+  
+  /* Document list container */
+  .document-list-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  /* Document list styles */
+  .document-list {
+    width: 48%; /* Adjust the width as needed */
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
-}
-
-header h1 {
-    margin: 0;
-    font-size: 24px;
-    color: #333;
-}
-
-/* This styles the document list section of the home component */
-.document-list {
-    width: 80%; /* Sets the width of the document list */
-    height: 200px; /* Sets the height of the document list */
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
-}
-
-.document-list h2 {
-    margin-top: 0;
+  }
+  
+  .document-list h2 {
     font-size: 20px;
-    color: #333;
-}
-
-/* This styles the button in the document list */
-.document-list button {
-    display: block; /* Makes the button a block element so it can be centered with margin */
+    color: #333333;
+    padding: 20px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  /* List item styles */
+  .document-list ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .document-list li {
+    padding: 15px 20px;
+    border-bottom: 1px solid #e0e0e0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .document-list li:last-child {
+    border-bottom: none;
+  }
+  
+  /* Button styles */
+  .document-list button {
     background-color: #007bff;
-    color: #fff;
+    color: #ffffff;
     padding: 10px 20px;
-    margin: 20px auto 0; /* Adds 20px of space above the button, centers it horizontally, and removes space below it */
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    text-decoration: none;
     transition: background-color 0.3s ease;
-}
-
-/* This styles the button when it is hovered over */
-.document-list button:hover {
+    margin: 20px 0;
+  }
+  
+  .document-list button:hover {
     background-color: #0056b3;
-}
-
-/* This styles the list in the document list */
-.document-list ul {
-    list-style-type: none;
-    padding: 0;
-    height: 150px; /* Sets the height of the list */
-}
-
-/* This styles the list items in the document list */
-.document-list li {
-    padding: 10px;
-    border-bottom: 1px solid #f8f9fa;
-    height: 50px; /* Sets the height of the list items */
-}
-
-/* This styles the last list item in the document list */
-.document-list li:last-child {
-    border-bottom: none;
-}
+  }
+  
