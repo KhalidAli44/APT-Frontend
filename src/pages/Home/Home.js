@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import Modal from 'react-modal';
 import './Home.css';
+import ManagePermissionsModal from './ManagePermissionsModal'; 
 
 const Home = () => {
     const location = useLocation();
@@ -12,6 +14,8 @@ const Home = () => {
     const [selectedDocument, setSelectedDocument] = useState(null);
     const [usernameInput, setUsernameInput] = useState('');
     const [canEdit, setCanEdit] = useState(false);
+    const [sharedUsers, setSharedUsers] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
 
     useEffect(() => {
         fetchDocuments();
@@ -132,6 +136,28 @@ const Home = () => {
         }
     };
 
+    const handleManagePermissions = async () => {
+        if (!selectedDocument) {
+            console.error('Please select a document.');
+            return;
+        }
+
+        try {
+            const response = await fetch(`https://apt-backend.onrender.com/shared/sent-to/${selectedDocument.id}`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch shared users');
+            }
+            const data = await response.json();
+            setSharedUsers(data);
+            setIsModalOpen(true);
+        } catch (error) {
+            console.error('Error fetching shared users:', error);
+        }
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
 
     return (
         <div className="home">
@@ -196,7 +222,16 @@ const Home = () => {
             </section>
             <section>
                 <button onClick={handleDeleteDocument}>Delete Document</button>
+                <button onClick={handleManagePermissions}>Manage Permissions</button>
             </section>
+            <ManagePermissionsModal
+                isOpen={isModalOpen}
+                closeModal={closeModal}
+                document={selectedDocument} 
+            >
+                <h2>Manage Permissions</h2>
+                <button onClick={closeModal}>Close</button>
+            </ManagePermissionsModal>
         </div>
     );
 };
