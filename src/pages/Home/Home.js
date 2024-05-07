@@ -68,6 +68,11 @@ const Home = () => {
         }
     };
 
+    const handleOpenDocument = (document) => {
+        const queryString = `?username=${username}&documentId=${document.id}&filename=${encodeURIComponent(document.filename)}&author=${encodeURIComponent(document.author)}&content=${encodeURIComponent(document.content)}`;
+        window.location.href = `/TextEditor${queryString}`;
+    };
+
     const handleDocumentClick = (document) => {
         setSelectedDocument(document);
     };
@@ -121,7 +126,7 @@ const Home = () => {
                                     checked={selectedDocument && selectedDocument.id === document.id}
                                     onChange={() => handleDocumentClick(document)}
                                 />
-                                <span onClick={() => handleDocumentClick(document)}>{document.filename}</span>
+                                <span onClick={() => handleOpenDocument(document)}>{document.filename}</span>
                             </li>
                         ))}
                     </ul>
@@ -130,7 +135,7 @@ const Home = () => {
                     <h2>Shared with Me</h2>
                     <ul>
                         {sharedDocuments.map(document => (
-                            <li key={document.id} onClick={() => handleDocumentClick(document)}>
+                            <li key={document.id} onClick={() => handleOpenDocument(document)}>
                                 {document.filename}
                             </li>
                         ))}
