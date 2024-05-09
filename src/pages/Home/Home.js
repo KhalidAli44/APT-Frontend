@@ -121,6 +121,7 @@ const Home = () => {
             setSelectedDocument(null);
             setUsernameInput('');
             setCanEdit(false);
+            setIsSendModalOpen(false);
         } catch (error) {
             console.error('Error sending document:', error);
         }
@@ -150,6 +151,7 @@ const Home = () => {
             // Handle success
             setSelectedDocument(null);
             setFileNameInput('');
+            setIsRenameModalOpen(false);
     
         } catch (error) {
             console.error('Error renaming document:', error);
