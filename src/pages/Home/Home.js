@@ -19,6 +19,8 @@ const Home = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isRenameModalOpen, setIsRenameModalOpen] = useState(false); 
     const [isSendModalOpen, setIsSendModalOpen] = useState(false);
+    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+    const [selectedSection, setSelectedSection] = useState('myDocuments');
 
     useEffect(() => {
         fetchDocuments();
@@ -84,6 +86,7 @@ const Home = () => {
             const createdDocument = await response.json();
             setDocuments([...documents, createdDocument]);
             setFilename('');
+            setIsCreateModalOpen(false);
         } catch (error) {
             console.error('Error creating document:', error);
         }
@@ -172,6 +175,7 @@ const Home = () => {
                 throw new Error('Failed to delete document');
             }
             setSelectedDocument(null);
+            fetchDocuments();
             console.log('Document deleted successfully');
         } catch (error) {
             console.error('Error deleting document:', error);
@@ -201,59 +205,64 @@ const Home = () => {
         setIsSendModalOpen(false);
     };
 
+    const handleCreateModalOpen = () => {
+        setIsCreateModalOpen(true);
+    };
+    
+    const handleCreateModalClose = () => {
+        setIsCreateModalOpen(false);
+    };
+
     return (
         <div className="home">
-            <header>
-                <h1>Welcome, {username}!</h1>
-            </header>
-            <section className="document-list-container">
-                <section className="document-list">
-                    <h2>My Documents</h2>
-                    <ul>
-                        {documents.map(document => (
-                            <li key={document.id}>
-                                <span onClick={() => handleOpenDocument(document)}>{document.filename}</span>
-                                <button onClick={() => handleRenameModalOpen(document)}>Rename</button>
-                                <button onClick={() => handleManagePermissions(document)}>Manage</button>
-                                <button onClick={() => handleSendModalOpen(document)}>Send</button>
-                                <button onClick={() => handleDeleteDocument(document)}>Delete</button>
-                            </li>
-                        ))}
-                    </ul>
-                </section>
-                <section className="shared-document-list">
-                    <h2>Shared with Me, Enabled</h2>
-                    <ul>
-                        {enabledSharedDocuments.map(document => (
-                            <li key={document.id}>
-                            <span onClick={() => handleOpenDocument(document)}>{document.filename}</span>
-                            <button onClick={() => handleRenameModalOpen(document)}>Rename</button>
-                            <button onClick={() => handleSendModalOpen(document)}>Send</button>
-                        </li>
-                        ))}
-                    </ul>
-                </section>
-                <section className="shared-document-list">
-                    <h2>Shared with Me, Disabled</h2>
-                    <ul>
-                        {disabledSharedDocuments.map(document => (
-                            <li key={document.id} onClick={() => handleOpenDocument(document)}>
-                                {document.filename}
-                            </li>
-                        ))}
-                    </ul>
-                </section>
-            </section>
-            <section className="create-document">
-                <h2>Create New Document</h2>
-                <input
-                    type="text"
-                    placeholder="Enter filename"
-                    value={filename}
-                    onChange={(e) => setFilename(e.target.value)}
-                />
-                <button onClick={handleCreateDocument}>Create Document</button>
-            </section>
+            <div className='header'>
+                <p>Welcome, {username}!</p>
+                <div className='header-options'>
+                    <select value={selectedSection} onChange={(e) => setSelectedSection(e.target.value)}>
+                        <option value="myDocuments">My Documents</option>
+                        <option value="sharedWithMe">Shared with Me</option>
+                    </select>
+                    <button onClick={() => handleCreateModalOpen()}>+</button>
+                </div>
+            </div>
+            <div className="document-list-container">
+                {selectedSection === 'myDocuments' && (
+                    <div className="document-list">
+                        <h2>My Documents</h2>
+                        <ul>
+                            {documents.map(document => (
+                                <li key={document.id}>
+                                    <span onClick={() => handleOpenDocument(document)}>{document.filename}</span>
+                                    <button onClick={() => handleRenameModalOpen(document)}>Rename</button>
+                                    <button onClick={() => handleManagePermissions(document)}>Manage</button>
+                                    <button onClick={() => handleSendModalOpen(document)}>Send</button>
+                                    <button onClick={() => handleDeleteDocument(document)}>Delete</button>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
+                {selectedSection === 'sharedWithMe' && (
+                    <div className="shared-document-list">
+                        <h2>Shared with Me</h2>
+                        <ul>
+                            {enabledSharedDocuments.map(document => (
+                                <li key={document.id}>
+                                    <span onClick={() => handleOpenDocument(document)}>{document.filename}</span>
+                                    <button onClick={() => handleRenameModalOpen(document)}>Rename</button>
+                                    <button onClick={() => handleSendModalOpen(document)}>Send</button>
+                                </li>
+                            ))}
+                            {disabledSharedDocuments.map(document => (
+                                <li key={document.id}>
+                                    <span onClick={() => handleOpenDocument(document)}>{document.filename}</span>
+                                    <p><i>(View Only)</i></p>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
+            </div>
             <ManagePermissionsModal
                 isOpen={isModalOpen}
                 closeModal={() => setIsModalOpen(false)}
@@ -264,7 +273,7 @@ const Home = () => {
             </ManagePermissionsModal>
             {isRenameModalOpen && (
                 <Modal isOpen={isRenameModalOpen} onRequestClose={handleRenameModalClose}>
-                    <section className="rename-document">
+                    <div className="rename-document">
                         <h2>Rename Document</h2>
                         <input
                             type="text"
@@ -274,12 +283,12 @@ const Home = () => {
                         />
                         <button onClick={handleRenameDocument}>Rename Document</button>
                         <button onClick={handleRenameModalClose}>Cancel</button>
-                    </section>
+                    </div>
                 </Modal>
             )}
             {isSendModalOpen && (
                 <Modal isOpen={isSendModalOpen} onRequestClose={handleSendModalClose}>
-                    <section className="send-document">
+                    <div className="send-document">
                         <h2>Send Document</h2>
                         <input
                             type="text"
@@ -297,7 +306,22 @@ const Home = () => {
                         </label>
                         <button onClick={handleSendDocument}>Send Document</button>
                         <button onClick={handleSendModalClose}>Cancel</button>
-                    </section>
+                    </div>
+                </Modal>
+            )}
+            {isCreateModalOpen && (
+                <Modal isOpen={isCreateModalOpen} onRequestClose={handleCreateModalClose}>
+                    <div className="create-document">
+                        <h2>Create New Document</h2>
+                        <input
+                            type="text"
+                            placeholder="Enter filename"
+                            value={filename}
+                            onChange={(e) => setFilename(e.target.value)}
+                        />
+                        <button onClick={handleCreateDocument}>Add</button>
+                        <button onClick={handleCreateModalClose}>Cancel</button>
+                    </div>
                 </Modal>
             )}
         </div>
