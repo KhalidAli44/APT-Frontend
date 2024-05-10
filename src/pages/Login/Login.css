@@ -1,19 +1,35 @@
 .login-form {
-    max-width: 400px;
+    width: 40%;
+    height: 70vh;
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-top: 15vh;
+    background-color: #fff;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
 }
 
 .login-form h2 {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 0;
 }
 
 .form-group {
+    height: 30vh;
     margin-bottom: 20px;
+    background-color: #fff;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.form-group label{
+    align-self: flex-start;
+    margin-left: 4.5vw;
 }
 
 label {
@@ -23,9 +39,9 @@ label {
 
 input[type="text"],
 input[type="password"] {
-    width: 100%;
+    width: 70%;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #000000;
     border-radius: 5px;
     font-size: 16px;
 }
@@ -33,6 +49,7 @@ input[type="password"] {
 .button-container {
     display: flex;
     justify-content: space-between;
+    background-color: #fff;
 }
 
 button {

@@ -83,9 +83,6 @@ const Signup = () => {
                         onChange={handleChange}
                         required
                     />
-                </div>
-                <p>{usernameError}</p>
-                <div className="form-group">
                     <label htmlFor="password">Password</label>
                     <input
                         type="password"
@@ -95,9 +92,7 @@ const Signup = () => {
                         onChange={handleChange}
                         required
                     />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="confirmPassword">Confirm Password</label>
+                    <label id='confirm' htmlFor="confirmPassword">Confirm Password</label>
                     <input
                         type="password"
                         id="confirmPassword"
@@ -107,8 +102,9 @@ const Signup = () => {
                         required
                     />
                 </div>
+                <p>{usernameError}</p>
                 <p>{passwordError}</p>
-                <div className='buttonContainer'>
+                <div className='button-container'>
                     <button type="submit">Sign Up</button>
                     <button className="login" onClick={goToLogin}>Go to Log In</button>
                 </div>

@@ -227,16 +227,20 @@ const Home = () => {
             </div>
             <div className="document-list-container">
                 {selectedSection === 'myDocuments' && (
-                    <div className="document-list">
+                    <div className="document-container">
                         <h2>My Documents</h2>
                         <ul>
                             {documents.map(document => (
-                                <li key={document.id}>
-                                    <span onClick={() => handleOpenDocument(document)}>{document.filename}</span>
-                                    <button onClick={() => handleRenameModalOpen(document)}>Rename</button>
-                                    <button onClick={() => handleManagePermissions(document)}>Manage</button>
-                                    <button onClick={() => handleSendModalOpen(document)}>Send</button>
-                                    <button onClick={() => handleDeleteDocument(document)}>Delete</button>
+                                <li className='document-list' key={document.id}>
+                                    <div className='document'>
+                                        <p onClick={() => handleOpenDocument(document)}>{document.filename}</p>
+                                        <div className='buttons-container'>
+                                            <button onClick={() => handleRenameModalOpen(document)}>Rename</button>
+                                            <button onClick={() => handleManagePermissions(document)}>Manage</button>
+                                            <button onClick={() => handleSendModalOpen(document)}>Send</button>
+                                            <button onClick={() => handleDeleteDocument(document)}>Delete</button>
+                                        </div>
+                                    </div>
                                 </li>
                             ))}
                         </ul>

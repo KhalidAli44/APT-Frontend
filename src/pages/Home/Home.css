@@ -1,10 +1,10 @@
 .header {
-    height: 10vh;
+    height: 15vh;
     padding: 0 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0;
+    margin: -1rem;
     position: sticky;
     top: 0;
 }
@@ -34,9 +34,57 @@
 }
 
 .header-options button {
-    width: 10vh;
-    height: 10vh;
+    width: 9vh;
+    height: 9vh;
     font-size: 34px;
-    margin: 0vw 0vw 0vw 0vw;
+    margin: 0vh 0vw 0vw 0vw;
     border-radius: 100px;
+}
+
+.buttons-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.buttons-container button {
+    width: 20%;
+    margin: 0 1rem;
+    display: flex;
+    gap: 10px; /* Add some space between buttons */
+}
+
+ul {
+    list-style-type: none;
+    padding: 0 50px;
+}
+
+li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.document-list {
+    display: flex;
+    align-items: center; /* Align items vertically */
+}
+
+.document {
+    display: flex;
+    justify-content: space-between; /* Spread items horizontally */
+    width: 100%; /* Ensure the document div takes full width */
+    align-items: center; /* Align items vertically */
+}
+
+select {
+    border-radius: 10px;
+    border-color: blue;
+    border-width: 2px;
+}
+
+.document p {
+    font-size: 24px;
+    font-weight: 500;
+    margin: 0;
 }

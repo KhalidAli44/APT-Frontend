@@ -7,17 +7,14 @@ import TextEditor from './pages/TextEditor/TextEditor';
 function App() {
   return (
     <Router>
-      <div className="App">
-        <div className="content">
-          <Routes>
-            <Route exact path="/Signup" element={<Signup />}/>
-            <Route exact path="/Login" element={<Login />}/>
-            <Route exact path="/Home" element={<Home />}/>
-            <Route exact path="/TextEditor" element={<TextEditor />}/>
-            <Route path="*" element={<Navigate to="/Login" />} />
-          </Routes>
-        </div>
-        
+      <div className='App'>
+        <Routes>
+          <Route exact path="/Signup" element={<Signup />}/>
+          <Route exact path="/Login" element={<Login />}/>
+          <Route exact path="/Home" element={<Home />}/>
+          <Route exact path="/TextEditor" element={<TextEditor />}/>
+          <Route path="*" element={<Navigate to="/Login" />} />
+        </Routes>
       </div>
     </Router>
   );
