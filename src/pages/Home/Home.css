@@ -5,44 +5,44 @@ body {
     padding: 0;
     background-color: #222; /* Darker background for a sleek look */
     color: #fff; /* Light text for readability */
-  }
-  
-  .home {
+}
+
+.home {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     font-size: 1.2rem; /* Increased base font size for larger elements */
-  }
-  
-  /* Header Styles */
-  .header {
+}
+
+/* Header Styles */
+.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1.5rem;
     background-color: #333; /* Darker header background */
-  }
-  
-  .header p {
+}
+
+.header p {
     margin: 0;
     font-size: 1.4rem; /* Larger font size for username */
     font-weight: bold;
-  }
-  
-  .header-options {
+}
+
+.header-options {
     display: flex;
     align-items: center;
-  }
-  
-  .header-options select {
+}
+
+.header-options select {
     padding: 0.75rem 1.5rem; /* Increased padding for buttons and select */
     border: 1px solid #444; /* Darker border color */
     border-radius: 5px; /* Rounded corners */
     margin-right: 1rem;
     font-size: 1rem; /* Larger font size for select options */
-  }
-  
-  .header-options button {
+}
+
+.header-options button {
     padding: 0.75rem 2rem;
     border: 1px solid #444;
     border-radius: 5px;
@@ -50,24 +50,24 @@ body {
     color: #fff; /* Light text for buttons */
     font-weight: bold;
     cursor: pointer;
-  }
-  
-  /* Document List Styles */
-  .document-list-container {
+}
+
+/* Document List Styles */
+.document-list-container {
     flex: 1;
     padding: 1.5rem;
-  }
-  
-  .document-container,
-  .shared-document-list {
+}
+
+.document-container,
+.shared-document-list {
     margin-bottom: 1.5rem;
     background-color: #333; /* Darker background for document sections */
     border-radius: 5px;
     padding: 1rem;
-  }
-  
-  .document-container h2,
-  .shared-document-list h2 {
+}
+
+.document-container h2,
+.shared-document-list h2 {
     margin: 0;
     padding-bottom: 1rem;
     border-bottom: 1px solid #444;
@@ -75,15 +75,15 @@ body {
     font-weight: bold;
     color: #fff; /* Light text for section headers */
     text-align: center; /* Centered text */
-  }
-  
-  .document-list {
+}
+
+.document-list {
     list-style: none;
     padding: 0;
     margin: 0;
-  }
-  
-  .document-list li {
+}
+
+.document-list li {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -93,25 +93,25 @@ body {
     background-color: #222; /* Darker background for list items */
     color: #fff; /* Light text for list items */
     font-size: 1.1rem; /* Increased font size for list items */
-  }
-  
-  .document {
+}
+
+.document {
     display: flex;
     align-items: center;
-  }
-  
-  .document p {
+}
+
+.document p {
     margin: 0;
     flex: 1;
     font-weight: bold;
-  }
-  
-  .buttons-container {
+}
+
+.buttons-container {
     display: flex;
     gap: 1rem;
-  }
-  
-  .buttons-container button {
+}
+
+.buttons-container button {
     padding: 0.75rem 2rem;
     border: 1px solid #444;
     border-radius: 5px;
@@ -119,10 +119,10 @@ body {
     color: #fff; /* Light text for buttons */
     font-weight: bold;
     cursor: pointer;
-  }
-  
-  /* Modals Styles */
-  .modal-overlay {
+}
+
+/* Modals Styles */
+.modal-overlay {
     /* Styles for modal overlay (if using React Modal library) */
     position: fixed;
     top: 0;
@@ -133,5 +133,4 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    }
-  
+}

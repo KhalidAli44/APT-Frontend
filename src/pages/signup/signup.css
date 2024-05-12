@@ -1,36 +1,57 @@
 .signup-form {
-    width: 40%;
-    height: 70vh;
+    width: 30%;
+    height: 50vh;
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    margin-top: 15vh;
-    background-color: #fff;
+    background-color: #ddd;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     flex-direction: column;
+    align-items: center;
 }
 
 .signup-form h2 {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 0;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #333;
 }
 
 .form-group {
-    margin-bottom: 20px;
+    height: auto;
+    margin-bottom: 15px;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
 }
 
-label {
-    display: block;
-    font-size: 16px;
-    font-weight: bold;
+.form-group label {
     margin-bottom: 5px;
+    color: #333;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    background-color: transparent;
+    width: 100%;
 }
 
 button[type="submit"] {
-    width: 47%;
-    padding: 12px;
+    padding: 10px 20px;
     background-color: #007bff;
     color: #fff;
     border: none;
@@ -45,10 +66,9 @@ button[type="submit"]:hover {
 }
 
 .login {
-    width: 47%;
     padding: 12px;
-    background-color: #d4d3d3;
-    color: #000;
+    background-color: #444;
+    color: #fff;
     border: none;
     border-radius: 5px;
     font-size: 16px;
@@ -57,20 +77,11 @@ button[type="submit"]:hover {
 }
 
 .login:hover {
-    background-color: #e1e2e3;
+    background-color: #333;
 }
 
-.button-container {
-    display: flex;
-    justify-content: space-between;
-    background-color: #fff;
-}
-
-input {
-    margin: 10px 0;
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #cccccc;
-    border-radius: 5px;
-    font-size: 16px;
+.dataError {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
