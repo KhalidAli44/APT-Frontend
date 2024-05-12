@@ -1,8 +1,11 @@
-body {
-    min-height: 100vh;
-    margin: 0;
-    padding: 0;
-    background-color: #ddd;
+.center-page {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-color: #ddd;
+  display: flex; /* Make the body a flex container */
+  justify-content: center; /* Center the content horizontally */
+  align-items: center; /* Center the content vertically */
 }
 
 .login-form {
