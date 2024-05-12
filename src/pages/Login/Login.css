@@ -113,8 +113,5 @@
     font-weight: bold; /* Bold weight for error message */
     margin-bottom: 10px; /* Add some space below the error message */
   }
-  @media (min-width: 768px) {
-    .login-form {
-        width: 80%; /* Increase width on larger screens */
-    }
-}
+ 
+
