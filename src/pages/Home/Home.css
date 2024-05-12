@@ -1,6 +1,5 @@
 /* General Styles */
 body {
-    
     font-family: sans-serif;
     margin: 0;
     padding: 0;
@@ -16,7 +15,7 @@ body {
 }
 
 /* Header Styles */
-.header {
+.home .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -24,19 +23,19 @@ body {
     background-color: #333; /* Darker header background */
 }
 
-.header p {
+.home .header p {
     margin: 0;
     font-size: 1.4rem; /* Larger font size for username */
     font-weight: bold;
     text-align: center; /* Center align the text */
 }
 
-.header-options {
+.home .header-options {
     display: flex;
     align-items: center;
 }
 
-.header-options select {
+.home .header-options select {
     padding: 0.75rem 1.5rem; /* Increased padding for buttons and select */
     border: 1px solid #444; /* Darker border color */
     border-radius: 5px; /* Rounded corners */
@@ -44,7 +43,7 @@ body {
     font-size: 1rem; /* Larger font size for select options */
 }
 
-.header-options button {
+.home .header-options button {
     padding: 0.75rem 2rem;
     border: 1px solid #444;
     border-radius: 5px;
@@ -55,21 +54,21 @@ body {
 }
 
 /* Document List Styles */
-.document-list-container {
+.home .document-list-container {
     flex: 1;
     padding: 1.5rem;
 }
 
-.document-container,
-.shared-document-list {
+.home .document-container,
+.home .shared-document-list {
     margin-bottom: 1.5rem;
     background-color: #333; /* Darker background for document sections */
     border-radius: 5px;
     padding: 1rem;
 }
 
-.document-container h2,
-.shared-document-list h2 {
+.home .document-container h2,
+.home .shared-document-list h2 {
     margin: 0;
     padding-bottom: 1rem;
     border-bottom: 1px solid #444;
@@ -79,13 +78,13 @@ body {
     text-align: center; /* Centered text */
 }
 
-.document-list {
+.home .document-list {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.document-list li {
+.home .document-list li {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -97,23 +96,23 @@ body {
     font-size: 1.1rem; /* Increased font size for list items */
 }
 
-.document {
+.home .document {
     display: flex;
     align-items: center;
 }
 
-.document p {
+.home .document p {
     margin: 0;
     flex: 1;
     font-weight: bold;
 }
 
-.buttons-container {
+.home .buttons-container {
     display: flex;
     gap: 1rem;
 }
 
-.buttons-container button {
+.home .buttons-container button {
     padding: 0.75rem 2rem;
     border: 1px solid #444;
     border-radius: 5px;
@@ -124,7 +123,7 @@ body {
 }
 
 /* Modals Styles */
-.modal-overlay {
+.home .modal-overlay {
     /* Styles for modal overlay (if using React Modal library) */
     position: fixed;
     top: 0;

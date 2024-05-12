@@ -2,15 +2,15 @@
 
 /* General Styles */
 body {
-    font-family: 'Helvetica Neue', sans-serif;
+    font-family: sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f0f0; /* Lighter background for a sleek look */
-    color: #333; /* Dark text for readability */
+    background-color: #ddd; /* Darker background for a sleek look */
+    color: #fff; /* Light text for readability */
 }
 
 /* Text Editor Styles */
-.editor-container {
+.TextEditor.editor-container {
     width: 80%; /* Less than full width for a centered look */
     height: 500px; /* Adjust as needed */
     border: 1px solid #ccc;
@@ -21,7 +21,7 @@ body {
 }
 
 /* Button Styles */
-button {
+.TextEditor.button {
     padding: 0.75rem 1.5rem;
     border: none;
     border-radius: 5px;
@@ -33,12 +33,12 @@ button {
     transition: background-color 0.3s ease; /* Smooth transition for hover effect */
 }
 
-button:hover {
+.TextEditor.button:hover {
     background-color: #0056b3; /* Darker blue on hover */
 }
 
 /* Document Title Styles */
-h1 {
+.TextEditor.h1 {
     font-size: 2rem; /* Larger font size for a sleek look */
     color: #333;
     text-align: center; /* Center the title */
