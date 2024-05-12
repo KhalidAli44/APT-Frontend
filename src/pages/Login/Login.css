@@ -1,7 +1,4 @@
-.login-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+body {
     min-height: 100vh;
     margin: 0;
     padding: 0;
@@ -9,15 +6,15 @@
 }
 
 .login-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%; /* Full width on all devices */
     max-width: none; /* Remove maximum width */
     height: auto; /* Adjust based on content */
     padding: 120px; /* Increase padding */
     background-color: #333;
-    display: flex;
-    justify-content: center;
     flex-direction: column;
-    align-items: center;
     border: 1px solid #ccc;
     border-radius: 5px;
     margin: 20px 0; /* Add some vertical margin */

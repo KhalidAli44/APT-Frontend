@@ -1,21 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import './Login.css';
 
 const Login = () => {
     const [formData, setFormData] = useState({
         username: '',
         password: ''
     });
+    
     const [dataError, setDataError] = useState('');
-
-    useEffect(() => {
-        // Add the class when the component mounts
-        document.body.classList.add('login-body');
-
-        // Remove the class when the component unmounts
-        return () => {
-            document.body.classList.remove('login-body');
-        };
-    }, []); // Empty dependency array means this effect runs once on mount and clean up on unmount
 
     const handleChange = (e) => {
         setFormData({
@@ -27,19 +19,21 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        setDataError('');
+
         try {
             const response = await fetch('https://apt-backend.onrender.com/users/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(formData)
             });
-
+      
             if (!response.ok) {
-                throw new Error('Invalid username or password');
+              throw new Error('Invalid username or password');
             }
-
+      
             window.location.href = `/Home?username=${formData.username}`;
 
         } catch (error) {
@@ -47,6 +41,7 @@ const Login = () => {
             console.error(error);
             return;
         }
+
 
         console.log(formData);
         setFormData({
