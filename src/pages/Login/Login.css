@@ -12,7 +12,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%; /* Full width on all devices */
+    width: 50%; /* Full width on all devices */
     max-width: none; /* Remove maximum width */
     height: auto; /* Adjust based on content */
     padding: 120px; /* Increase padding */
