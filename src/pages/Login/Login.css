@@ -41,7 +41,7 @@ body {
   
   .form-group {
     height: auto; /* Adjust based on content */
-    margin: 20px 0 15px 0; /* Add top margin */
+    margin: 20px 0 20px 0; /* Add top margin */
     background-color: transparent; /* Transparent background */
     display: flex;
     flex-direction: column;
@@ -75,7 +75,7 @@ body {
     display: flex;
     justify-content: space-between; /* Maintains horizontal spacing */
     background-color: transparent; /* Transparent background */
-    width: 100%; /* Full width */
+    width: 110%; /* Full width */
     flex-grow: 1;
   }
   
