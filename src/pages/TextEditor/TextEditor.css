@@ -8,14 +8,14 @@ body {
     color: #fff;
 }
 
-.TextEditor {
+ {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     font-size: 1.2rem;
 }
 
-.TextEditor .header {
+ .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -23,19 +23,19 @@ body {
     background-color: #333;
 }
 
-.TextEditor .header p {
+ .header p {
     margin: 0;
     font-size: 1.4rem;
     font-weight: bold;
     text-align: center;
 }
 
-.TextEditor .header-options {
+ .header-options {
     display: flex;
     align-items: center;
 }
 
-.TextEditor .header-options select {
+ .header-options select {
     padding: 0.75rem 1.5rem;
     border: none;
     border-radius: 5px;
@@ -45,7 +45,7 @@ body {
     color: #fff;
 }
 
-.TextEditor .header-options button {
+ .header-options button {
     padding: 0.75rem 2rem;
     border: none;
     border-radius: 5px;
@@ -56,11 +56,11 @@ body {
     transition: background-color 0.3s ease;
 }
 
-.TextEditor .header-options button:hover {
+ .header-options button:hover {
     background-color: #555;
 }
 
-.TextEditor .editor-container {
+ .editor-container {
     flex: 1;
     padding: 1.5rem;
     background-color: #333;
@@ -68,7 +68,7 @@ body {
     padding: 1rem;
 }
 
-.TextEditor .editor-container h1 {
+ .editor-container h1 {
     margin: 0;
     padding-bottom: 1rem;
     border-bottom: 1px solid #444;
@@ -78,12 +78,12 @@ body {
     text-align: center;
 }
 
-.TextEditor .buttons-container {
+ .buttons-container {
     display: flex;
     gap: 1rem;
 }
 
-.TextEditor .buttons-container button {
+ .buttons-container button {
     padding: 0.75rem 2rem;
     border: none;
     border-radius: 5px;
@@ -94,6 +94,6 @@ body {
     transition: background-color 0.3s ease;
 }
 
-.TextEditor .buttons-container button:hover {
+ .buttons-container button:hover {
     background-color: #555;
 }
