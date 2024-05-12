@@ -53,7 +53,7 @@ input {
 button[type="submit"] {
     padding: 10px 20px;
     background-color: #ddd;
-    color: #ccc;
+    color: #333;
     border: none;
     border-radius: 5px;
     font-size: 16px;
