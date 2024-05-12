@@ -56,7 +56,8 @@ const Login = () => {
     };
 
     return (
-        <div className="login-form center-page">
+        <div className="center-page">    
+        <div className="login-form">
             <h2>Login</h2>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
@@ -86,6 +87,7 @@ const Login = () => {
                 </div>
             </form>
         </div>
+    </div>
     );
 };
 
