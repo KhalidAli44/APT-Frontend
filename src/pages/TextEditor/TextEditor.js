@@ -17,7 +17,9 @@ const TextEditor = () => {
 
     const editorRef = useRef(null);
 
-    const [stompClient, setStompClient] = useState([]);
+    const [stompClient, setStompClient] = useState(null);
+    const [cursorIndex, setCursorIndex] = useState(null);
+    const [insertedCharacter, setInsertedCharacter] = useState(null);
 
     useEffect(() => {
         const socket = new SockJS('https://apt-backend.onrender.com/ws');
@@ -48,6 +50,8 @@ const TextEditor = () => {
                 },
                 theme: 'snow'
             });
+
+            editorRef.current.on('text-change', handleTextChange);
 
             editorRef.current.setText('');
             editorRef.current.clipboard.dangerouslyPasteHTML(content);
@@ -84,8 +88,36 @@ const TextEditor = () => {
     };
 
     const handleSendMessage = () => {
-        const message = editorRef.current.root.innerHTML;
-        stompClient.send(`/app/operation/${documentId}`, {}, message);
+        if (stompClient !== null) {
+            stompClient.send(`/app/operation/${documentId}`, {}, editorRef.current.root.innerHTML);
+        }
+    };
+
+    const insertCharacter = (index, character) => {
+        editorRef.current.insertText(index, character);
+    };
+
+    const handleTextChange = (delta, oldDelta, source) => {
+        if (source === 'user') {
+            let index = null;
+            let insertedChar = null;
+            delta.ops.forEach(op => {
+              if (op.insert) {
+                if (typeof op.insert === 'string') {
+                  index = editorRef.current.getIndex(op);
+                  insertedChar = op.insert;
+                } else if (typeof op.insert === 'object') {
+                  if (op.insert.hasOwnProperty('image')) {
+                    index = editorRef.current.getIndex(op);
+                    insertedChar = '[IMAGE]';
+                  }
+                }
+              }
+            });
+            setCursorIndex(index);
+            setInsertedCharacter(insertedChar);
+            handleSendMessage();
+        }
     };
 
     return (
