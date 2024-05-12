@@ -1,9 +1,10 @@
 /* General Styles */
 body {
+    
     font-family: sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #222; /* Darker background for a sleek look */
+    background-color: #ddd; /* Darker background for a sleek look */
     color: #fff; /* Light text for readability */
 }
 
@@ -27,6 +28,7 @@ body {
     margin: 0;
     font-size: 1.4rem; /* Larger font size for username */
     font-weight: bold;
+    text-align: center; /* Center align the text */
 }
 
 .header-options {
