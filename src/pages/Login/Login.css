@@ -5,7 +5,7 @@
     margin: 0 auto; /* Maintains centering */
     padding: 20px;
     /* Inherit background color from parent element */
-    background-color: #ddd;
+    background-color: #333;
     display: flex; /* Assuming flexbox for centering */
     justify-content: center; /* Center elements horizontally */
     flex-direction: column;
@@ -35,7 +35,7 @@
   .form-group label {
     /* Reuses existing label styles */
     margin-bottom: 5px; /* Add some space below labels */
-    color: #333; /* New color for labels */
+    color: #ddd; /* New color for labels */
   }
   
   .username-field { /* New class for username input */
@@ -63,8 +63,8 @@
   
   .login-button {
     padding: 10px 20px;
-    background-color: #007bff; /* Matches existing button color */
-    color: #fff;
+    background-color: #ddd; /* Matches existing button color */
+    color: #ccc;
     border: none;
     border-radius: 5px;
     font-size: 16px;
