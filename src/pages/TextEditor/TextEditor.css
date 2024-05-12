@@ -5,7 +5,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #ddd;
-    color: #333; /* Changed to dark color for better contrast */
+    color: #333; /* Dark color for better contrast on light background */
 }
 
 .TextEditor {
@@ -13,6 +13,13 @@ body {
     flex-direction: column;
     min-height: 100vh;
     font-size: 1.2rem;
+    color: #333; /* Dark color for better contrast on light background */
+}
+
+.panel {
+    background-color: #333;
+    padding: 1rem;
+    color: #fff; /* White color for better contrast on dark background */
 }
 
 .h1 {
@@ -21,7 +28,7 @@ body {
     border-bottom: 1px solid #333;
     font-size: 1.5rem;
     font-weight: bold;
-    color: #333; /* Changed to dark color for better contrast */
+    color: #fff; /* White color for better contrast on dark background */
     text-align: center;
 }
 
@@ -37,12 +44,14 @@ body {
     margin: 0;
     font-size: 1.4rem;
     font-weight: bold;
+    color: #fff; /* White color for better contrast on dark background */
     text-align: center;
 }
 
 .header-options {
     display: flex;
     align-items: center;
+    justify-content: flex-end; /* Align buttons to the right */
 }
 
 .header-options select {
@@ -89,7 +98,7 @@ body {
     border-bottom: 1px solid #ddddddc1;
     font-size: 1.5rem;
     font-weight: bold;
-    color: #333;
+    color: #fff; /* White color for better contrast on dark background */
     text-align: center;
 }
 
