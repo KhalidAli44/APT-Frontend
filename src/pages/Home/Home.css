@@ -1,17 +1,18 @@
-
-
-
+CSS
 /* General Styles */
 body {
   font-family: sans-serif;
   margin: 0;
   padding: 0;
+  background-color: #222; /* Darker background for a sleek look */
+  color: #fff; /* Light text for readability */
 }
 
 .home {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  font-size: 1.1rem; /* Increase base font size for larger elements */
 }
 
 /* Header Styles */
@@ -19,12 +20,13 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
-  background-color: #f0f0f0;
+  padding: 1.5rem;
+  background-color: #333; /* Darker header background */
 }
 
 .header p {
   margin: 0;
+  font-size: 1.2rem; /* Larger font size for username */
   font-weight: bold;
 }
 
@@ -34,36 +36,45 @@ body {
 }
 
 .header-options select {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 0.75rem 1.5rem; /* Increase padding for buttons and select */
+  border: 1px solid #444; /* Darker border color */
+  border-radius: 5px; /* Rounded corners */
   margin-right: 1rem;
+  font-size: 1rem; /* Larger font size for select options */
 }
 
 .header-options button {
-  padding: 0.5rem 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #fff;
+  padding: 0.75rem 2rem;
+  border: 1px solid #444;
+  border-radius: 5px;
+  background-color: #444; /* Darker button background */
+  color: #fff; /* Light text for buttons */
+  font-weight: bold;
   cursor: pointer;
 }
 
 /* Document List Styles */
 .document-list-container {
   flex: 1;
-  padding: 1rem;
+  padding: 1.5rem;
 }
 
 .document-container,
 .shared-document-list {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  background-color: #333; /* Darker background for document sections */
+  border-radius: 5px;
+  padding: 1rem;
 }
 
 .document-container h2,
 .shared-document-list h2 {
   margin: 0;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid #ccc;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #444;
+  font-size: 1.3rem; /* Larger font size for section headers */
+  font-weight: bold;
+  color: #fff; /* Light text for section headers */
 }
 
 .document-list {
@@ -76,9 +87,11 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 1rem;
-  border-bottom: 1px solid #eee;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #444; /* Darker border for list items */
   cursor: pointer;
+  background-color: #222; /* Darker background for list items */
+  color: #fff; /* Light text for list items */
 }
 
 .document {
@@ -89,18 +102,21 @@ body {
 .document p {
   margin: 0;
   flex: 1;
+  font-weight: bold;
 }
 
 .buttons-container {
   display: flex;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 
 .buttons-container button {
-  padding: 0.5rem 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #fff;
+  padding: 0.75rem 2rem;
+  border: 1px solid #444;
+  border-radius: 5px;
+  background-color: #444;
+  color: #fff;
+  font-weight: bold;
   cursor: pointer;
 }
 
@@ -114,42 +130,6 @@ body {
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal-content {
-  /* Styles for modal content */
-  padding: 1rem;
-  background-color: #fff;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.rename-document,
-.send-document,
-.create-document {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.rename-document h2,
-.send-document h2,
-.create-document h2 {
-  margin: 0;
-}
-
-.rename-document input,
-.send-document input,
-.create-document input {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.send-document label {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
 }
