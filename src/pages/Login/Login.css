@@ -9,10 +9,10 @@ body {
 }
 
 .login-form {
-    width: 95%; /* Increase width on mobile devices */
-    max-width: 800px; /* Increase maximum width of the form */
+    width: 100%; /* Full width on all devices */
+    max-width: none; /* Remove maximum width */
     height: auto; /* Adjust based on content */
-    padding: 20px;
+    padding: 40px; /* Increase padding */
     background-color: #333;
     display: flex;
     justify-content: center;
@@ -22,7 +22,11 @@ body {
     border-radius: 5px;
     margin: 20px 0; /* Add some vertical margin */
 }
-  
+
+/* Rest of your CSS */
+
+/* Media query for larger screens */
+
   .login-form h2 {
     text-align: center; /* Center text horizontally */
     margin-bottom: 0;
@@ -111,6 +115,6 @@ body {
   }
   @media (min-width: 768px) {
     .login-form {
-        width: 70%; /* Take up half of the screen on larger screens */
+        width: 80%; /* Increase width on larger screens */
     }
 }
