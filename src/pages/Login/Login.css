@@ -115,7 +115,44 @@ h2 {
   .signup:hover {
     background-color: #333; /* Darker hover color for signup button */
   }
-  
+  .ManagePermissionsModal, .rename-document, .send-document, .create-document {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #333;
+    border-radius: 5px;
+    color: #ddd;
+}
+
+.ManagePermissionsModal h2, .rename-document h2, .send-document h2, .create-document h2 {
+    margin-bottom: 20px;
+}
+
+.ManagePermissionsModal input, .rename-document input, .send-document input, .create-document input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.ManagePermissionsModal button, .rename-document button, .send-document button, .create-document button {
+    padding: 10px 20px;
+    background-color: #ddd;
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.ManagePermissionsModal button:hover, .rename-document button:hover, .send-document button:hover, .create-document button:hover {
+    background-color: #0056b3;
+}
   
   /* Error Message Style */
   .dataError {
