@@ -9,8 +9,8 @@ body {
 }
 
 .login-form {
-    width: 90%; /* Full width on mobile devices */
-    max-width: 400px; /* Maximum width of the form */
+    width: 95%; /* Increase width on mobile devices */
+    max-width: 800px; /* Increase maximum width of the form */
     height: auto; /* Adjust based on content */
     padding: 20px;
     background-color: #333;
@@ -20,6 +20,7 @@ body {
     align-items: center;
     border: 1px solid #ccc;
     border-radius: 5px;
+    margin: 20px 0; /* Add some vertical margin */
 }
   
   .login-form h2 {
@@ -110,6 +111,6 @@ body {
   }
   @media (min-width: 768px) {
     .login-form {
-        width: 50%; /* Take up half of the screen on larger screens */
+        width: 70%; /* Take up half of the screen on larger screens */
     }
 }
