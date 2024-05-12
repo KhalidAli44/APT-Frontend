@@ -24,13 +24,13 @@
   
   .form-group {
     height: auto; /* Adjust based on content */
-    margin-bottom: 15px; /* Reduced spacing */
+    margin: 20px 0 15px 0; /* Add top margin */
     background-color: transparent; /* Transparent background */
     display: flex;
     flex-direction: column;
     align-items: flex-start; /* Align labels to the left */
     width: 100%; /* Full width for inputs */
-  }
+}
   
   .form-group label {
     /* Reuses existing label styles */
