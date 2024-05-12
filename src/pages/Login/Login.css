@@ -17,7 +17,7 @@ body {
     justify-content: center;
     align-items: center;
     width: 50%; /* Full width on all devices */
-    max-width: 400px; /* Remove maximum width */
+    max-width: 200px; /* Remove maximum width */
     height: auto; /* Adjust based on content */
     padding: 120px; /* Increase padding */
     background-color: #333;
@@ -73,7 +73,7 @@ body {
   
   .button-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Maintains horizontal spacing */
     background-color: transparent; /* Transparent background */
     width: 100%; /* Full width */
     flex-grow: 1;
@@ -103,13 +103,13 @@ body {
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-left: auto; /* Add this line */
-}
-  
+    margin-left: auto;  /* Maintains right alignment */
+  }
   
   .signup:hover {
     background-color: #333; /* Darker hover color for signup button */
   }
+  
   
   /* Error Message Style */
   .dataError {
