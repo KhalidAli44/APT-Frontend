@@ -9,8 +9,9 @@ body {
 }
 
 .login-form {
-    width: 30%;
-    height: 50vh;
+    width: 90%; /* Full width on mobile devices */
+    max-width: 400px; /* Maximum width of the form */
+    height: auto; /* Adjust based on content */
     padding: 20px;
     background-color: #333;
     display: flex;
@@ -20,80 +21,95 @@ body {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
-
-.login-form h2 {
-    text-align: center;
+  
+  .login-form h2 {
+    text-align: center; /* Center text horizontally */
     margin-bottom: 0;
-    font-size: 1.4rem;
-    font-weight: bold;
-    color: #ddd;
-}
-
-.form-group {
-    height: auto;
-    margin: 20px 0 15px 0;
-    background-color: transparent;
+    font-size: 1.4rem; /* Increased font size for a bolder look */
+    font-weight: bold; /* Matches existing header weight */
+    color: #ddd; /* Darker text color */
+  }
+  
+  .form-group {
+    height: auto; /* Adjust based on content */
+    margin: 20px 0 15px 0; /* Add top margin */
+    background-color: transparent; /* Transparent background */
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
+    align-items: flex-start; /* Align labels to the left */
+    width: 100%; /* Full width for inputs */
 }
-
-.form-group label {
-    margin-bottom: 5px;
-    color: #ddd;
-}
-
-.username-field,
-.password-field {
-    width: 100%;
+  
+  .form-group label {
+    /* Reuses existing label styles */
+    margin-bottom: 5px; /* Add some space below labels */
+    color: #ddd; /* New color for labels */
+  }
+  
+  .username-field { /* New class for username input */
+    width: 100%; /* Full width */
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #ccc; /* Lighter border color */
     border-radius: 5px;
     font-size: 16px;
-}
-
-.button-container {
+  }
+  
+  .password-field { /* New class for password input */
+    width: 100%; /* Full width */
+    padding: 10px;
+    border: 1px solid #ccc; /* Lighter border color */
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .button-container {
     display: flex;
     justify-content: space-between;
-    background-color: transparent;
-    width: 100%;
+    background-color: transparent; /* Transparent background */
+    width: 100%; /* Full width */
     flex-grow: 1;
-}
-
-.login-button {
+  }
+  
+  .login-button {
     padding: 10px 20px;
-    background-color: #ddd;
+    background-color: #ddd; /* Matches existing button color */
     color: #ccc;
     border: none;
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-}
-
-.login-button:hover {
-    background-color: #0056b3;
-}
-
-.signup {
+  }
+  
+  .login-button:hover {
+    background-color: #0056b3; /* Matches existing button hover color */
+  }
+  
+  .signup {
     padding: 12px;
-    background-color: #444;
-    color: #fff;
+    background-color: #444; /* Darker background color for signup button */
+    color: #fff; /* Lighter text color for signup button */
     border: none;
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-left: auto;
+    margin-left: auto; /* Add this line */
 }
-
-.signup:hover {
-    background-color: #333;
-}
-
-.dataError {
-    color: red;
-    font-weight: bold;
-    margin-bottom: 10px;
+  
+  
+  .signup:hover {
+    background-color: #333; /* Darker hover color for signup button */
+  }
+  
+  /* Error Message Style */
+  .dataError {
+    color: red; /* Red color for error message */
+    font-weight: bold; /* Bold weight for error message */
+    margin-bottom: 10px; /* Add some space below the error message */
+  }
+  @media (min-width: 768px) {
+    .login-form {
+        width: 50%; /* Take up half of the screen on larger screens */
+    }
 }
