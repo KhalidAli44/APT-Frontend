@@ -4,7 +4,7 @@
     margin: 0 auto; /* Maintains centering */
     padding: 20px;
     /* Inherit background color from parent element */
-    background-color: inherit;
+    background-color: #ddd;
     display: flex; /* Assuming flexbox for centering */
     justify-content: center; /* Center elements horizontally */
     flex-direction: column;
