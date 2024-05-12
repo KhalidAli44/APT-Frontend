@@ -5,7 +5,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #ddd;
-    color: #333; /* Dark color for better contrast on light background */
+    color: #ddd; /* Dark color for better contrast on light background */
 }
 
 .TextEditor {
@@ -16,14 +16,11 @@ body {
     color: #333; /* Dark color for better contrast on light background */
 }
 
-.panel {
-    background-color: #333;
-    padding: 1rem;
-    color: #fff; /* White color for better contrast on dark background */
-}
+
 
 .h1 {
     margin: 0;
+    background-color: #333;
     padding-bottom: 1rem;
     border-bottom: 1px solid #333;
     font-size: 1.5rem;
