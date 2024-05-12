@@ -27,17 +27,7 @@ body {
     margin: 20px 0;
     box-shadow: -20px 20px 10px #0000001a;
   }
-  .button-container {
-    position: absolute;
-    top: 0;
-    right: 0;
-    display: flex;
-    justify-content: space-between;
-    background-color: #333;
-    padding: 20px;
-    border-radius: 5px;
-  }
-  
+
   .save-button, .send-button {
     padding: 20px 40px;
     background-color: #ddd;
