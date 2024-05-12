@@ -5,10 +5,10 @@ body {
     margin: 0;
     padding: 0;
     background-color: #ddd;
-    color: #fff;
+    color: #333; /* Changed to dark color for better contrast */
 }
 
- .TextEditor{
+.TextEditor {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -21,10 +21,11 @@ body {
     border-bottom: 1px solid #333;
     font-size: 1.5rem;
     font-weight: bold;
-    color: #ddd;
+    color: #333; /* Changed to dark color for better contrast */
     text-align: center;
 }
- .header {
+
+.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -32,19 +33,19 @@ body {
     background-color: #333;
 }
 
- .header p {
+.header p {
     margin: 0;
     font-size: 1.4rem;
     font-weight: bold;
     text-align: center;
 }
 
- .header-options {
+.header-options {
     display: flex;
     align-items: center;
 }
 
- .header-options select {
+.header-options select {
     padding: 0.75rem 1.5rem;
     border: none;
     border-radius: 5px;
@@ -54,7 +55,10 @@ body {
     color: #fff;
 }
 
- .header-options button {
+.header-options button,
+.TextEditor.buttons-container button,
+.save-button,
+.send-button {
     padding: 0.75rem 2rem;
     border: none;
     border-radius: 5px;
@@ -65,19 +69,21 @@ body {
     transition: background-color 0.3s ease;
 }
 
- .header-options button:hover {
+.header-options button:hover,
+.TextEditor.buttons-container button:hover,
+.save-button:hover,
+.send-button:hover {
     background-color: #555;
 }
 
- .editor-container {
+.editor-container {
     flex: 1;
     padding: 1.5rem;
     background-color: #dddddd94;
     border-radius: 5px;
-    padding: 1rem;
 }
 
- .editor-container h1 {
+.text-editor-header h1 {
     margin: 0;
     padding-bottom: 1rem;
     border-bottom: 1px solid #ddddddc1;
@@ -90,48 +96,4 @@ body {
 .TextEditor.buttons-container {
     display: flex;
     gap: 1rem;
-}
-
-.TextEditor.buttons-container button {
-    padding: 0.75rem 2rem;
-    border: none;
-    border-radius: 5px;
-    background-color: #444;
-    color: #fff;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.TextEditor.buttons-container button:hover {
-    background-color: #555;
-}
-.save-button {
-    padding: 0.75rem 2rem;
-    border: none;
-    border-radius: 5px;
-    background-color: #444;
-    color: #fff;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.save-button:hover {
-    background-color: #555;
-}
-
-.send-button {
-    padding: 0.75rem 2rem;
-    border: none;
-    border-radius: 5px;
-    background-color: #444;
-    color: #fff;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.send-button:hover {
-    background-color: #555;
 }
