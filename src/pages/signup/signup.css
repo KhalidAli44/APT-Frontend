@@ -1,15 +1,24 @@
+.center-page {
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex; /* Make the body a flex container */
+    justify-content: center; /* Center the content horizontally */
+    align-items: center; /* Center the content vertically */
+  }
 .signup-form {
-    width: 30%;
-    height: 50vh;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #333;
     display: flex;
     justify-content: center;
-    flex-direction: column;
     align-items: center;
+    width: 50%; /* Full width on all devices */
+    max-width: 400px; /* Remove maximum width */
+    height: auto; /* Adjust based on content */
+    padding: 120px; /* Increase padding */
+    background-color: #333;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 20px 0; /* Add some vertical margin */
 }
 
 .signup-form h2 {
