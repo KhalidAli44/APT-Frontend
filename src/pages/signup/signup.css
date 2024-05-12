@@ -19,6 +19,7 @@
     border: 1px solid #ccc;
     border-radius: 75px;
     margin: 20px 0; /* Add some vertical margin */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .signup-form h2 {

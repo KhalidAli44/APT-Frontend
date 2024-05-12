@@ -25,10 +25,16 @@ body {
     border: 1px solid #ccc;
     border-radius: 75px;
     margin: 20px 0; /* Add some vertical margin */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a light shadow */
 }
-
-/* Rest of your CSS */
-
+h1 {
+  text-align: center; /* Center text horizontally */
+  margin-top: 0; /* Remove top margin */
+  margin-bottom: 20px; /* Add some bottom margin */
+  font-size: 2em; /* Larger font size for a heading */
+  font-weight: bold; /* Bold weight */
+  color: #ddd; /* Darker text color */
+}
 /* Media query for larger screens */
 
   .login-form h2 {
