@@ -59,6 +59,7 @@
     justify-content: space-between;
     background-color: transparent; /* Transparent background */
     width: 100%; /* Full width */
+    flex-grow: 1;
   }
   
   .login-button {

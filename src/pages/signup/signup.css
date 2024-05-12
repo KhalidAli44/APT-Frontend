@@ -48,6 +48,7 @@ input {
     justify-content: space-between;
     background-color: transparent;
     width: 100%;
+    flex-grow: 1;
 }
 
 button[type="submit"] {
@@ -62,7 +63,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: #0056b3;
+    background-color: rgba(71, 71, 71, 0.8)
 }
 
 .login {
