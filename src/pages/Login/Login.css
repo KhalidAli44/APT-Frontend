@@ -19,7 +19,7 @@
     margin-bottom: 0;
     font-size: 1.4rem; /* Increased font size for a bolder look */
     font-weight: bold; /* Matches existing header weight */
-    color: #333; /* Darker text color */
+    color: #ddd; /* Darker text color */
   }
   
   .form-group {
