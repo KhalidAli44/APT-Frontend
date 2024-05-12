@@ -56,7 +56,7 @@ const Login = () => {
     };
 
     return (
-        <div className="login-form center-form">
+        <div className="login-form center-page">
             <h2>Login</h2>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
