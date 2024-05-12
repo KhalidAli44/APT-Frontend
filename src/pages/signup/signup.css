@@ -29,7 +29,14 @@
     font-weight: bold;
     color: #ddd;
 }
-
+h2 {
+    text-align: center; /* Center text horizontally */
+    margin-top: 0; /* Remove top margin */
+    margin-bottom: 20px; /* Add some bottom margin */
+    font-size: 2em; /* Larger font size for a heading */
+    font-weight: bold; /* Bold weight */
+    color: #ddd; /* Darker text color */
+  }
 .form-group {
     height: auto;
     margin-bottom: 15px;
