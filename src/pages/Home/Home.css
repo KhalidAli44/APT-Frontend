@@ -1,90 +1,155 @@
-.header {
-    height: 15vh;
-    padding: 0 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: -1rem;
-    position: sticky;
-    top: 0;
+
+
+
+/* General Styles */
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
-.header-options {
-    width: 35vw;
-    height: 10vh;
-    display: flex;
-    justify-content: space-around;
-    padding-right: 0;
-    margin: 0;
-    padding: 0;
-    background-color: transparent;
-    align-items: center;
+.home {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Header Styles */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #f0f0f0;
 }
 
 .header p {
-    font-size: 28px;
-    margin-top: 0vh
+  margin: 0;
+  font-weight: bold;
+}
+
+.header-options {
+  display: flex;
+  align-items: center;
 }
 
 .header-options select {
-    width: 13vw;
-    height: 7vh;
-    font-size: 18px;
-    margin: 0;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 1rem;
 }
 
 .header-options button {
-    width: 9vh;
-    height: 9vh;
-    font-size: 34px;
-    margin: 0vh 0vw 0vw 0vw;
-    border-radius: 100px;
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  cursor: pointer;
 }
 
-.buttons-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+/* Document List Styles */
+.document-list-container {
+  flex: 1;
+  padding: 1rem;
 }
 
-.buttons-container button {
-    width: 20%;
-    margin: 0 1rem;
-    display: flex;
-    gap: 10px; /* Add some space between buttons */
+.document-container,
+.shared-document-list {
+  margin-bottom: 1rem;
 }
 
-ul {
-    list-style-type: none;
-    padding: 0 50px;
-}
-
-li {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.document-container h2,
+.shared-document-list h2 {
+  margin: 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #ccc;
 }
 
 .document-list {
-    display: flex;
-    align-items: center; /* Align items vertically */
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.document-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
 }
 
 .document {
-    display: flex;
-    justify-content: space-between; /* Spread items horizontally */
-    width: 100%; /* Ensure the document div takes full width */
-    align-items: center; /* Align items vertically */
-}
-
-select {
-    border-radius: 10px;
-    border-color: blue;
-    border-width: 2px;
+  display: flex;
+  align-items: center;
 }
 
 .document p {
-    font-size: 24px;
-    font-weight: 500;
-    margin: 0;
+  margin: 0;
+  flex: 1;
+}
+
+.buttons-container {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.buttons-container button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+/* Modals Styles */
+.modal-overlay {
+  /* Styles for modal overlay (if using React Modal library) */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  /* Styles for modal content */
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.rename-document,
+.send-document,
+.create-document {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.rename-document h2,
+.send-document h2,
+.create-document h2 {
+  margin: 0;
+}
+
+.rename-document input,
+.send-document input,
+.create-document input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.send-document label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
