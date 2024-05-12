@@ -107,7 +107,7 @@ const Signup = () => {
                 <p>{passwordError}</p>
                 <div className='button-container'>
                     <button type="submit">Sign Up</button>
-                    <button className="login" onClick={goToLogin}>Log In</button>
+                    <button className="login" onClick={goToLogin}>Go to Log In</button>
                 </div>
             </form>
         </div>

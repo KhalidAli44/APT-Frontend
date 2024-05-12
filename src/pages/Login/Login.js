@@ -83,7 +83,7 @@ const Login = () => {
                 <p>{dataError}</p>
                 <div className="button-container">
                     <button type="submit"className="login-button">Login</button>
-                    <button className='signup' onClick={goToSignup}>Sign Up</button>
+                    <button className='signup' onClick={goToSignup}>Go to Sign Up</button>
                 </div>
             </form>
         </div>
