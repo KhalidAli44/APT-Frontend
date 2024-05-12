@@ -17,7 +17,7 @@ body {
     justify-content: center;
     align-items: center;
     width: 50%; /* Full width on all devices */
-    max-width: none; /* Remove maximum width */
+    max-width: 400px; /* Remove maximum width */
     height: auto; /* Adjust based on content */
     padding: 120px; /* Increase padding */
     background-color: #333;
