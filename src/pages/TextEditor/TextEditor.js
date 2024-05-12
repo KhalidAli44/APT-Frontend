@@ -13,35 +13,50 @@ const TextEditor = () => {
     const documentId = queryParams.get('documentId');
     const filename = queryParams.get('filename');
     const author = queryParams.get('author');
-    const content = queryParams.get('content');
+    const [content, setContent] = useState(queryParams.get('content'));
 
     const editorRef = useRef(null);
+    const stompClientRef = useRef(null);
 
-    const [stompClient, setStompClient] = useState(null);
-    const [cursorIndex, setCursorIndex] = useState(null);
-    const [insertedCharacter, setInsertedCharacter] = useState(null);
+    const [buffer, setBuffer] = useState(content);
 
     useEffect(() => {
+        // Initialize Stomp client
         const socket = new SockJS('https://apt-backend.onrender.com/ws');
         const client = Stomp.over(socket);
-
-        client.connect({}, () => {
-            client.subscribe(`/all/broadcast/${documentId}`, (message) => {
-                const receivedMessage = message.body;
-                console.log(receivedMessage);
-            });
-        });
-
-        setStompClient(client);
-
-        return () => {
-            //client.disconnect();
-        };
-
-    }, []);
     
+        client.connect({}, () => {
+            console.log('WebSocket connection established.');
+            stompClientRef.current = client;
+    
+            // Subscribe to the message channel
+            if (stompClientRef.current) {
+                stompClientRef.current.subscribe(`/all/broadcast/${documentId}`, (message) => {
+                    const receivedMessage = JSON.parse(message.body);
+                    console.log(receivedMessage.insertedIndex + ", " +  receivedMessage.insertedChar);
+                    insertAtIndex(receivedMessage.insertedIndex, receivedMessage.insertedChar);
+                    
+                    console.log("buffer1 = " + buffer);
+                });
+            }
+        }, (error) => {
+            console.error('WebSocket connection failed:', error);
+        });
+    
+        return () => {
+            if (stompClientRef.current) {
+                stompClientRef.current.disconnect();
+            }
+        };
+    }, [documentId]);
+    
+    
+    
+    
+
     useEffect(() => {
         if (!editorRef.current) {
+            // Initialize Quill editor
             editorRef.current = new Quill('#editor-container', {
                 modules: {
                     toolbar: [
@@ -57,6 +72,15 @@ const TextEditor = () => {
             editorRef.current.clipboard.dangerouslyPasteHTML(content);
         }
     }, [content]);
+
+    useEffect(() => {
+        console.log("buffer2 = " + buffer);
+        setContent(buffer);
+        const plainText = buffer.replace(/<[^>]+>/g, ''); 
+        editorRef.current.setText(plainText);
+        editorRef.current.setSelection(plainText.length);
+        console.log("plainText = " + plainText);
+    }, [buffer]);
 
     const handleSave = () => {
         const newContent = editorRef.current.root.innerHTML;
@@ -87,38 +111,56 @@ const TextEditor = () => {
         });
     };
 
-    const handleSendMessage = () => {
-        if (stompClient !== null) {
-            stompClient.send(`/app/operation/${documentId}`, {}, editorRef.current.root.innerHTML);
+    const handleSendMessage = (insertedIndex, insertedChar) => {
+        if (stompClientRef.current !== null) {
+            stompClientRef.current.send(`/app/operation/${documentId}`, {}, JSON.stringify({ insertedIndex, insertedChar }));
         }
-    };
-
-    const insertCharacter = (index, character) => {
-        editorRef.current.insertText(index, character);
     };
 
     const handleTextChange = (delta, oldDelta, source) => {
         if (source === 'user') {
-            let index = null;
+            let insertedIndex = null;
             let insertedChar = null;
+            let textSize = null;
+    
             delta.ops.forEach(op => {
-              if (op.insert) {
-                if (typeof op.insert === 'string') {
-                  index = editorRef.current.getIndex(op);
-                  insertedChar = op.insert;
-                } else if (typeof op.insert === 'object') {
-                  if (op.insert.hasOwnProperty('image')) {
-                    index = editorRef.current.getIndex(op);
-                    insertedChar = '[IMAGE]';
-                  }
+
+                const selection = editorRef.current.getSelection();
+                if (selection) {
+                    const content = editorRef.current.getText(0, editorRef.current.getLength());
+                    textSize = content.length;
                 }
-              }
+
+                if (op.insert) {
+                    if (typeof op.insert === 'string') {
+                        if (textSize === 2) {
+                            insertedIndex = editorRef.current.getSelection().index;
+                        }
+                        else {
+                            insertedIndex = editorRef.current.getSelection().index - 1;
+                        }
+                        insertedChar = op.insert;
+                    } else if (typeof op.insert === 'object' && op.insert.hasOwnProperty('image')) {
+                        insertedChar = '[IMAGE]';
+                    }
+                }
             });
-            setCursorIndex(index);
-            setInsertedCharacter(insertedChar);
-            handleSendMessage();
+
+            const plainText = buffer.replace(/<[^>]+>/g, ''); 
+            editorRef.current.setText(plainText);
+            editorRef.current.setSelection(plainText.length);
+
+            handleSendMessage(insertedIndex, insertedChar);
         }
     };
+
+    function insertAtIndex(index, character) {
+        setBuffer(prevBuffer => {
+            let str = prevBuffer.replace(/<[^>]+>/g, ''); 
+            str = str.slice(0, index) + character + str.slice(index);
+            return str;
+        });
+    }
 
     return (
         <div>
