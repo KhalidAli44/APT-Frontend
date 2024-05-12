@@ -56,6 +56,7 @@ const Login = () => {
     };
 
     return (
+        <div className="center-page">    
         <div className="login-form">
             <h2>Login</h2>
             <form onSubmit={handleSubmit}>
@@ -81,11 +82,12 @@ const Login = () => {
                 </div>
                 <p>{dataError}</p>
                 <div className="button-container">
-                    <button type="submit">Login</button>
+                    <button type="submit"className="login-button">Login</button>
                     <button className='signup' onClick={goToSignup}>Go to Sign Up</button>
                 </div>
             </form>
         </div>
+    </div>
     );
 };
 

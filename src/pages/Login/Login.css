@@ -1,30 +1,53 @@
+body {
+  background-color: #ddd; /* Adjust the color as needed */
+  margin: 0;
+  padding: 0;
+}
+.center-page {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex; /* Make the body a flex container */
+  justify-content: center; /* Center the content horizontally */
+  align-items: center; /* Center the content vertically */
+}
 
 .login-form {
-    width: 30%; /* Reduced width for smaller panel */
-    height: 50vh; /* Reduced height for smaller panel */
-    margin: 0 auto; /* Maintains centering */
-    padding: 20px;
-    /* Inherit background color from parent element */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%; /* Full width on all devices */
+    max-width: 200px; /* Remove maximum width */
+    height: auto; /* Adjust based on content */
+    padding: 120px; /* Increase padding */
     background-color: #333;
-    display: flex; /* Assuming flexbox for centering */
-    justify-content: center; /* Center elements horizontally */
     flex-direction: column;
-    align-items: center; /* Center elements horizontally */
-    border: 1px solid #ccc; /* Lighter border color */
-    border-radius: 5px;
-  }
-  
+    border: 1px solid #ccc;
+    border-radius: 75px;
+    margin: 20px 0; /* Add some vertical margin */
+    box-shadow: -20px 20px 10px #0000001a; /* Add a light shadow */
+}
+h2 {
+  text-align: center; /* Center text horizontally */
+  margin-top: 0; /* Remove top margin */
+  margin-bottom: 20px; /* Add some bottom margin */
+  font-size: 2em; /* Larger font size for a heading */
+  font-weight: bold; /* Bold weight */
+  color: #ddd; /* Darker text color */
+}
+/* Media query for larger screens */
+
   .login-form h2 {
     text-align: center; /* Center text horizontally */
-    margin-bottom: 0;
-    font-size: 1.4rem; /* Increased font size for a bolder look */
+    margin-bottom: 1;
+    font-size: 2.5rem; /* Increased font size for a bolder look */
     font-weight: bold; /* Matches existing header weight */
     color: #ddd; /* Darker text color */
   }
   
   .form-group {
     height: auto; /* Adjust based on content */
-    margin: 20px 0 15px 0; /* Add top margin */
+    margin: 20px 0 20px 0; /* Add top margin */
     background-color: transparent; /* Transparent background */
     display: flex;
     flex-direction: column;
@@ -56,22 +79,22 @@
   
   .button-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Maintains horizontal spacing */
     background-color: transparent; /* Transparent background */
-    width: 100%; /* Full width */
+    width: 110%; /* Full width */
     flex-grow: 1;
   }
   
-  .login-button {
+  button[type="submit"] {
     padding: 10px 20px;
-    background-color: #ddd; /* Matches existing button color */
-    color: #ccc;
+    background-color: #ddd;
+    color: #333;
     border: none;
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-  }
+}
   
   .login-button:hover {
     background-color: #0056b3; /* Matches existing button hover color */
@@ -86,13 +109,13 @@
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-left: auto; /* Add this line */
-}
-  
+    margin-left: auto;  /* Maintains right alignment */
+  }
   
   .signup:hover {
     background-color: #333; /* Darker hover color for signup button */
   }
+  
   
   /* Error Message Style */
   .dataError {
@@ -100,3 +123,8 @@
     font-weight: bold; /* Bold weight for error message */
     margin-bottom: 10px; /* Add some space below the error message */
   }
+  @media (min-width: 768px) {
+    .login-form {
+        width: 80%; /* Increase width on larger screens */
+    }
+}

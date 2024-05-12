@@ -166,10 +166,14 @@ const TextEditor = () => {
         <div>
             <div>
                 <h1>{filename}, By {author}</h1>
-                <button onClick={handleSave}>Save</button>
+                
+                <div className="button-container">
+                <button className="save-button" onClick={handleSave}>Save</button>
+                <button className="send-button" onClick={handleSendMessage}>Send</button>
+                </div>
             </div>
             <div id="editor-container" className="editor-container" />
-            <button onClick={handleSendMessage}>Send</button>
+            
         </div>
     );
 };

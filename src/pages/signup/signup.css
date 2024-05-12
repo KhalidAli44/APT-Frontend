@@ -1,25 +1,42 @@
+.center-page {
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex; /* Make the body a flex container */
+    justify-content: center; /* Center the content horizontally */
+    align-items: center; /* Center the content vertically */
+  }
 .signup-form {
-    width: 30%;
-    height: 50vh;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #333;
     display: flex;
     justify-content: center;
-    flex-direction: column;
     align-items: center;
+    width: 50%; /* Full width on all devices */
+    max-width: 200px; /* Remove maximum width */
+    height: auto; /* Adjust based on content */
+    padding: 120px; /* Increase padding */
+    background-color: #333;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    border-radius: 75px;
+    margin: 20px 0; /* Add some vertical margin */
+    box-shadow: -20px 20px 10px #0000001a;
 }
 
 .signup-form h2 {
     text-align: center;
     margin-bottom: 0;
-    font-size: 1.4rem;
+    font-size: 2.5rem;
     font-weight: bold;
     color: #ddd;
 }
-
+h2 {
+    text-align: center; /* Center text horizontally */
+    margin-top: 1; /* Remove top margin */
+    margin-bottom: 20px; /* Add some bottom margin */
+    font-size: 2em; /* Larger font size for a heading */
+    font-weight: bold; /* Bold weight */
+    color: #ddd; /* Darker text color */
+  }
 .form-group {
     height: auto;
     margin-bottom: 15px;
@@ -45,9 +62,9 @@ input {
 
 .button-container {
     display: flex;
-    justify-content: space-between;
-    background-color: transparent;
-    width: 100%;
+    justify-content: space-between; /* Maintains horizontal spacing */
+    background-color: transparent; /* Transparent background */
+    width: 110%; /* Full width */
     flex-grow: 1;
 }
 

@@ -70,6 +70,7 @@ const Signup = () => {
     };
 
     return (
+    <div className="center-page">
         <div className="signup-form">
             <h2>Sign Up</h2>
             <form onSubmit={handleSubmit}>
@@ -110,6 +111,7 @@ const Signup = () => {
                 </div>
             </form>
         </div>
+    </div>
     );
 };
 
