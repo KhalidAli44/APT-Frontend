@@ -21,8 +21,8 @@ body {
     align-items: center;
     padding: 1.5rem;
     background-color: #333; /* Darker header background */
-    border-radius: 20px;
-    margin-top: auto;
+    
+    
 }
 
 .home .header p {
@@ -61,25 +61,6 @@ body {
 .home .document-list-container {
     flex: 1;
     padding: 1.5rem;
-}
-
-.home .document-container,
-.home .shared-document-list {
-    margin-bottom: 1.5rem;
-    background-color: #333; /* Darker background for document sections */
-    border-radius: 5px;
-    padding: 1rem;
-}
-
-.home .document-container h2,
-.home .shared-document-list h2 {
-    margin: 0;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid #444;
-    font-size: 1.5rem; /* Larger font size for section headers */
-    font-weight: bold;
-    color: #fff; /* Light text for section headers */
-    text-align: center; /* Centered text */
 }
 
 .home .document-list {
