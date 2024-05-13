@@ -140,8 +140,8 @@ h2 {
 
 .ManagePermissionsModal button, .rename-document button, .send-document button, .create-document button {
     padding: 10px 20px;
-    background-color: #333;
-    color: #ddd;
+    background-color: #ddd;
+    color: #333;
     border: none;
     border-radius: 5px;
     font-size: 16px;
@@ -151,7 +151,36 @@ h2 {
 }
 
 .ManagePermissionsModal button:hover, .rename-document button:hover, .send-document button:hover, .create-document button:hover {
-    background-color: #0056b3;
+    background-color: #525151a9;
+}
+.Manage-document {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #333;
+  border-radius: 5px;
+  color: #ddd;
+}
+
+.Manage-document h2 {
+  margin-bottom: 20px;
+}
+
+.Manage-document button {
+  padding: 10px 20px;
+  background-color: #ddd;
+  color: #333;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.Manage-document button:hover {
+  background-color: #0056b3;
 }
   
   /* Error Message Style */

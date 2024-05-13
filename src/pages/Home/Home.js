@@ -272,8 +272,10 @@ const Home = () => {
                 closeModal={() => setIsModalOpen(false)}
                 document={selectedDocument} 
             >
+            <div className="Manage-document">
                 <h2>Manage Permissions</h2>
-                <button onClick={() => setIsModalOpen(false)}>Close</button>
+                <button onClick={() => setIsModalOpen(false)}>Cancel</button>
+            </div>
             </ManagePermissionsModal>
             {isRenameModalOpen && (
                 <Modal isOpen={isRenameModalOpen} onRequestClose={handleRenameModalClose}>
