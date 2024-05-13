@@ -159,21 +159,24 @@ h2 {
     background-color: #746f6f8e;
 }
 
-.ManagePermissionsModal, .Manage-document {
-  display: flex;
-  flex-direction: column;
+.ManagePermissionsModal .Manage-document {
   align-items: center;
-  padding: 20px;
   background-color: #333;
   border-radius: 5px;
   color: #ddd;
+  display: flex;
+  flex-direction: row;
+  padding: 20px;
+  flex-wrap: wrap;
+  align-content: stretch;
+  justify-content: space-between;
 }
 
-.ManagePermissionsModal h2, .Manage-document h2 {
+.ManagePermissionsModal .Manage-document h2 {
   margin-bottom: 20px;
 }
 
-.ManagePermissionsModal button, .Manage-document button {
+.ManagePermissionsModal .Manage-document button {
   padding: 10px 20px;
   background-color: #ddd;
   color: #333;
@@ -185,8 +188,8 @@ h2 {
   margin-top: 10px;
 }
 
-.ManagePermissionsModal button:hover, .Manage-document button:hover {
-  background-color: #0056b3;
+.ManagePermissionsModal .Manage-document button:hover {
+  background-color: #746f6f8e;
 }
   
   /* Error Message Style */
