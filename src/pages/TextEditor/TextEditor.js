@@ -168,7 +168,6 @@ const TextEditor = () => {
             <p>{filename}, By {author}</p>
                 <div className='header-options header-Texteditor'>
                 <button className="save-button" onClick={handleSave}>Save</button>
-                <button className="send-button" onClick={handleSendMessage}>Send</button>
                 </div>
             </div>
             

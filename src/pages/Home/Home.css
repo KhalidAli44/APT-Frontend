@@ -21,6 +21,7 @@ body {
     align-items: center;
     padding: 1.5rem;
     background-color: #333; /* Darker header background */
+    border-radius: 20px;
 }
 
 .home .header p {
@@ -33,6 +34,7 @@ body {
 .home .header-options {
     display: flex;
     align-items: center;
+    margin: auto;
 }
 
 .home .header-options select {
@@ -51,6 +53,7 @@ body {
     color: #fff; /* Light text for buttons */
     font-weight: bold;
     cursor: pointer;
+
 }
 
 /* Document List Styles */
