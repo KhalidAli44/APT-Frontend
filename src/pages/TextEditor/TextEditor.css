@@ -13,25 +13,34 @@ body {
     background-color: #333;
   }
   
-  #editor-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: auto;
-    padding: 120px;
-    background-color: #333;
-    flex-direction: column;
+  #editor-container
+   {
+    align-items: left;
     border: 1px solid #ccc;
-    border-radius: 75px;
-    margin: 20px 0;
+    border-radius: 20px;
     box-shadow: -20px 20px 10px #0000001a;
-  }
-
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    justify-content: center;
+    margin: 20px 0;
+    padding: 50%;
+    max-width: 10px;
+}
+  .button-container-TextEditor 
+  {
+    background-color: initial;
+    display: flex;
+    flex-grow: 1;
+    justify-content: flex-start;
+    width: 100%;
+    flex-direction: row;
+    align-content: center;
+}
   .save-button, .send-button {
     padding: 20px 40px;
-    background-color: #ddd;
-    color: #333;
+    background-color: #333;
+    color: #ddd;
     border: none;
     border-radius: 5px;
     font-size: 16px;
@@ -40,7 +49,7 @@ body {
   }
   
   .save-button:hover, .send-button:hover {
-    background-color: #0056b3;
+    background-color: #dddddd76;
   }
   
   @media (min-width: 768px) {

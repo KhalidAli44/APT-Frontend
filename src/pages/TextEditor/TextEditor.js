@@ -167,7 +167,7 @@ const TextEditor = () => {
             <div>
                 <h1>{filename}, By {author}</h1>
                 
-                <div className="button-container">
+                <div className="button-container button-container-TextEditor">
                 <button className="save-button" onClick={handleSave}>Save</button>
                 <button className="send-button" onClick={handleSendMessage}>Send</button>
                 </div>
