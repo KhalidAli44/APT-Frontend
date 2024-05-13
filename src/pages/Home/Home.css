@@ -36,23 +36,24 @@ body {
 }
 
 .home .header-options select {
-    padding: 0.75rem 1.5rem;
-    border: 1px solid #444;
-    border-radius: 5px;
+    padding: 0.75rem 1.5rem; /* Increased padding for buttons and select */
+    border: 1px solid #444; /* Darker border color */
+    border-radius: 5px; /* Rounded corners */
     margin-right: 1rem;
-    font-size: 1rem;
+    font-size: 1rem; /* Larger font size for select options */
 }
 
 .home .header-options button {
     padding: 0.75rem 2rem;
     border: 1px solid #444;
     border-radius: 5px;
-    background-color: #444;
-    color: #fff;
+    background-color: #444; /* Darker button background */
+    color: #fff; /* Light text for buttons */
     font-weight: bold;
     cursor: pointer;
 }
 
+/* Document List Styles */
 .home .document-list-container {
     flex: 1;
     padding: 1.5rem;
@@ -112,9 +113,30 @@ body {
     cursor: pointer;
 }
 
-.home .document p {
-  
+.home .document-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
 
+.home .document-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #444; /* Darker border for list items */
+    cursor: pointer;
+    background-color: #222; /* Darker background for list items */
+    color: #fff; /* Light text for list items */
+    font-size: 1.1rem; /* Increased font size for list items */
+}
+
+.home .document {
+    display: flex;
+    align-items: center;
+}
+
+.home .document p {
     margin: 0;
     flex: 1;
     font-weight: bold;
@@ -150,44 +172,44 @@ body {
 }
 .ManagePermissionsModal, .rename-document, .send-document, .create-document , .Manage-document {
     
-    align-items: center;
-    background-color: #333;
-    border-radius: 5px;
-    color: #ddd;
-    display: flex;
-    flex-direction: row;
-    padding: 20px;
-    flex-wrap: wrap;
-    align-content: stretch;
-    justify-content: space-between;
-
+      align-items: center;
+      background-color: #333;
+      border-radius: 5px;
+      color: #ddd;
+      display: flex;
+      flex-direction: row;
+      padding: 20px;
+      flex-wrap: wrap;
+      align-content: stretch;
+      justify-content: space-between;
+  
 }
 
 .ManagePermissionsModal h2, .rename-document h2, .send-document h2, .create-document h2, .Manage-document h2 {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .ManagePermissionsModal input, .rename-document input, .send-document input, .create-document input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-  margin-bottom: 10px;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 10px;
 }
 
 .ManagePermissionsModal button, .rename-document button, .send-document button, .create-document button , .Manage-document button{
-  padding: 10px 20px;
-  background-color: #ddd;
-  color: #333;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #ddd;
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
 }
 
 .ManagePermissionsModal button:hover, .rename-document button:hover, .send-document button:hover, .create-document button:hover , .Manage-document button:hover{
-  background-color: #746f6f8e;
+    background-color: #746f6f8e;
 }
