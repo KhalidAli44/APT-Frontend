@@ -228,6 +228,7 @@ const Home = () => {
             <div className="document-list-container">
                 {selectedSection === 'myDocuments' && (
                     <div className="document-container">
+                     <div className="document-list">   
                         <h2>My Documents</h2>
                         <ul>
                             {documents.map(document => (
@@ -245,6 +246,7 @@ const Home = () => {
                             ))}
                         </ul>
                     </div>
+                </div>
                 )}
                 {selectedSection === 'sharedWithMe' && (
                     <div className="document-container">
