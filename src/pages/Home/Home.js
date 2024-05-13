@@ -278,19 +278,15 @@ const Home = () => {
                 )}
             </div>
             <ManagePermissionsModal
-    isOpen={isModalOpen}
-    closeModal={() => setIsModalOpen(false)}
-    document={selectedDocument} 
->
-    <div className="Manage-document">
-        <h2>Manage Permissions</h2>
-        <div className="Manage-document-body">
-            <p>Here you can manage the permissions for the selected document.</p>
-            {/* Add your form elements or information here */}
-        </div>
-        <button onClick={() => setIsModalOpen(false)}>Cancel</button>
-    </div>
-</ManagePermissionsModal>
+                isOpen={isModalOpen}
+                closeModal={() => setIsModalOpen(false)}
+                document={selectedDocument} 
+            >
+            <div className="Manage-document">
+                <h2>Manage Permissions</h2>
+                <button onClick={() => setIsModalOpen(false)}>Cancel</button>
+            </div>
+            </ManagePermissionsModal>
             {isRenameModalOpen && (
                 <Modal isOpen={isRenameModalOpen} onRequestClose={handleRenameModalClose}>
                     <div className="rename-document">
