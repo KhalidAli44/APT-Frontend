@@ -252,9 +252,12 @@ const Home = () => {
                         <ul>
                             {enabledSharedDocuments.map(document => (
                                 <li key={document.id}>
-                                    <span onClick={() => handleOpenDocument(document)}>{document.filename}</span>
-                                    <button onClick={() => handleRenameModalOpen(document)}>Rename</button>
-                                    <button onClick={() => handleSendModalOpen(document)}>Send</button>
+                                    <div className='buttons-container buttons-container-shared'>
+                                            <button onClick={() => handleRenameModalOpen(document)}>Rename</button>
+                                            <button onClick={() => handleManagePermissions(document)}>Manage</button>
+                                            <button onClick={() => handleSendModalOpen(document)}>Send</button>
+                                            <button onClick={() => handleDeleteDocument(document)}>Delete</button>
+                                        </div>
                                 </li>
                             ))}
                             {disabledSharedDocuments.map(document => (

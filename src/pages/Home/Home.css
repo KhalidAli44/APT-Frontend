@@ -58,7 +58,6 @@ body {
     padding: 1.5rem;
 }
 
-.home .document-container,
 .home .shared-document-list {
     margin-bottom: 1.5rem;
     background-color: #333;
@@ -66,7 +65,6 @@ body {
     padding: 1rem;
 }
 
-.home .document-container h2,
 .home .shared-document-list h2 {
     margin: 0;
     padding-bottom: 1rem;
@@ -77,14 +75,12 @@ body {
     text-align: center;
 }
 
-.home .document-list,
-.home .shared-document-list {
+.home .shared-document-list ul {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.home .document-list li,
 .home .shared-document-list li {
     display: flex;
     justify-content: space-between;
@@ -97,10 +93,23 @@ body {
     font-size: 1.1rem;
 }
 
-.home .document,
 .home .shared-document-list .document {
     display: flex;
     align-items: center;
+}
+
+.home .shared-document-list .buttons-container {
+    display: flex;
+}
+
+.home .shared-document-list .buttons-container button {
+    padding: 0.5rem 1rem;
+    margin-left: 0.5rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #444;
+    color: #fff;
+    cursor: pointer;
 }
 
 .home .document p {
