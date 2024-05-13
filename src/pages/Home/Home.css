@@ -36,24 +36,23 @@ body {
 }
 
 .home .header-options select {
-    padding: 0.75rem 1.5rem; /* Increased padding for buttons and select */
-    border: 1px solid #444; /* Darker border color */
-    border-radius: 5px; /* Rounded corners */
+    padding: 0.75rem 1.5rem;
+    border: 1px solid #444;
+    border-radius: 5px;
     margin-right: 1rem;
-    font-size: 1rem; /* Larger font size for select options */
+    font-size: 1rem;
 }
 
 .home .header-options button {
     padding: 0.75rem 2rem;
     border: 1px solid #444;
     border-radius: 5px;
-    background-color: #444; /* Darker button background */
-    color: #fff; /* Light text for buttons */
+    background-color: #444;
+    color: #fff;
     font-weight: bold;
     cursor: pointer;
 }
 
-/* Document List Styles */
 .home .document-list-container {
     flex: 1;
     padding: 1.5rem;
@@ -62,7 +61,7 @@ body {
 .home .document-container,
 .home .shared-document-list {
     margin-bottom: 1.5rem;
-    background-color: #333; /* Darker background for document sections */
+    background-color: #333;
     border-radius: 5px;
     padding: 1rem;
 }
@@ -72,36 +71,41 @@ body {
     margin: 0;
     padding-bottom: 1rem;
     border-bottom: 1px solid #444;
-    font-size: 1.5rem; /* Larger font size for section headers */
+    font-size: 1.5rem;
     font-weight: bold;
-    color: #fff; /* Light text for section headers */
-    text-align: center; /* Centered text */
+    color: #fff;
+    text-align: center;
 }
 
-.home .document-list {
+.home .document-list,
+.home .shared-document-list {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.home .document-list li {
+.home .document-list li,
+.home .shared-document-list li {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1rem 1.5rem;
-    border-bottom: 1px solid #444; /* Darker border for list items */
+    border-bottom: 1px solid #444;
     cursor: pointer;
-    background-color: #222; /* Darker background for list items */
-    color: #fff; /* Light text for list items */
-    font-size: 1.1rem; /* Increased font size for list items */
+    background-color: #222;
+    color: #fff;
+    font-size: 1.1rem;
 }
 
-.home .document {
+.home .document,
+.home .shared-document-list .document {
     display: flex;
     align-items: center;
 }
 
 .home .document p {
+  
+
     margin: 0;
     flex: 1;
     font-weight: bold;
