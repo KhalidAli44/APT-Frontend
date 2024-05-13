@@ -165,9 +165,8 @@ const TextEditor = () => {
     return (
         <div>
             <div>
-                <h1>{filename}, By {author}</h1>
-                
                 <div className="button-container button-container-TextEditor">
+                <h1>{filename}, By {author}</h1>
                 <button className="save-button" onClick={handleSave}>Save</button>
                 <button className="send-button" onClick={handleSendMessage}>Send</button>
                 </div>
