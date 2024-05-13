@@ -93,6 +93,7 @@ const ManagePermissionsModal = ({ isOpen, closeModal, document }) => {
                 <p>No shared users found for this document.</p>
             )}
             <button onClick={closeModal}>Close</button>
+            
             </div>
         </Modal>
     );
