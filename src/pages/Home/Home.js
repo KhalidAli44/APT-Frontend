@@ -247,7 +247,7 @@ const Home = () => {
                     </div>
                 )}
                 {selectedSection === 'sharedWithMe' && (
-                    <div className="shared-document-list">
+                    <div className="document-list">
                         <h2>Shared with Me</h2>
                         <ul>
                             {enabledSharedDocuments.map(document => (
