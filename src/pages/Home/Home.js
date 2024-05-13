@@ -21,17 +21,7 @@ const Home = () => {
     const [isSendModalOpen, setIsSendModalOpen] = useState(false);
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
     const [selectedSection, setSelectedSection] = useState('myDocuments');
-    const [navOpen, setNavOpen] = useState(false);
 
-    const openNav = () => {
-        document.getElementById("mySidenav").style.width = "250px";
-        setNavOpen(true);
-    }
-    
-    const closeNav = () => {
-        document.getElementById("mySidenav").style.width = "0";
-        setNavOpen(false);
-    }
     useEffect(() => {
         fetchDocuments();
         fetchEnabledSharedDocuments();
@@ -231,7 +221,6 @@ const Home = () => {
                     <select value={selectedSection} onChange={(e) => setSelectedSection(e.target.value)}>
                         <option value="myDocuments">My Documents</option>
                         <option value="sharedWithMe">Shared with Me</option>
-                        <div id="mySidenav" className={`sidenav ${navOpen ? 'open' : ''}`}></div>
                     </select>
                     <button onClick={() => handleCreateModalOpen()}>+</button>
                 </div>
@@ -287,14 +276,6 @@ const Home = () => {
                     </div>
                 </div>
                 )}
-            <div>
-                <span onClick={this.openNav}>Open Settings</span>
-
-                <div id="mySidenav" className="sidenav">
-                    <a href="javascript:void(0)" className="closebtn" onClick={this.closeNav}>&times;</a>
-                    <a href="#">Settings</a>
-                    <a href="#">Logout</a>
-                </div>
             </div>
             <ManagePermissionsModal
                 isOpen={isModalOpen}
@@ -360,7 +341,6 @@ const Home = () => {
                 </Modal>
             )}
         </div>
-    </div>
     );
 };
 

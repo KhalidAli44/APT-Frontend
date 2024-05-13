@@ -178,50 +178,27 @@ body {
 .ManagePermissionsModal button:hover, .rename-document button:hover, .send-document button:hover, .create-document button:hover , .Manage-document button:hover{
     background-color: #746f6f8e;
 }
-
-/* The side navigation menu */
-.sidenav {
-    height: 100%; /* 100% Full-height */
-    width: 0; /* 0 width - change this with JavaScript */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Stay on top */
-    top: 0; /* Stay at the top */
-    left: 0;
-    background-color: #111; /* Black*/
-    overflow-x: hidden; /* Disable horizontal scroll */
-    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
-    padding-top: 60px; /* Place content 60px from the top */
+input[type="checkbox"] {
+    width: 20px; /* Desired width */
+    height: 20px; /* Desired height */
+    background-color: #EEE; /* Background color */
+    border-radius: 5px; /* Rounded corners */
+    border: 2px solid #007BFF; /* Border color */
+    cursor: pointer; /* Hand cursor on hover */
 }
 
-/* The navigation menu links */
-.sidenav a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
+input[type="checkbox"]:checked {
+    background-color: #007BFF; /* Background color when checked */
 }
 
-/* When you mouse over the navigation links, change their color */
-.sidenav a:hover {
-    color: #f1f1f1;
+input[type="checkbox"]:focus {
+    outline: none; /* Remove default focus outline */
 }
 
-/* Position and style the close button (top right corner) */
-.sidenav .closebtn {
-    position: absolute;
-    top: 0;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
-}
-
-/* Style the navigation menu to be full width and fixed to the bottom of the page when it's open */
-.sidenav.open {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    bottom: 0;
-    background-color: #333;
+/* Style for checkbox label */
+.send-document .label{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
 }
