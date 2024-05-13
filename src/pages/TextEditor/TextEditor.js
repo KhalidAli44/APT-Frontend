@@ -164,9 +164,9 @@ const TextEditor = () => {
 
     return (
         <div>
-            <div className = "header">
-                <div className="header-options">
-                <label>{filename}, By {author}</label>
+            <div className = 'header'>
+            <p>{filename}, By {author}</p>
+                <div className='header-options'>
                 <button className="save-button" onClick={handleSave}>Save</button>
                 <button className="send-button" onClick={handleSendMessage}>Send</button>
                 </div>
