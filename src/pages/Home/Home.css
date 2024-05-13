@@ -167,7 +167,8 @@ body {
     margin-bottom: 10px;
 }
 
-.ManagePermissionsModal button, .rename-document button, .send-document button, .create-document button , .Manage-document button{
+.ManagePermissionsModal button, .rename-document button, .send-document button, .create-document button , .Manage-document button
+{
     padding: 10px 20px;
     background-color: #ddd;
     color: #333;
