@@ -252,6 +252,7 @@ const Home = () => {
                         <ul>
                             {enabledSharedDocuments.map(document => (
                                 <li key={document.id}>
+                                    <p onClick={() => handleOpenDocument(document)}>{document.filename}</p>
                                     <div className='buttons-container buttons-container-shared'>
                                             <button onClick={() => handleRenameModalOpen(document)}>Rename</button>
                                             <button onClick={() => handleManagePermissions(document)}>Manage</button>
