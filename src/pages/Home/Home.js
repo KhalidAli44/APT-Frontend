@@ -247,6 +247,7 @@ const Home = () => {
                     </div>
                 )}
                 {selectedSection === 'sharedWithMe' && (
+                    <div className="document-container">
                     <div className="document-list">
                         <h2>Shared with Me</h2>
                         <ul>
@@ -269,6 +270,7 @@ const Home = () => {
                             ))}
                         </ul>
                     </div>
+                </div>
                 )}
             </div>
             <ManagePermissionsModal
