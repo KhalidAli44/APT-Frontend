@@ -260,9 +260,7 @@ const Home = () => {
                                     <div className='buttons-container buttons-container-shared'>
                                             <button onClick={() => handleOpenDocument(document)}>Edit</button>
                                             <button onClick={() => handleRenameModalOpen(document)}>Rename</button>
-                                            <button onClick={() => handleManagePermissions(document)}>Manage</button>
                                             <button onClick={() => handleSendModalOpen(document)}>Send</button>
-                                            <button onClick={() => handleDeleteDocument(document)}>Delete</button>
                                         </div>
                                 </li>
                             ))}
