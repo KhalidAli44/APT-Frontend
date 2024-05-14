@@ -102,6 +102,7 @@ body {
     background-color: #222; /* Darker background for list items */
     color: #fff; /* Light text for list items */
     font-size: 1.1rem; /* Increased font size for list items */
+    border-radius: 20px;
 }
 
 .home .document {
