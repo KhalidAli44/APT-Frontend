@@ -18,7 +18,7 @@ const TextEditor = () => {
     const editorRef = useRef(null);
     const stompClientRef = useRef(null);
 
-    const [buffer, setBuffer] = useState(content);
+    let buffer = content;
     let n = 0;
 
     useEffect(() => {
