@@ -123,47 +123,30 @@ const TextEditor = () => {
         if (source === 'user') {
             let insertedIndex = null;
             let insertedChar = null;
-            let textSize = null;
             let timeStamp = null;
     
             delta.ops.forEach(op => {
-
-                const selection = editorRef.current.getSelection();
-                if (selection) {
-                    const content = editorRef.current.getText(0, editorRef.current.getLength());
-                    textSize = content.length;
-                }
-
                 if (op.insert) {
                     if (typeof op.insert === 'string') {
-                        if (textSize === 2) {
-                            insertedIndex = editorRef.current.getSelection().index;
-                        }
-                        else {
-                            insertedIndex = editorRef.current.getSelection().index - 1;
-                        }
+                        insertedIndex = editorRef.current.getSelection().index;
                         insertedChar = op.insert;
                     } else if (typeof op.insert === 'object' && op.insert.hasOwnProperty('image')) {
                         insertedChar = '[IMAGE]';
                     }
                 }
             });
-
-            const plainText = buffer.replace(/<[^>]+>/g, ''); 
-            editorRef.current.setText(plainText);
-            editorRef.current.setSelection(plainText.length);
-
+    
             timeStamp = Date.now();
-
+    
             handleSendMessage(insertedIndex, insertedChar, timeStamp);
         }
     };
-
+    
     function insertAtIndex(index, character) {
         setBuffer(prevBuffer => {
-            let str = prevBuffer.replace(/<[^>]+>/g, ''); 
-            str = str.slice(0, index) + character + str.slice(index);
+            let str = prevBuffer.slice(0, index) + character + prevBuffer.slice(index);
             return str;
+          
         });
     }
 
