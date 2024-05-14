@@ -28,7 +28,7 @@ const TextEditor = () => {
         n = n + 1;
         if (n === 1) {
         sessionId = generateSessionId();
-        ////console.log("session Id = " + sessionId);
+        console.log("session Id = " + sessionId);
         if (sessionId) {
             // Initialize Stomp client
             sessionId=generateSessionId();
@@ -36,20 +36,20 @@ const TextEditor = () => {
             const client = Stomp.over(socket);
 
             client.connect({}, () => {
-                //console.log('WebSocket connection established.');
+                console.log('WebSocket connection established.');
                 stompClientRef.current = client;
 
                 if (stompClientRef.current) {
                     stompClientRef.current.subscribe(`/all/broadcast/${documentId}`, (message) => {
                         const receivedMessage = JSON.parse(message.body);
-                        //console.log(receivedMessage.insertedIndex + ", " + receivedMessage.insertedChar + ", " + receivedMessage.sessionId);
+                        console.log(receivedMessage.insertedIndex + ", " + receivedMessage.insertedChar + ", " + receivedMessage.sessionId);
                         if (receivedMessage.sessionId === sessionId) return;
                         insertAtIndex(receivedMessage.insertedIndex, receivedMessage.insertedChar);
 
                     });
                 }
             }, (error) => {
-                //console.error('WebSocket connection failed:', error);
+                console.error('WebSocket connection failed:', error);
             });
             return () => {
                 if (stompClientRef.current) {
@@ -81,12 +81,12 @@ const TextEditor = () => {
     }, [content]);
 
     useEffect(() => {
-        //console.log("buffer2 = " + buffer);
+        console.log("buffer2 = " + buffer);
         setContent(buffer);
         const plainText = buffer.replace(/<[^>]+>/g, '');
         editorRef.current.setText(plainText);
         editorRef.current.setSelection(plainText.length);
-        //console.log("plainText = " + plainText);
+        console.log("plainText = " + plainText);
     }, [buffer]);
 
     const handleSave = () => {
@@ -108,19 +108,19 @@ const TextEditor = () => {
         })
             .then(response => {
                 if (response.ok) {
-                    //console.log('Document saved successfully.');
+                    console.log('Document saved successfully.');
                 } else {
-                    //console.error('Failed to save document.');
+                    console.error('Failed to save document.');
                 }
             })
             .catch(error => {
-                //console.error('Error saving document:', error);
+                console.error('Error saving document:', error);
             });
     };
 
     const handleSendMessage = (insertedIndex, insertedChar) => {
         if (stompClientRef.current !== null) {
-            //console.log("sending session Id = " + sessionId);
+            console.log("sending session Id = " + sessionId);
             stompClientRef.current.send(`/app/operation/${documentId}`, {}, JSON.stringify({ insertedIndex, insertedChar, sessionId }));
         }
     };
@@ -141,14 +141,13 @@ const TextEditor = () => {
         if (change) {
             let insertedIndex = editorRef.current.getSelection().index;
             let insertedChar = null;
-            let x = 0;
 
             if (change.type === 'insert') {
                 insertedChar = typeof change.value === 'string' ? change.value : '[IMAGE]';
                 
                 if (insertedChar === '\n') 
                 {
-                    //console.log("new line");
+                    console.log("new line");
                     insertedIndex = insertedIndex ;
                     x = 1;
                 } else {
@@ -159,34 +158,35 @@ const TextEditor = () => {
                 insertedIndex = insertedIndex - 1;
             }
 
-            //console.log("text change: sessionId = " + sessionId);
+            console.log("text change: sessionId = " + sessionId);
             handleSendMessage(insertedIndex, insertedChar);
-            insertedIndex = insertedIndex + x;
+
             messages.push({ insertedIndex  , insertedChar, sessionId });
-            ////console.log(editorRef.current.getText());
+            console.log(editorRef.current.getText());
             buffer = editorRef.current.getText();
         }
     };
 
     function insertAtIndex(index, character) 
     {
-        console.log("Char = " + character);
+        let x = 0;
+        console.log("\n insertAtIndex: CHar = " + character + "\n");
         if (character === '\n') 
         {
             // If it's a newline, increase the index by 1
-            index++;
+            x = 1;
         }
         buffer = buffer.substring(0, index) + character + buffer.substring(index);
 
         setContent(buffer);
         let plainText = buffer.replace(/<[^>]+>/g, '');
         editorRef.current.setText(plainText);
-        editorRef.current.setSelection(index + 1);
+        editorRef.current.setSelection(index + 1 + x);
     }
 
     function generateSessionId() {
         let x = 'session-' + Date.now() + '-' + Math.random().toString(36).slice(2);
-        ////console.log("Generated session Id = " + x);
+        console.log("Generated session Id = " + x);
         return x;
     }
 
