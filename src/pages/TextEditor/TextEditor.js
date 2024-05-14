@@ -42,7 +42,7 @@ const TextEditor = () => {
                     stompClientRef.current.subscribe(`/all/broadcast/${documentId}`, (message) => {
                         const receivedMessage = JSON.parse(message.body);
                         console.log(receivedMessage.insertedIndex + ", " + receivedMessage.insertedChar + ", " + receivedMessage.sessionId);
-                        if (receivedMessage.sessionId === sessionId) return;
+                        if (receivedMessage.sessionId = sessionId) return;
                         insertAtIndex(receivedMessage.insertedIndex, receivedMessage.insertedChar);
 
                         console.log("buffer1 = " + buffer);
