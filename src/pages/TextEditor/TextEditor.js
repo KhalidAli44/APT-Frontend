@@ -114,16 +114,10 @@ const TextEditor = () => {
     };
 
     const handleSendMessage = (insertedIndex, insertedChar, timeStamp) => {
-        return new Promise((resolve, reject) => {
-            if (stompClientRef.current !== null) {
-                stompClientRef.current.send(`/app/operation/${documentId}`, {}, JSON.stringify({ insertedIndex, insertedChar, timeStamp }), resolve);
-            } else {
-                reject(new Error('Stomp client is null'));
-            }
-        });
+        if (stompClientRef.current !== null) {
+            stompClientRef.current.send(`/app/operation/${documentId}`, {}, JSON.stringify({ insertedIndex, insertedChar, timeStamp }));
+        }
     };
-
-    let queue = [];
 
     const handleTextChange = (delta, oldDelta, source) => {
         if (source !== 'user') return;
@@ -139,26 +133,18 @@ const TextEditor = () => {
         });
     
         if (change) {
-            queue.push({ change, index: editorRef.current.getSelection().index });
-            processQueue();
+            let insertedIndex = editorRef.current.getSelection().index;
+            let insertedChar = null;
+            let timeStamp = Date.now();
+    
+            if (change.type === 'insert') {
+                insertedChar = typeof change.value === 'string' ? change.value : '[IMAGE]';
+            } else if (change.type === 'delete') {
+                insertedChar = '';
+            }
+    
+            handleSendMessage(insertedIndex, insertedChar, timeStamp);
         }
-    };
-    
-    const processQueue = () => {
-        if (queue.length === 0) return;
-    
-        let { change, index } = queue.shift();
-        let insertedIndex = index;
-        let insertedChar = null;
-        let timeStamp = Date.now();
-    
-        if (change.type === 'insert') {
-            insertedChar = typeof change.value === 'string' ? change.value : '[IMAGE]';
-        } else if (change.type === 'delete') {
-            insertedChar = '';
-        }
-    
-        handleSendMessage(insertedIndex, insertedChar, timeStamp).then(processQueue);
     };
     
     function insertAtIndex(index, character) {
