@@ -24,6 +24,7 @@ const TextEditor = () => {
 
     useEffect(() => {
         setSessionId(generateSessionId());
+        console.log("Generated session Id = " + sessionId);
     }, []);
 
     useEffect(() => {
