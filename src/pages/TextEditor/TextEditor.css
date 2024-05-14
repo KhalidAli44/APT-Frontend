@@ -13,6 +13,7 @@ body {
     height: auto;
     justify-content: flex-start;
     text-align: left;
+   
 }
 
 .ql-editor {
@@ -24,17 +25,17 @@ body {
   line-height: 1.42;
   outline: none;
   overflow-y: auto;
-  overflow-x: auto;
   padding: 12px 15px;
   -o-tab-size: 4;
   tab-size: 4;
   -moz-tab-size: 4;
   text-align: left;
-  white-space: pre-wrap;
   background-color: #333;
   border-radius: 20px;
   box-shadow: -20px 20px 10px #0000001a;
-  padding: 15px; /* Adjust this value as needed */
+  padding: 15px;
+  width: 100%; /* Add a defined width */
+  max-width: 600px; /* Or a max-width */
 }
 .ql-container.ql-snow {
   border: 0px solid #ccc; 
