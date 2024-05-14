@@ -21,6 +21,7 @@ const TextEditor = () => {
     let sessionId = null;
     let n = 0;
     let buffer = content;
+    let SpaceFlag = false;
 
     var pending = [];
     var changes = [];
@@ -145,30 +146,55 @@ const TextEditor = () => {
 
             if (change.type === 'insert') {
                 insertedChar = typeof change.value === 'string' ? change.value : '[IMAGE]';
+                
+                if (insertedChar === '\n') 
+                {
+                    console.log("new line");
+                    insertedIndex = insertedIndex ;
+                   
+                } else {
+                    insertedIndex = insertedIndex - 1;
+                }
             } else if (change.type === 'delete') {
                 insertedChar = '';
+                insertedIndex = insertedIndex - 1;
             }
 
             console.log("text change: sessionId = " + sessionId);
-            pending.push({ insertedIndex, insertedChar, sessionId });
-            handleSendMessage(insertedIndex - 1, insertedChar);
+            handleSendMessage(insertedIndex, insertedChar);
+
+            messages.push({ insertedIndex  , insertedChar, sessionId });
             console.log(editorRef.current.getText());
             buffer = editorRef.current.getText();
         }
     };
 
-    function insertAtIndex(index, character) {
+    function insertAtIndex(index, character) 
+    {
+        
+        console.log(" insertAtIndex: CHar = " + character );
+        if (SpaceFlag === true) 
+            {
+                index = index + 1;
+                SpaceFlag = false;
+            }
+            
+        if (character === '\n') 
+        {
+            SpaceFlag = true;
+        }
+        
         buffer = buffer.substring(0, index) + character + buffer.substring(index);
 
         setContent(buffer);
         let plainText = buffer.replace(/<[^>]+>/g, '');
         editorRef.current.setText(plainText);
-        editorRef.current.setSelection(index + 1);
+        editorRef.current.setSelection(index + 1 );
     }
 
     function generateSessionId() {
         let x = 'session-' + Date.now() + '-' + Math.random().toString(36).slice(2);
-        console.log("Generated session Id = " + x);
+        console.log("Generated session Id gedan = " + x);
         return x;
     }
 
