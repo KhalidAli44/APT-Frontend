@@ -57,6 +57,7 @@ const TextEditor = () => {
                 }
             };
         }
+        console.log("Leaving session Id = " + sessionId);
     }, [sessionId]);
 
 
