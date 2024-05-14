@@ -18,15 +18,14 @@ const TextEditor = () => {
     const editorRef = useRef(null);
     const stompClientRef = useRef(null);
 
-    const [sessionId, setSessionId] = useState(null);
-
+    let sessionId = null;
+    let n = 0;
     let buffer = content;
 
     useEffect(() => {
-        setSessionId(generateSessionId());
-    }, []);
-
-    useEffect(() => {
+        n = n + 1;
+        if (n === 1) {
+        sessionId = generateSessionId();
         console.log("session Id = " + sessionId);
         if (sessionId) {
             // Initialize Stomp client
@@ -57,7 +56,8 @@ const TextEditor = () => {
                 }
             };
         }
-    }, [sessionId]);
+    }
+    }, []);
 
 
     useEffect(() => {
@@ -119,6 +119,7 @@ const TextEditor = () => {
 
     const handleSendMessage = (insertedIndex, insertedChar) => {
         if (stompClientRef.current !== null) {
+            console.log("sending session Id = " + sessionId);
             stompClientRef.current.send(`/app/operation/${documentId}`, {}, JSON.stringify({ insertedIndex, insertedChar, sessionId }));
         }
     };
@@ -146,6 +147,7 @@ const TextEditor = () => {
                 insertedChar = '';
             }
 
+            console.log("text change: sessionId = " + sessionId);
             handleSendMessage(insertedIndex, insertedChar);
         }
     };
