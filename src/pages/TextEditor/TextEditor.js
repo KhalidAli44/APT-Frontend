@@ -160,11 +160,9 @@ const TextEditor = () => {
         editorRef.current.setSelection(index + 1);
     }
 
-    const generateSessionId = () => {
-        const randomNumber = Math.floor(Math.random() * 1000000);
-        const timestamp = Date.now();
-        return `${randomNumber}_${timestamp}`;
-    };
+    function generateSessionId() {
+        return 'session-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+    }
 
     return (
         <div>
