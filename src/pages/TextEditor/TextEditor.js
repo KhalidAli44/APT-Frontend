@@ -148,7 +148,7 @@ const TextEditor = () => {
                 if (insertedChar === '\n') 
                 {
                     console.log("new line");
-                    insertedIndex = insertedIndex - 2;
+                    insertedIndex = insertedIndex ;
                 } else {
                     insertedIndex = insertedIndex - 1;
                 }
@@ -166,6 +166,10 @@ const TextEditor = () => {
     };
 
     function insertAtIndex(index, character) {
+        if (character === '\n') {
+            // If it's a newline, increase the index by 1
+            index++;
+        }
         buffer = buffer.substring(0, index) + character + buffer.substring(index);
 
         setContent(buffer);
