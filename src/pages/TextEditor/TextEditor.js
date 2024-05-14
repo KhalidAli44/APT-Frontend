@@ -149,9 +149,13 @@ const TextEditor = () => {
     
     function insertAtIndex(index, character) {
         setBuffer(prevBuffer => {
-            let str = prevBuffer.slice(0, index) + character + prevBuffer.slice(index);
-            return str;
-          
+            if (character === '') {
+                // Delete character at index
+                return prevBuffer.slice(0, index - 1) + prevBuffer.slice(index);
+            } else {
+                // Insert character at index
+                return prevBuffer.slice(0, index) + character + prevBuffer.slice(index);
+            }
         });
     }
 
