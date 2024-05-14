@@ -114,32 +114,51 @@ const TextEditor = () => {
     };
 
     const handleSendMessage = (insertedIndex, insertedChar, timeStamp) => {
-        if (stompClientRef.current !== null) {
-            stompClientRef.current.send(`/app/operation/${documentId}`, {}, JSON.stringify({ insertedIndex, insertedChar, timeStamp }));
-        }
+        return new Promise((resolve, reject) => {
+            if (stompClientRef.current !== null) {
+                stompClientRef.current.send(`/app/operation/${documentId}`, {}, JSON.stringify({ insertedIndex, insertedChar, timeStamp }), resolve);
+            } else {
+                reject(new Error('Stomp client is null'));
+            }
+        });
     };
 
+    let queue = [];
+
     const handleTextChange = (delta, oldDelta, source) => {
-        if (source === 'user') {
-            let insertedIndex = null;
-            let insertedChar = null;
-            let timeStamp = null;
+        if (source !== 'user') return;
     
-            delta.ops.forEach(op => {
-                if (op.insert) {
-                    if (typeof op.insert === 'string') {
-                        insertedIndex = editorRef.current.getSelection().index;
-                        insertedChar = op.insert;
-                    } else if (typeof op.insert === 'object' && op.insert.hasOwnProperty('image')) {
-                        insertedChar = '[IMAGE]';
-                    }
-                }
-            });
+        let change = null;
     
-            timeStamp = Date.now();
+        delta.ops.forEach(op => {
+            if (op.insert) {
+                change = { type: 'insert', value: op.insert };
+            } else if (op.delete) {
+                change = { type: 'delete', value: op.delete };
+            }
+        });
     
-            handleSendMessage(insertedIndex, insertedChar, timeStamp);
+        if (change) {
+            queue.push({ change, index: editorRef.current.getSelection().index });
+            processQueue();
         }
+    };
+    
+    const processQueue = () => {
+        if (queue.length === 0) return;
+    
+        let { change, index } = queue.shift();
+        let insertedIndex = index;
+        let insertedChar = null;
+        let timeStamp = Date.now();
+    
+        if (change.type === 'insert') {
+            insertedChar = typeof change.value === 'string' ? change.value : '[IMAGE]';
+        } else if (change.type === 'delete') {
+            insertedChar = '';
+        }
+    
+        handleSendMessage(insertedIndex, insertedChar, timeStamp).then(processQueue);
     };
     
     function insertAtIndex(index, character) {
