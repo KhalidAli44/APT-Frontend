@@ -171,7 +171,7 @@ const TextEditor = () => {
     return (
         <div>
             <div className='header header-Texteditor'>
-                <p>{filename}, By {author}</p>
+                <p>{filename}</p>
             </div>
 
             <div id="editor-container" className="editor-container" />
