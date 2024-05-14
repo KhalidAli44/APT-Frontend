@@ -208,38 +208,45 @@ const TextEditor = () => {
 
     const handleTextChange = (delta, oldDelta, source) => {
         if (source === 'user') {
-          const newContent = editorRef.current.root.innerHTML;
-          // Update buffer with the full HTML content
-          buffer = newContent;
-          
-          // Update state with the full HTML content
-          setContent(newContent);
-      
-          // Extract relevant information for sending message (optional)
-          let insertedIndex = null;
-          let insertedChar = null;
-          let timeStamp = null;
-       
-          delta.ops.forEach(op => {
-            if (op.insert) {
-              const selection = editorRef.current.getSelection();
-              if (selection) {
-                insertedIndex = selection.index;
-                if (typeof op.insert === 'string') {
-                  insertedChar = op.insert;
-                } else if (typeof op.insert === 'object' && op.insert.hasOwnProperty('image')) {
-                  insertedChar = '[IMAGE]'; // Handle image insertion (adjust if needed)
+            let insertedIndex = null;
+            let insertedChar = null;
+            let textSize = null;
+            let timeStamp = null;
+    
+            delta.ops.forEach(op => {
+
+                const selection = editorRef.current.getSelection();
+                if (selection) {
+                    const content = editorRef.current.getText(0, editorRef.current.getLength());
+                    textSize = content.length;
                 }
-              }
-            }
-          });
-          
-          timeStamp = Date.now();
-      
-          // Send message with extracted information (optional)
-          handleSendMessage(insertedIndex, insertedChar, timeStamp);
+
+                if (op.insert) {
+                    if (typeof op.insert === 'string') {
+                        if (textSize === 2) {
+                            insertedIndex = editorRef.current.getSelection().index;
+                        }
+                        else {
+                            insertedIndex = editorRef.current.getSelection().index - 1;
+                        }
+                        insertedChar = op.insert;
+                    } else if (typeof op.insert === 'object' && op.insert.hasOwnProperty('image')) {
+                        insertedChar = '[IMAGE]';
+                    }
+                }
+            });
+
+            const plainText = buffer.replace(/<[^>]+>/g, ''); 
+            editorRef.current.setText(plainText);
+            editorRef.current.setSelection(plainText.length);
+
+            timeStamp = Date.now();
+
+            handleSendMessage(insertedIndex, insertedChar, timeStamp);
+
+            pending.enqueue(JSON.stringify({ insertedIndex, insertedChar, timeStamp }));
         }
-      };
+    };
 
     function insertAtIndex(index, character) {
         // setBuffer(prevBuffer => {
