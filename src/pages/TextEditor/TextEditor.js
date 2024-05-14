@@ -145,9 +145,10 @@ const TextEditor = () => {
             if (change.type === 'insert') {
                 insertedChar = typeof change.value === 'string' ? change.value : '[IMAGE]';
                 
-                if (insertedChar === '\n') {
-               
-                    insertedIndex = insertedIndex + 1;
+                if (insertedChar === '\n') 
+                {
+                    console.log("new line");
+                    insertedIndex = insertedIndex - 2;
                 } else {
                     insertedIndex = insertedIndex - 1;
                 }
