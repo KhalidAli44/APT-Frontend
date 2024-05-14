@@ -170,7 +170,7 @@ const TextEditor = () => {
     function insertAtIndex(index, character) 
     {
         let x = 0;
-        console.log("\n insertAtIndex: CHar = " + character + "\n");
+        console.log(" insertAtIndex: CHar = " + character );
         if (character === '\n') 
         {
             // If it's a newline, increase the index by 1
