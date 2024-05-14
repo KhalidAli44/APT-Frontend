@@ -58,7 +58,7 @@ const TextEditor = () => {
             };
         }
        
-    }, []);
+    }, [documentId]);
 
 
     useEffect(() => {
