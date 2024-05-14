@@ -161,7 +161,7 @@ const TextEditor = () => {
     }
 
     function generateSessionId() {
-        return 'session-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+        return 'session-' + Date.now() + '-' + Math.random().toString(36).slice(2);
     }
 
     return (
