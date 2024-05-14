@@ -141,6 +141,7 @@ const TextEditor = () => {
         if (change) {
             let insertedIndex = editorRef.current.getSelection().index;
             let insertedChar = null;
+            let x = 0;
 
             if (change.type === 'insert') {
                 insertedChar = typeof change.value === 'string' ? change.value : '[IMAGE]';
@@ -149,6 +150,7 @@ const TextEditor = () => {
                 {
                     console.log("new line");
                     insertedIndex = insertedIndex ;
+                    x = 1;
                 } else {
                     insertedIndex = insertedIndex - 1;
                 }
@@ -158,18 +160,16 @@ const TextEditor = () => {
             }
 
             console.log("text change: sessionId = " + sessionId);
-            messages.push({ insertedIndex, insertedChar, sessionId });
             handleSendMessage(insertedIndex, insertedChar);
+            insertedIndex = insertedIndex + x;
+            messages.push({ insertedIndex  , insertedChar, sessionId });
             console.log(editorRef.current.getText());
             buffer = editorRef.current.getText();
         }
     };
 
     function insertAtIndex(index, character) {
-        if (character === '\n') {
-            // If it's a newline, increase the index by 1
-            index++;
-        }
+        
         buffer = buffer.substring(0, index) + character + buffer.substring(index);
 
         setContent(buffer);
