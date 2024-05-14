@@ -149,7 +149,7 @@ const TextEditor = () => {
                 {
                     console.log("new line");
                     insertedIndex = insertedIndex ;
-                    x = 1;
+                   
                 } else {
                     insertedIndex = insertedIndex - 1;
                 }
