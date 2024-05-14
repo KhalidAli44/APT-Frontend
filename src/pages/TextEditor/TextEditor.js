@@ -144,13 +144,21 @@ const TextEditor = () => {
 
             if (change.type === 'insert') {
                 insertedChar = typeof change.value === 'string' ? change.value : '[IMAGE]';
+                
+                if (insertedChar === '\n') {
+               
+                    insertedIndex = insertedIndex;
+                } else {
+                    insertedIndex = insertedIndex - 1;
+                }
             } else if (change.type === 'delete') {
                 insertedChar = '';
+                insertedIndex = insertedIndex - 1;
             }
 
             console.log("text change: sessionId = " + sessionId);
             messages.push({ insertedIndex, insertedChar, sessionId });
-            handleSendMessage(insertedIndex - 1, insertedChar);
+            handleSendMessage(insertedIndex, insertedChar);
             console.log(editorRef.current.getText());
             buffer = editorRef.current.getText();
         }
