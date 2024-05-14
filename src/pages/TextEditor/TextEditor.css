@@ -10,14 +10,10 @@ body {
     align-items: flex-start; /* Align items to the start of the flex container */
     justify-content: flex-start; /* Align content to the start of the flex container */
     text-align: left; /* Align text to the left */
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    box-shadow: -20px 20px 10px #0000001a;
     display: flex;
     flex-direction: column;
     height: auto;
     margin: 20px 0;
-    padding: 10px; /* Adjust this value as needed */
     max-width: 10px;
     background: #333;
 }
@@ -37,6 +33,8 @@ body {
   white-space: pre-wrap;
   background-color: #333;
   border-radius: 20px;
+  box-shadow: -20px 20px 10px #0000001a;
+  padding: 50%;
 }
 .header-Texteditor {
   display: flex;
