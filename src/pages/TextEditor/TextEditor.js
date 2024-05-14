@@ -206,8 +206,7 @@ const TextEditor = () => {
         }
     };
 
-    const handleTextChange = (delta, oldDelta, source) => 
-        {
+    const handleTextChange = (delta, oldDelta, source) => {
         if (source === 'user') {
             let insertedIndex = null;
             let insertedChar = null;
