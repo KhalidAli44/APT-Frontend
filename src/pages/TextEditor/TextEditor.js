@@ -22,14 +22,15 @@ const TextEditor = () => {
 
     let buffer = content;
 
-    useEffect(() => {
-        setSessionId(generateSessionId());
-    }, []);
+    // useEffect(() => {
+    //     SessionId=generateSessionId();
+    // }, []);
 
     useEffect(() => {
         console.log("session Id = " + sessionId);
         if (sessionId) {
             // Initialize Stomp client
+            sessionId=generateSessionId();
             const socket = new SockJS('https://apt-backend.onrender.com/ws');
             const client = Stomp.over(socket);
 
@@ -50,7 +51,6 @@ const TextEditor = () => {
             }, (error) => {
                 console.error('WebSocket connection failed:', error);
             });
-            console.log("Leaving session Id = " + sessionId);
             return () => {
                 if (stompClientRef.current) {
                     stompClientRef.current.disconnect();
@@ -58,7 +58,7 @@ const TextEditor = () => {
             };
         }
        
-    }, [sessionId]);
+    }, []);
 
 
     useEffect(() => {
