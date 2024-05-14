@@ -125,12 +125,11 @@ const TextEditor = () => {
         }
     };
 
- 
     const handleTextChange = (delta, oldDelta, source) => {
         if (source !== 'user') return;
-    
+
         let change = null;
-    
+
         delta.ops.forEach(op => {
             if (op.insert !== undefined) {
                 change = { type: 'insert', value: op.insert };
@@ -138,23 +137,21 @@ const TextEditor = () => {
                 change = { type: 'delete', value: op.delete };
             }
         });
-    
+
         if (change) {
             let insertedIndex = editorRef.current.getSelection().index;
             let insertedChar = null;
-    
+
             if (change.type === 'insert') {
                 insertedChar = typeof change.value === 'string' ? change.value : '[IMAGE]';
-                if (insertedChar === '\n') {
-                    insertedChar = '\\n'; // Escape the newline character
-                }
             } else if (change.type === 'delete') {
                 insertedChar = '';
             }
-    
+
             console.log("text change: sessionId = " + sessionId);
             messages.push({ insertedIndex, insertedChar, sessionId });
             handleSendMessage(insertedIndex, insertedChar);
+            console.log(editorRef.current.getText());
             buffer = editorRef.current.getText();
         }
     };
