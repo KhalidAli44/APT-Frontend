@@ -19,8 +19,13 @@ const TextEditor = () => {
     const stompClientRef = useRef(null);
 
     const [buffer, setBuffer] = useState(content);
+    let n = 0;
 
     useEffect(() => {
+        n = n + 1;
+        console.log("Time = " + n);
+
+        if (n === 1) {
         // Initialize Stomp client
         const socket = new SockJS('https://apt-backend.onrender.com/ws');
         const client = Stomp.over(socket);
@@ -29,11 +34,10 @@ const TextEditor = () => {
             console.log('WebSocket connection established.');
             stompClientRef.current = client;
     
-            // Subscribe to the message channel
             if (stompClientRef.current) {
                 stompClientRef.current.subscribe(`/all/broadcast/${documentId}`, (message) => {
                     const receivedMessage = JSON.parse(message.body);
-                    console.log(receivedMessage.insertedIndex + ", " +  receivedMessage.insertedChar);
+                    console.log(receivedMessage.insertedIndex + ", " +  receivedMessage.insertedChar+ ", " +  receivedMessage.timeStamp);
                     insertAtIndex(receivedMessage.insertedIndex, receivedMessage.insertedChar);
                     
                     console.log("buffer1 = " + buffer);
@@ -48,10 +52,8 @@ const TextEditor = () => {
                 stompClientRef.current.disconnect();
             }
         };
-    }, [documentId]);
-    
-    
-    
+        }
+    }, []);
     
 
     useEffect(() => {
@@ -111,9 +113,9 @@ const TextEditor = () => {
         });
     };
 
-    const handleSendMessage = (insertedIndex, insertedChar) => {
+    const handleSendMessage = (insertedIndex, insertedChar, timeStamp) => {
         if (stompClientRef.current !== null) {
-            stompClientRef.current.send(`/app/operation/${documentId}`, {}, JSON.stringify({ insertedIndex, insertedChar }));
+            stompClientRef.current.send(`/app/operation/${documentId}`, {}, JSON.stringify({ insertedIndex, insertedChar, timeStamp }));
         }
     };
 
@@ -122,6 +124,7 @@ const TextEditor = () => {
             let insertedIndex = null;
             let insertedChar = null;
             let textSize = null;
+            let timeStamp = null;
     
             delta.ops.forEach(op => {
 
@@ -150,7 +153,9 @@ const TextEditor = () => {
             editorRef.current.setText(plainText);
             editorRef.current.setSelection(plainText.length);
 
-            handleSendMessage(insertedIndex, insertedChar);
+            timeStamp = Date.now();
+
+            handleSendMessage(insertedIndex, insertedChar, timeStamp);
         }
     };
 
@@ -169,7 +174,6 @@ const TextEditor = () => {
                 
                 <div className="button-container">
                 <button className="save-button" onClick={handleSave}>Save</button>
-                <button className="send-button" onClick={handleSendMessage}>Send</button>
                 </div>
             </div>
             <div id="editor-container" className="editor-container" />
