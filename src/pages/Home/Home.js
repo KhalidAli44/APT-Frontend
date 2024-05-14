@@ -1,345 +1,270 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import Modal from 'react-modal';
-import './Home.css';
-import ManagePermissionsModal from './ManagePermissionsModal'; 
+import Stomp from 'stompjs';
+import SockJS from 'sockjs-client';
+import Quill from 'quill';
+import 'quill/dist/quill.snow.css'; 
+import './TextEditor.css';
 
-const Home = () => {
+class Queue {
+    constructor() {
+        this.elements = [];
+    }
+
+    enqueue(element) {
+        this.elements.push(element);
+    }
+
+    // Remove and return the first element of the queue
+    dequeue() {
+        return this.elements.shift();
+    }
+
+    // Get the first element of the queue without removing it
+    peek() {
+        return this.elements[0];
+    }
+
+    // Check if the queue is empty
+    isEmpty() {
+        return this.elements.length === 0;
+    }
+
+    // Get the size of the queue
+    size() {
+        return this.elements.length;
+    }
+}
+
+class List {
+    constructor() {
+        this.elements = [];
+    }
+
+    // Add an element to the list
+    add(element) {
+        this.elements.push(element);
+    }
+
+    // Remove an element from the list by value
+    remove(element) {
+        const index = this.elements.indexOf(element);
+        if (index !== -1) {
+            this.elements.splice(index, 1);
+            return true; // Element found and removed
+        }
+        return false; // Element not found
+    }
+
+    // Get the size of the list
+    size() {
+        return this.elements.length;
+    }
+
+    // Check if the list is empty
+    isEmpty() {
+        return this.elements.length === 0;
+    }
+
+    // Get an element at a specific index
+    get(index) {
+        return this.elements[index];
+    }
+
+    // Clear the list
+    clear() {
+        this.elements = [];
+    }
+}
+
+const TextEditor = () => {
     const location = useLocation();
-    const username = new URLSearchParams(location.search).get('username');
+    const queryParams = new URLSearchParams(location.search);
 
-    const [documents, setDocuments] = useState([]);
-    const [enabledSharedDocuments, setEnabledSharedDocuments] = useState([]);
-    const [disabledSharedDocuments, setDisabledSharedDocuments] = useState([]);
-    const [filename, setFilename] = useState('');
-    const [selectedDocument, setSelectedDocument] = useState(null);
-    const [usernameInput, setUsernameInput] = useState('');
-    const [fileNameInput, setFileNameInput] = useState('');
-    const [canEdit, setCanEdit] = useState(false);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isRenameModalOpen, setIsRenameModalOpen] = useState(false); 
-    const [isSendModalOpen, setIsSendModalOpen] = useState(false);
-    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-    const [selectedSection, setSelectedSection] = useState('myDocuments');
+    const documentId = queryParams.get('documentId');
+    const filename = queryParams.get('filename');
+    const author = queryParams.get('author');
+    const [content, setContent] = useState(queryParams.get('content'));
+
+    const editorRef = useRef(null);
+    const stompClientRef = useRef(null);
+
+    let buffer = content;
+    let n = 0;
+    
+    const pending = new Queue();
+    const changes = new List();
 
     useEffect(() => {
-        fetchDocuments();
-        fetchEnabledSharedDocuments();
-        fetchDisabledSharedDocuments();
-    }, [username, selectedDocument]);
+        n = n + 1;
+        console.log("Time = " + n);
 
-    const fetchDocuments = async () => {
-        try {
-            const response = await fetch(`https://apt-backend.onrender.com/documents/${username}`);
-            if (!response.ok) {
-                throw new Error('Failed to fetch documents');
+        if (n === 1) {
+        // Initialize Stomp client
+        const socket = new SockJS('https://apt-backend.onrender.com/ws');
+        const client = Stomp.over(socket);
+    
+        client.connect({}, () => {
+            console.log('WebSocket connection established.');
+            stompClientRef.current = client;
+    
+            if (stompClientRef.current) {
+                stompClientRef.current.subscribe(`/all/broadcast/${documentId}`, (message) => {
+                    const receivedMessage = JSON.parse(message.body);
+                    console.log(receivedMessage.insertedIndex + ", " +  receivedMessage.insertedChar+ ", " +  receivedMessage.timeStamp);
+
+                    let currentChange = JSON.parse(pending.peek());
+
+                    for (let i = 0; i < changes.size(); i++) {
+                        console.log("change of " + i + " index = " + changes.get(i).insertedIndex);
+                        if (currentChange.insertedIndex >= changes.get(i).insertedIndex) {
+                            console.log("change of " + i + " index = " + changes.get(i).insertedIndex);
+                            currentChange.insertedIndex = currentChange.insertedIndex + 1;
+                        }
+                    }
+
+                    changes.add(JSON.parse(pending.dequeue()));
+                    console.log("current change = " + JSON.stringify(currentChange));
+                    insertAtIndex(currentChange.insertedIndex, currentChange.insertedChar);
+                    
+                    console.log("buffer1 = " + buffer);
+                });
             }
-            const data = await response.json();
-            setDocuments(data);
-        } catch (error) {
-            console.error('Error fetching documents:', error);
-        }
-    };
-
-    const fetchEnabledSharedDocuments = async () => {
-        try {
-            const response = await fetch(`https://apt-backend.onrender.com/shared/enabled/${username}`);
-            if (!response.ok) {
-                throw new Error('Failed to fetch shared documents');
+        }, (error) => {
+            console.error('WebSocket connection failed:', error);
+        });
+    
+        return () => {
+            if (stompClientRef.current) {
+                stompClientRef.current.disconnect();
             }
-            const data = await response.json();
-            setEnabledSharedDocuments(data);
-        } catch (error) {
-            console.error('Error fetching shared documents:', error);
+        };
         }
-    };
+    }, []);
+    
 
-    const fetchDisabledSharedDocuments = async () => {
-        try {
-            const response = await fetch(`https://apt-backend.onrender.com/shared/disabled/${username}`);
-            if (!response.ok) {
-                throw new Error('Failed to fetch shared documents');
-            }
-            const data = await response.json();
-            setDisabledSharedDocuments(data);
-        } catch (error) {
-            console.error('Error fetching shared documents:', error);
-        }
-    };
-
-    const handleCreateDocument = async () => {
-        try {
-            const response = await fetch('https://apt-backend.onrender.com/documents', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
+    useEffect(() => {
+        if (!editorRef.current) {
+            // Initialize Quill editor
+            editorRef.current = new Quill('#editor-container', {
+                modules: {
+                    toolbar: [
+                        ['bold', 'italic']
+                    ],
                 },
-                body: JSON.stringify({
-                    filename: filename,
-                    author: username,
-                    content: ''
-                })
-            });
-            if (!response.ok) {
-                throw new Error('Failed to create document');
-            }
-            const createdDocument = await response.json();
-            setDocuments([...documents, createdDocument]);
-            setFilename('');
-            setIsCreateModalOpen(false);
-        } catch (error) {
-            console.error('Error creating document:', error);
-        }
-    };
-
-    const handleOpenDocument = (document) => {
-        const queryString = `?username=${username}&documentId=${document.id}&filename=${encodeURIComponent(document.filename)}&author=${encodeURIComponent(document.author)}&content=${encodeURIComponent(document.content)}`;
-        window.location.href = `/TextEditor${queryString}`;
-    };
-
-    const handleSendDocument = async () => {
-        if (!usernameInput) {
-            console.error('Please select a document and enter a username.');
-            return;
-        }
-
-        try {
-            const response = await fetch('https://apt-backend.onrender.com/shared', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    username: usernameInput,
-                    documentId: selectedDocument.id,
-                    canEdit: canEdit
-                })
+                theme: 'snow'
             });
 
-            if (!response.ok) {
-                throw new Error('Failed to send document');
+            editorRef.current.on('text-change', handleTextChange);
+
+            editorRef.current.setText('');
+            editorRef.current.clipboard.dangerouslyPasteHTML(content);
+        }
+    }, [content]);
+
+    // useEffect(() => {
+    //     console.log("buffer2 = " + buffer);
+    //     setContent(buffer);
+    //     const plainText = buffer.replace(/<[^>]+>/g, ''); 
+    //     editorRef.current.setText(plainText);
+    //     editorRef.current.setSelection(plainText.length);
+    //     console.log("plainText = " + plainText);
+    // }, [buffer]);
+
+    const handleSave = () => {
+        const newContent = editorRef.current.root.innerHTML;
+        
+        const documentObject = {
+            _id: documentId,
+            filename: filename,
+            author: author,
+            content: newContent
+        };
+
+        fetch(`https://apt-backend.onrender.com/documents/update/${documentId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(documentObject),
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log('Document saved successfully.');
+            } else {
+                console.error('Failed to save document.');
             }
+        })
+        .catch(error => {
+            console.error('Error saving document:', error);
+        });
+    };
 
-            // Reset selected document, username input, and canEdit after successful send
-            setSelectedDocument(null);
-            setUsernameInput('');
-            setCanEdit(false);
-            setIsSendModalOpen(false);
-        } catch (error) {
-            console.error('Error sending document:', error);
+    const handleSendMessage = (insertedIndex, insertedChar, timeStamp) => {
+        if (stompClientRef.current !== null) {
+            stompClientRef.current.send(`/app/operation/${documentId}`, {}, JSON.stringify({ insertedIndex, insertedChar, timeStamp }));
         }
     };
 
-    const handleRenameDocument = async () => {
-        if (!fileNameInput) {
-            console.error('Please select a document and enter a file name.');
-            return;
-        }
-
-        selectedDocument.filename = fileNameInput;
-
-        try {
-            const response = await fetch(`https://apt-backend.onrender.com/documents/rename/${selectedDocument.id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(selectedDocument)
-            });
+    const handleTextChange = (delta, oldDelta, source) => {
+        if (source !== 'user') return;
     
-            if (!response.ok) {
-                throw new Error('Failed to update document filename');
+        let change = null;
+    
+        delta.ops.forEach(op => {
+            if (op.insert !== undefined) {
+                change = { type: 'insert', value: op.insert };
+            } else if (op.delete) {
+                change = { type: 'delete', value: op.delete };
+            }
+        });
+    
+        if (change) {
+            let insertedIndex = editorRef.current.getSelection().index;
+            let insertedChar = null;
+            let timeStamp = Date.now();
+    
+            if (change.type === 'insert') {
+                insertedChar = typeof change.value === 'string' ? change.value : '[IMAGE]';
+            } else if (change.type === 'delete') {
+                insertedChar = '';
             }
     
-            // Handle success
-            setSelectedDocument(null);
-            setFileNameInput('');
-            setIsRenameModalOpen(false);
-    
-        } catch (error) {
-            console.error('Error renaming document:', error);
-        }
+            handleSendMessage(insertedIndex, insertedChar, timeStamp);
 
-    };
-
-    const handleDeleteDocument = async (document) => {
-
-        try {
-            const response = await fetch(`https://apt-backend.onrender.com/documents/${document.id}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-            if (!response.ok) {
-                throw new Error('Failed to delete document');
-            }
-            setSelectedDocument(null);
-            fetchDocuments();
-            console.log('Document deleted successfully');
-        } catch (error) {
-            console.error('Error deleting document:', error);
+            pending.enqueue(JSON.stringify({ insertedIndex, insertedChar, timeStamp }));
         }
     };
-
-    const handleManagePermissions = async (document) => {
-        setSelectedDocument(document);
-        setIsModalOpen(true);
-    };
-
-    const handleRenameModalOpen = (document) => {
-        setSelectedDocument(document);
-        setIsRenameModalOpen(true);
-    };
-
-    const handleRenameModalClose = () => {
-        setIsRenameModalOpen(false);
-    };
-
-    const handleSendModalOpen = (document) => {
-        setSelectedDocument(document);
-        setIsSendModalOpen(true);
-    };
     
-    const handleSendModalClose = () => {
-        setIsSendModalOpen(false);
-    };
-
-    const handleCreateModalOpen = () => {
-        setIsCreateModalOpen(true);
-    };
-    
-    const handleCreateModalClose = () => {
-        setIsCreateModalOpen(false);
-    };
+    function insertAtIndex(index, character) {
+        // setBuffer(prevBuffer => {
+        //     let str = prevBuffer.replace(/<[^>]+>/g, ''); 
+        //     str = str.slice(0, index) + character + str.slice(index);
+        //     return str;
+        // });
+        buffer = buffer.slice(0, index) + character + buffer.slice(index);
+        
+        console.log("buffer2 = " + buffer);
+        setContent(buffer);
+        const plainText = buffer.replace(/<[^>]+>/g, ''); 
+        editorRef.current.setText(plainText);
+        editorRef.current.setSelection(plainText.length);
+        console.log("plainText = " + plainText);
+    }
 
     return (
-        <div className="home">
-            <div className='header'>
-                <p>Welcome, {username}!</p>
-                <div className='header-options'>
-                    <select value={selectedSection} onChange={(e) => setSelectedSection(e.target.value)}>
-                        <option value="myDocuments">My Documents</option>
-                        <option value="sharedWithMe">Shared with Me</option>
-                    </select>
-                    <button onClick={() => handleCreateModalOpen()}>+</button>
+        <div>
+            <div className = 'header header-Texteditor'>
+            <p>{filename}, By {author}</p>
+                <div className='header-options header-Texteditor'>
+                <button className="save-button" onClick={handleSave}>Save</button>
                 </div>
             </div>
-            <div className="document-list-container">
-                {selectedSection === 'myDocuments' && (
-                    <div className="document-container">
-                     <div className="document-list">   
-                        <h2>My Documents</h2>
-                        <ul>
-                            {documents.map(document => (
-                                <li className='document-list' key={document.id}>
-                                    
-                                        <p onClick={() => handleOpenDocument(document)}>{document.filename}</p>
-                                        <div className='buttons-container'>
-                                        <button onClick={() => handleOpenDocument(document)}>Edit</button>
-                                            <button onClick={() => handleRenameModalOpen(document)}>Rename</button>
-                                            <button onClick={() => handleManagePermissions(document)}>Manage</button>
-                                            <button onClick={() => handleSendModalOpen(document)}>Send</button>
-                                            <button onClick={() => handleDeleteDocument(document)}>Delete</button>
-                                        
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                </div>
-                )}
-                {selectedSection === 'sharedWithMe' && (
-                    <div className="document-container">
-                    <div className="document-list">
-                        <h2>Shared with Me</h2>
-                        <ul>
-                            {enabledSharedDocuments.map(document => (
-                                <li key={document.id}>
-                                    <p onClick={() => handleOpenDocument(document)}>{document.filename}</p>
-                                    <div className='buttons-container buttons-container-shared'>
-                                            <button onClick={() => handleOpenDocument(document)}>Edit</button>
-                                            <button onClick={() => handleRenameModalOpen(document)}>Rename</button>
-                                            <button onClick={() => handleSendModalOpen(document)}>Send</button>
-                                        </div>
-                                </li>
-                            ))}
-                            {disabledSharedDocuments.map(document => (
-                                <li key={document.id}>
-                                    <span onClick={() => handleOpenDocument(document)}>{document.filename}</span>
-                                    <p><i>(View Only)</i></p>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                </div>
-                )}
-            </div>
-            <ManagePermissionsModal
-                isOpen={isModalOpen}
-                closeModal={() => setIsModalOpen(false)}
-                document={selectedDocument} 
-            >
-            <div className="Manage-document">
-                <h2>Manage Permissions</h2>
-                <button onClick={() => setIsModalOpen(false)}>Cancel</button>
-            </div>
-            </ManagePermissionsModal>
-            {isRenameModalOpen && (
-                <Modal isOpen={isRenameModalOpen} onRequestClose={handleRenameModalClose}>
-                    <div className="rename-document">
-                        <h2>Rename Document</h2>
-                        <input
-                            type="text"
-                            placeholder="Enter new name"
-                            value={fileNameInput}
-                            onChange={(e) => setFileNameInput(e.target.value)}
-                        />
-                        <button onClick={handleRenameDocument}>Rename Document</button>
-                        <button onClick={handleRenameModalClose}>Cancel</button>
-                    </div>
-                </Modal>
-            )}
-            {isSendModalOpen && (
-                <Modal isOpen={isSendModalOpen} onRequestClose={handleSendModalClose}>
-                    <div className="send-document">
-                        <h2>Send Document</h2>
-                        <input
-                            type="text"
-                            placeholder="Enter username"
-                            value={usernameInput}
-                            onChange={(e) => setUsernameInput(e.target.value)}
-                        />
-                        <label>
-                            <input
-                                type="checkbox"
-                                checked={canEdit}
-                                onChange={() => setCanEdit(!canEdit)}
-                            />
-                            Can Edit
-                        </label>
-                        <button onClick={handleSendDocument}>Send Document</button>
-                        <button onClick={handleSendModalClose}>Cancel</button>
-                    </div>
-                </Modal>
-            )}
-            {isCreateModalOpen && (
-                <Modal isOpen={isCreateModalOpen} onRequestClose={handleCreateModalClose}>
-                    <div className="create-document">
-                        <h2>Create New Document</h2>
-                        <input
-                            type="text"
-                            placeholder="Enter filename"
-                            value={filename}
-                            onChange={(e) => setFilename(e.target.value)}
-                        />
-                        <button onClick={handleCreateDocument}>Add</button>
-                        <button onClick={handleCreateModalClose}>Cancel</button>
-                    </div>
-                </Modal>
-            )}
+            
+            <div id="editor-container" className="editor-container" />
+            
         </div>
     );
 };
 
-export default Home;
+export default TextEditor;
