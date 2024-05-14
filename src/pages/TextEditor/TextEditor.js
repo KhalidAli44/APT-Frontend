@@ -50,14 +50,14 @@ const TextEditor = () => {
             }, (error) => {
                 console.error('WebSocket connection failed:', error);
             });
-
+            console.log("Leaving session Id = " + sessionId);
             return () => {
                 if (stompClientRef.current) {
                     stompClientRef.current.disconnect();
                 }
             };
         }
-        console.log("Leaving session Id = " + sessionId);
+       
     }, [sessionId]);
 
 
