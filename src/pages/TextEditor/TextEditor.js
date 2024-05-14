@@ -151,6 +151,7 @@ const TextEditor = () => {
             console.log("text change: sessionId = " + sessionId);
             messages.push({ insertedIndex, insertedChar, sessionId });
             handleSendMessage(insertedIndex, insertedChar);
+            buffer = editorRef.current.getText();
         }
     };
 
