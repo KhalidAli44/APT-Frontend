@@ -76,6 +76,7 @@ const ManagePermissionsModal = ({ isOpen, closeModal, document }) => {
             isOpen={isOpen}
             onRequestClose={closeModal}
         >
+            <div className="Manage-document">
             <h2>Manage Permissions</h2>
             {sharedUsers.length > 0 ? (
                 <ul>
@@ -92,6 +93,7 @@ const ManagePermissionsModal = ({ isOpen, closeModal, document }) => {
                 <p>No shared users found for this document.</p>
             )}
             <button onClick={closeModal}>Close</button>
+            </div>
         </Modal>
     );
 };

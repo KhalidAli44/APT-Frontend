@@ -169,13 +169,13 @@ const TextEditor = () => {
 
     return (
         <div>
-            <div>
-                <h1>{filename}, By {author}</h1>
-                
-                <div className="button-container">
+            <div className = 'header header-Texteditor'>
+            <p>{filename}, By {author}</p>
+                <div className='header-options header-Texteditor'>
                 <button className="save-button" onClick={handleSave}>Save</button>
                 </div>
             </div>
+            
             <div id="editor-container" className="editor-container" />
             
         </div>

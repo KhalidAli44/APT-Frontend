@@ -228,33 +228,40 @@ const Home = () => {
             <div className="document-list-container">
                 {selectedSection === 'myDocuments' && (
                     <div className="document-container">
+                     <div className="document-list">   
                         <h2>My Documents</h2>
                         <ul>
                             {documents.map(document => (
                                 <li className='document-list' key={document.id}>
-                                    <div className='document'>
+                                    
                                         <p onClick={() => handleOpenDocument(document)}>{document.filename}</p>
                                         <div className='buttons-container'>
+                                        <button onClick={() => handleOpenDocument(document)}>Edit</button>
                                             <button onClick={() => handleRenameModalOpen(document)}>Rename</button>
                                             <button onClick={() => handleManagePermissions(document)}>Manage</button>
                                             <button onClick={() => handleSendModalOpen(document)}>Send</button>
                                             <button onClick={() => handleDeleteDocument(document)}>Delete</button>
-                                        </div>
+                                        
                                     </div>
                                 </li>
                             ))}
                         </ul>
                     </div>
+                </div>
                 )}
                 {selectedSection === 'sharedWithMe' && (
-                    <div className="shared-document-list">
+                    <div className="document-container">
+                    <div className="document-list">
                         <h2>Shared with Me</h2>
                         <ul>
                             {enabledSharedDocuments.map(document => (
                                 <li key={document.id}>
-                                    <span onClick={() => handleOpenDocument(document)}>{document.filename}</span>
-                                    <button onClick={() => handleRenameModalOpen(document)}>Rename</button>
-                                    <button onClick={() => handleSendModalOpen(document)}>Send</button>
+                                    <p onClick={() => handleOpenDocument(document)}>{document.filename}</p>
+                                    <div className='buttons-container buttons-container-shared'>
+                                            <button onClick={() => handleOpenDocument(document)}>Edit</button>
+                                            <button onClick={() => handleRenameModalOpen(document)}>Rename</button>
+                                            <button onClick={() => handleSendModalOpen(document)}>Send</button>
+                                        </div>
                                 </li>
                             ))}
                             {disabledSharedDocuments.map(document => (
@@ -265,6 +272,7 @@ const Home = () => {
                             ))}
                         </ul>
                     </div>
+                </div>
                 )}
             </div>
             <ManagePermissionsModal
@@ -272,8 +280,10 @@ const Home = () => {
                 closeModal={() => setIsModalOpen(false)}
                 document={selectedDocument} 
             >
+            <div className="Manage-document">
                 <h2>Manage Permissions</h2>
-                <button onClick={() => setIsModalOpen(false)}>Close</button>
+                <button onClick={() => setIsModalOpen(false)}>Cancel</button>
+            </div>
             </ManagePermissionsModal>
             {isRenameModalOpen && (
                 <Modal isOpen={isRenameModalOpen} onRequestClose={handleRenameModalClose}>
