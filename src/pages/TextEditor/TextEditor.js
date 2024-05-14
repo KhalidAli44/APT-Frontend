@@ -22,7 +22,8 @@ const TextEditor = () => {
     let n = 0;
     let buffer = content;
 
-    var messages = [];
+    var pending = [];
+    var changes = [];
 
     useEffect(() => {
         n = n + 1;
@@ -149,7 +150,7 @@ const TextEditor = () => {
             }
 
             console.log("text change: sessionId = " + sessionId);
-            messages.push({ insertedIndex, insertedChar, sessionId });
+            pending.push({ insertedIndex, insertedChar, sessionId });
             handleSendMessage(insertedIndex - 1, insertedChar);
             console.log(editorRef.current.getText());
             buffer = editorRef.current.getText();
