@@ -29,6 +29,7 @@ const TextEditor = () => {
         console.log("session Id = " + sessionId);
         if (sessionId) {
             // Initialize Stomp client
+            sessionId=generateSessionId();
             const socket = new SockJS('https://apt-backend.onrender.com/ws');
             const client = Stomp.over(socket);
 
@@ -49,7 +50,6 @@ const TextEditor = () => {
             }, (error) => {
                 console.error('WebSocket connection failed:', error);
             });
-
             return () => {
                 if (stompClientRef.current) {
                     stompClientRef.current.disconnect();
@@ -161,11 +161,12 @@ const TextEditor = () => {
         editorRef.current.setSelection(index + 1);
     }
 
-    const generateSessionId = () => {
-        const randomNumber = Math.floor(Math.random() * 1000000);
-        const timestamp = Date.now();
-        return `${randomNumber}_${timestamp}`;
-    };
+    function generateSessionId() {
+        
+        let x = 'session-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+        console.log("Generated session Id = " + x);
+        return x;
+    }
 
     return (
         <div>
