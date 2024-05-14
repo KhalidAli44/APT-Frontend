@@ -169,7 +169,12 @@ const TextEditor = () => {
     };
 
     function insertAtIndex(index, character) {
-        
+        console.log("insertAtIndex: CHar = " + character);
+        if (character === '\n') 
+        {
+            // If it's a newline, increase the index by 1
+            index++;
+        }
         buffer = buffer.substring(0, index) + character + buffer.substring(index);
 
         setContent(buffer);
