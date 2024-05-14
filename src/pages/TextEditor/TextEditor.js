@@ -125,7 +125,7 @@ const TextEditor = () => {
         let change = null;
     
         delta.ops.forEach(op => {
-            if (op.insert) {
+            if (op.insert !== undefined) {
                 change = { type: 'insert', value: op.insert };
             } else if (op.delete) {
                 change = { type: 'delete', value: op.delete };
@@ -151,7 +151,7 @@ const TextEditor = () => {
         setBuffer(prevBuffer => {
             if (character === '') {
                 // Delete character at index
-                return prevBuffer.slice(0, index - 1) + prevBuffer.slice(index);
+                return prevBuffer.slice(0, index) + prevBuffer.slice(index + 1);
             } else {
                 // Insert character at index
                 return prevBuffer.slice(0, index) + character + prevBuffer.slice(index);
