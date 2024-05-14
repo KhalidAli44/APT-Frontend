@@ -207,61 +207,45 @@ const TextEditor = () => {
     };
 
     const handleTextChange = (delta, oldDelta, source) => {
-        if (source === 'user') {
-            let insertedIndex = null;
-            let insertedChar = null;
-            let textSize = null;
-            let timeStamp = null;
+        if (source !== 'user') return;
     
-            delta.ops.forEach(op => {
-
-                const selection = editorRef.current.getSelection();
-                if (selection) {
-                    const content = editorRef.current.getText(0, editorRef.current.getLength());
-                    textSize = content.length;
-                }
-
-                if (op.insert) {
-                    if (typeof op.insert === 'string') {
-                        if (textSize === 2) {
-                            insertedIndex = editorRef.current.getSelection().index;
-                        }
-                        else {
-                            insertedIndex = editorRef.current.getSelection().index - 1;
-                        }
-                        insertedChar = op.insert;
-                    } else if (typeof op.insert === 'object' && op.insert.hasOwnProperty('image')) {
-                        insertedChar = '[IMAGE]';
-                    }
-                }
-            });
-
-            const plainText = buffer.replace(/<[^>]+>/g, ''); 
-            editorRef.current.setText(plainText);
-            editorRef.current.setSelection(plainText.length);
-
-            timeStamp = Date.now();
-
+        let change = null;
+    
+        delta.ops.forEach(op => {
+            if (op.insert !== undefined) {
+                change = { type: 'insert', value: op.insert };
+            } else if (op.delete) {
+                change = { type: 'delete', value: op.delete };
+            }
+        });
+    
+        if (change) {
+            let insertedIndex = editorRef.current.getSelection().index;
+            let insertedChar = null;
+            let timeStamp = Date.now();
+    
+            if (change.type === 'insert') {
+                insertedChar = typeof change.value === 'string' ? change.value : '[IMAGE]';
+            } else if (change.type === 'delete') {
+                insertedChar = '';
+            }
+    
             handleSendMessage(insertedIndex, insertedChar, timeStamp);
 
             pending.enqueue(JSON.stringify({ insertedIndex, insertedChar, timeStamp }));
         }
     };
-
+    
     function insertAtIndex(index, character) {
-        // setBuffer(prevBuffer => {
-        //     let str = prevBuffer.replace(/<[^>]+>/g, ''); 
-        //     str = str.slice(0, index) + character + str.slice(index);
-        //     return str;
-        // });
-        buffer = buffer.slice(0, index) + character + buffer.slice(index);
-        
-        console.log("buffer2 = " + buffer);
-        setContent(buffer);
-        const plainText = buffer.replace(/<[^>]+>/g, ''); 
-        editorRef.current.setText(plainText);
-        editorRef.current.setSelection(plainText.length);
-        console.log("plainText = " + plainText);
+        setBuffer(prevBuffer => {
+            if (character === '') {
+                // Delete character at index
+                return prevBuffer.slice(0, index) + prevBuffer.slice(index + 1);
+            } else {
+                // Insert character at index
+                return prevBuffer.slice(0, index) + character + prevBuffer.slice(index);
+            }
+        });
     }
 
     return (
