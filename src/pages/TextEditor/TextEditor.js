@@ -237,15 +237,12 @@ const TextEditor = () => {
     };
     
     function insertAtIndex(index, character) {
-        setBuffer(prevBuffer => {
-            if (character === '') {
-                // Delete character at index
-                return prevBuffer.slice(0, index) + prevBuffer.slice(index + 1);
-            } else {
-                // Insert character at index
-                return prevBuffer.slice(0, index) + character + prevBuffer.slice(index);
-            }
-        });
+        buffer = buffer.substring(0, index) + character + buffer.substring(index);
+        
+        setContent(buffer);
+        let plainText = buffer.replace(/<[^>]+>/g, '');
+        editorRef.current.setText(plainText);
+        editorRef.current.setSelection(index + 1);
     }
 
     return (
