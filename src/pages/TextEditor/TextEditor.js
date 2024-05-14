@@ -124,11 +124,21 @@ const TextEditor = () => {
         }
     };
 
+    class Message {
+        constructor(operation, character, index) {
+            this.operation = operation;
+            this.character = character;
+            this.index = index;
+        }
+    }
+    
+    let myMessage = [];
+    
     const handleTextChange = (delta, oldDelta, source) => {
         if (source !== 'user') return;
-
+    
         let change = null;
-
+    
         delta.ops.forEach(op => {
             if (op.insert !== undefined) {
                 change = { type: 'insert', value: op.insert };
@@ -136,29 +146,81 @@ const TextEditor = () => {
                 change = { type: 'delete', value: op.delete };
             }
         });
-
+    
         if (change) {
             let insertedIndex = editorRef.current.getSelection().index;
             let insertedChar = null;
-
+    
             if (change.type === 'insert') {
                 insertedChar = typeof change.value === 'string' ? change.value : '[IMAGE]';
+                myMessage.push(new Message('ins', insertedChar, insertedIndex));
             } else if (change.type === 'delete') {
                 insertedChar = '';
+                myMessage.push(new Message('del', insertedChar, insertedIndex));
             }
-
+    
             console.log("text change: sessionId = " + sessionId);
             handleSendMessage(insertedIndex, insertedChar);
         }
     };
-
+    
     function insertAtIndex(index, character) {
         buffer = buffer.substring(0, index) + character + buffer.substring(index);
-
+    
         setContent(buffer);
         let plainText = buffer.replace(/<[^>]+>/g, '');
         editorRef.current.setText(plainText);
         editorRef.current.setSelection(index + 1);
+    
+        myMessage.push(new Message('ins', character, index));
+    }
+    
+    function processMessages() {
+        while(myMessage.length !== 0) {
+            let something = receive();
+            if (something.operation === 'ack') {
+                myMessage.shift();
+                continue;
+            }
+            else {
+                for (let i = 0; i < myMessage.length; i++) {
+                    let message = myMessage[i];
+                    if (something.operation === 'ins' && message.operation === 'ins') {
+                        if (something.index <= message.index) {
+                            message.index = message.index + 1;
+                        }
+                        else {
+                            something.index = something.index + 1;
+                        }
+                    }
+                    else if (something.operation === 'ins' && message.operation === 'del') {
+                        if (something.index <= message.index) {
+                            message.index = message.index + 1;
+                        }
+                        else {
+                            something.index = something.index - 1;
+                        }
+                    }
+                    else if (something.operation === 'del' && message.operation === 'ins') {
+                        if (something.index <= message.index) {
+                            message.index = message.index - 1;
+                        }
+                        else {
+                            something.index = something.index + 1;
+                        }
+                    }
+                    else if (something.operation === 'del' && message.operation === 'del') {
+                        if (something.index <= message.index) {
+                            message.index = message.index - 1;
+                        }
+                        else {
+                            something.index = something.index - 1;
+                        }
+                    }
+                }
+                write(something);
+            }
+        }
     }
 
     function generateSessionId() {
