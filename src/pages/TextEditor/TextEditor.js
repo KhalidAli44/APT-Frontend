@@ -21,6 +21,7 @@ const TextEditor = () => {
     let sessionId = null;
     let n = 0;
     let buffer = content;
+    let SpaceFlag = false;
 
     var messages = [];
 
@@ -169,19 +170,25 @@ const TextEditor = () => {
 
     function insertAtIndex(index, character) 
     {
-        let x = 0;
+        
         console.log(" insertAtIndex: CHar = " + character );
+        if (SpaceFlag === true) 
+            {
+                index = index + 1;
+                SpaceFlag = false;
+            }
+            
         if (character === '\n') 
         {
-            // If it's a newline, increase the index by 1
-            x = 1;
+            SpaceFlag = true;
         }
+        
         buffer = buffer.substring(0, index) + character + buffer.substring(index);
 
         setContent(buffer);
         let plainText = buffer.replace(/<[^>]+>/g, '');
         editorRef.current.setText(plainText);
-        editorRef.current.setSelection(index + 1 + x);
+        editorRef.current.setSelection(index + 1 );
     }
 
     function generateSessionId() {
