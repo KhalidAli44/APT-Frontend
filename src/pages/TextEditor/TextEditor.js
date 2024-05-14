@@ -21,7 +21,6 @@ const TextEditor = () => {
     const [sessionId, setSessionId] = useState(null);
 
     let buffer = content;
-    let n = 0;
 
     useEffect(() => {
         setSessionId(generateSessionId());

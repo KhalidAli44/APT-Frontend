@@ -37,7 +37,7 @@ body {
   border-radius: 20px;
   box-shadow: -20px 20px 10px #0000001a;
   padding: 15px;
-  width: 800%; /* Add a defined width */
+  width: 125%; /* Add a defined width */
 }
 .ql-container.ql-snow {
   border: 0px solid #ccc; 
