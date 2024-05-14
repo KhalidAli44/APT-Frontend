@@ -160,8 +160,10 @@ const TextEditor = () => {
     }
 
     function generateSessionId() {
-        return 'session-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+        
+        let x = 'session-' + Date.now() + '-' + Math.random().toString(36).slice(2);
         console.log("Generated session Id = " + sessionId);
+        return x;
     }
 
     return (
