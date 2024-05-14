@@ -147,7 +147,7 @@ const TextEditor = () => {
                 
                 if (insertedChar === '\n') {
                
-                    insertedIndex = insertedIndex;
+                    insertedIndex = insertedIndex + 1;
                 } else {
                     insertedIndex = insertedIndex - 1;
                 }
