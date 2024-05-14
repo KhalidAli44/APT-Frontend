@@ -164,9 +164,9 @@ const TextEditor = () => {
                 <button className="save-button" onClick={handleSave}>Save</button>
                 </div>
             </div>
-            
+            <div className="document-list-container">
             <div id="editor-container" className="editor-container" />
-            
+            </div>
         </div>
     );
 };
