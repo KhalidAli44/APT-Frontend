@@ -176,7 +176,7 @@ const TextEditor = () => {
             </div>
 
             <div id="editor-container" className="editor-container" />
-
+            
         </div>
     );
 };
