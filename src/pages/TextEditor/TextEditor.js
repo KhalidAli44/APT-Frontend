@@ -6,77 +6,6 @@ import Quill from 'quill';
 import 'quill/dist/quill.snow.css'; 
 import './TextEditor.css';
 
-class Queue {
-    constructor() {
-        this.elements = [];
-    }
-
-    enqueue(element) {
-        this.elements.push(element);
-    }
-
-    // Remove and return the first element of the queue
-    dequeue() {
-        return this.elements.shift();
-    }
-
-    // Get the first element of the queue without removing it
-    peek() {
-        return this.elements[0];
-    }
-
-    // Check if the queue is empty
-    isEmpty() {
-        return this.elements.length === 0;
-    }
-
-    // Get the size of the queue
-    size() {
-        return this.elements.length;
-    }
-}
-
-class List {
-    constructor() {
-        this.elements = [];
-    }
-
-    // Add an element to the list
-    add(element) {
-        this.elements.push(element);
-    }
-
-    // Remove an element from the list by value
-    remove(element) {
-        const index = this.elements.indexOf(element);
-        if (index !== -1) {
-            this.elements.splice(index, 1);
-            return true; // Element found and removed
-        }
-        return false; // Element not found
-    }
-
-    // Get the size of the list
-    size() {
-        return this.elements.length;
-    }
-
-    // Check if the list is empty
-    isEmpty() {
-        return this.elements.length === 0;
-    }
-
-    // Get an element at a specific index
-    get(index) {
-        return this.elements[index];
-    }
-
-    // Clear the list
-    clear() {
-        this.elements = [];
-    }
-}
-
 const TextEditor = () => {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
@@ -89,11 +18,8 @@ const TextEditor = () => {
     const editorRef = useRef(null);
     const stompClientRef = useRef(null);
 
-    let buffer = content;
+    const [buffer, setBuffer] = useState(content);
     let n = 0;
-    
-    const pending = new Queue();
-    const changes = new List();
 
     useEffect(() => {
         n = n + 1;
@@ -112,20 +38,7 @@ const TextEditor = () => {
                 stompClientRef.current.subscribe(`/all/broadcast/${documentId}`, (message) => {
                     const receivedMessage = JSON.parse(message.body);
                     console.log(receivedMessage.insertedIndex + ", " +  receivedMessage.insertedChar+ ", " +  receivedMessage.timeStamp);
-
-                    let currentChange = JSON.parse(pending.peek());
-
-                    for (let i = 0; i < changes.size(); i++) {
-                        console.log("change of " + i + " index = " + changes.get(i).insertedIndex);
-                        if (currentChange.insertedIndex >= changes.get(i).insertedIndex) {
-                            console.log("change of " + i + " index = " + changes.get(i).insertedIndex);
-                            currentChange.insertedIndex = currentChange.insertedIndex + 1;
-                        }
-                    }
-
-                    changes.add(JSON.parse(pending.dequeue()));
-                    console.log("current change = " + JSON.stringify(currentChange));
-                    insertAtIndex(currentChange.insertedIndex, currentChange.insertedChar);
+                    insertAtIndex(receivedMessage.insertedIndex, receivedMessage.insertedChar);
                     
                     console.log("buffer1 = " + buffer);
                 });
@@ -162,14 +75,14 @@ const TextEditor = () => {
         }
     }, [content]);
 
-    // useEffect(() => {
-    //     console.log("buffer2 = " + buffer);
-    //     setContent(buffer);
-    //     const plainText = buffer.replace(/<[^>]+>/g, ''); 
-    //     editorRef.current.setText(plainText);
-    //     editorRef.current.setSelection(plainText.length);
-    //     console.log("plainText = " + plainText);
-    // }, [buffer]);
+    useEffect(() => {
+        console.log("buffer2 = " + buffer);
+        setContent(buffer);
+        const plainText = buffer.replace(/<[^>]+>/g, ''); 
+        editorRef.current.setText(plainText);
+        editorRef.current.setSelection(plainText.length);
+        console.log("plainText = " + plainText);
+    }, [buffer]);
 
     const handleSave = () => {
         const newContent = editorRef.current.root.innerHTML;
@@ -207,61 +120,43 @@ const TextEditor = () => {
     };
 
     const handleTextChange = (delta, oldDelta, source) => {
-        if (source === 'user') {
-            let insertedIndex = null;
-            let insertedChar = null;
-            let textSize = null;
-            let timeStamp = null;
+        if (source !== 'user') return;
     
-            delta.ops.forEach(op => {
-
-                const selection = editorRef.current.getSelection();
-                if (selection) {
-                    const content = editorRef.current.getText(0, editorRef.current.getLength());
-                    textSize = content.length;
-                }
-
-                if (op.insert) {
-                    if (typeof op.insert === 'string') {
-                        if (textSize === 2) {
-                            insertedIndex = editorRef.current.getSelection().index;
-                        }
-                        else {
-                            insertedIndex = editorRef.current.getSelection().index - 1;
-                        }
-                        insertedChar = op.insert;
-                    } else if (typeof op.insert === 'object' && op.insert.hasOwnProperty('image')) {
-                        insertedChar = '[IMAGE]';
-                    }
-                }
-            });
-
-            const plainText = buffer.replace(/<[^>]+>/g, ''); 
-            editorRef.current.setText(plainText);
-            editorRef.current.setSelection(plainText.length);
-
-            timeStamp = Date.now();
-
+        let change = null;
+    
+        delta.ops.forEach(op => {
+            if (op.insert !== undefined) {
+                change = { type: 'insert', value: op.insert };
+            } else if (op.delete) {
+                change = { type: 'delete', value: op.delete };
+            }
+        });
+    
+        if (change) {
+            let insertedIndex = editorRef.current.getSelection().index;
+            let insertedChar = null;
+            let timeStamp = Date.now();
+    
+            if (change.type === 'insert') {
+                insertedChar = typeof change.value === 'string' ? change.value : '[IMAGE]';
+            } else if (change.type === 'delete') {
+                insertedChar = '';
+            }
+    
             handleSendMessage(insertedIndex, insertedChar, timeStamp);
-
-            pending.enqueue(JSON.stringify({ insertedIndex, insertedChar, timeStamp }));
         }
     };
-
+    
     function insertAtIndex(index, character) {
-        // setBuffer(prevBuffer => {
-        //     let str = prevBuffer.replace(/<[^>]+>/g, ''); 
-        //     str = str.slice(0, index) + character + str.slice(index);
-        //     return str;
-        // });
-        buffer = buffer.slice(0, index) + character + buffer.slice(index);
-        
-        console.log("buffer2 = " + buffer);
-        setContent(buffer);
-        const plainText = buffer.replace(/<[^>]+>/g, ''); 
-        editorRef.current.setText(plainText);
-        editorRef.current.setSelection(plainText.length);
-        console.log("plainText = " + plainText);
+        setBuffer(prevBuffer => {
+            if (character === '') {
+                // Delete character at index
+                return prevBuffer.slice(0, index) + prevBuffer.slice(index + 1);
+            } else {
+                // Insert character at index
+                return prevBuffer.slice(0, index) + character + prevBuffer.slice(index);
+            }
+        });
     }
 
     return (
