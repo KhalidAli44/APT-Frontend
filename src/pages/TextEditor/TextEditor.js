@@ -139,7 +139,7 @@ const TextEditor = () => {
         });
 
         if (change) {
-            let insertedIndex = editorRef.current.getSelection();
+            let insertedIndex = editorRef.current.getSelection().index;
             let insertedChar = null;
 
             if (change.type === 'insert') {
