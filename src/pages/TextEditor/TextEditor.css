@@ -6,8 +6,7 @@ body {
   
 
   
-  #editor-container 
-  {
+  #editor-container {
     align-items: flex-start; /* Align items to the start of the flex container */
     justify-content: flex-start; /* Align content to the start of the flex container */
     text-align: left; /* Align text to the left */
