@@ -150,7 +150,7 @@ const TextEditor = () => {
 
             console.log("text change: sessionId = " + sessionId);
             messages.push({ insertedIndex, insertedChar, sessionId });
-            handleSendMessage(insertedIndex, insertedChar);
+            handleSendMessage(insertedIndex - 1, insertedChar);
             console.log(editorRef.current.getText());
             buffer = editorRef.current.getText();
         }
