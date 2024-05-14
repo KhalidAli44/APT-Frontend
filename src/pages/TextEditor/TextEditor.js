@@ -22,6 +22,8 @@ const TextEditor = () => {
     let n = 0;
     let buffer = content;
 
+    var messages = [];
+
     useEffect(() => {
         n = n + 1;
         if (n === 1) {
@@ -44,7 +46,6 @@ const TextEditor = () => {
                         if (receivedMessage.sessionId === sessionId) return;
                         insertAtIndex(receivedMessage.insertedIndex, receivedMessage.insertedChar);
 
-                        console.log("buffer1 = " + buffer);
                     });
                 }
             }, (error) => {
@@ -148,6 +149,7 @@ const TextEditor = () => {
             }
 
             console.log("text change: sessionId = " + sessionId);
+            messages.push({ insertedIndex, insertedChar, sessionId });
             handleSendMessage(insertedIndex, insertedChar);
         }
     };
@@ -162,7 +164,6 @@ const TextEditor = () => {
     }
 
     function generateSessionId() {
-        
         let x = 'session-' + Date.now() + '-' + Math.random().toString(36).slice(2);
         console.log("Generated session Id = " + x);
         return x;
