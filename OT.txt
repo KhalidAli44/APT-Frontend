@@ -1,0 +1,70 @@
+// Define the Message object type
+function Message(operation, character, index) {
+    this.operation = operation;
+    this.character = character;
+    this.index = index;
+}
+
+// Create multiple Message objects
+// var message1 = new Message('add', 'a', 0);
+// var message2 = new Message('delete', 'b', 1);
+// var message3 = new Message('update', 'c', 2);
+
+var something;
+
+// Access object properties
+// console.log(message1.operation); // Output: add
+// console.log(message2.character); // Output: b
+// console.log(message3.index); // Output: 2
+
+var myMessage = [];
+
+onTextChange() {
+    myMessage.push(new change);
+}
+
+while(myMessage.size != 0) {
+    send(myMessage.front());
+    receive(something);
+    if (something.operation == 'ack') {
+        pop(myMessage);
+        continue;
+    }
+    else {
+        for each message in myMessage {
+            if (something.operation == 'ins' && message.operation == 'ins') {
+                if (something.index <= message.index) {
+                    message.index = message.index + 1;
+                }
+                else {
+                    something.index = something.index + 1;
+                }
+            }
+            else if (something.operation == 'ins' && message.operation == 'del') {
+                if (something.index <= message.index) {
+                    message.index = message.index + 1;
+                }
+                else {
+                    something.index = something.index - 1;
+                }
+            }
+            else if (something.operation == 'del' && message.operation == 'ins') {
+                if (something.index <= message.index) {
+                    message.index = message.index - 1;
+                }
+                else {
+                    something.index = something.index + 1;
+                }
+            }
+            else if (something.operation == 'del' && message.operation == 'del') {
+                if (something.index <= message.index) {
+                    message.index = message.index - 1;
+                }
+                else {
+                    something.index = something.index - 1;
+                }
+            }
+        }
+        write(something);
+    }
+}
