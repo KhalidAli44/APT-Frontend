@@ -24,7 +24,6 @@ const TextEditor = () => {
 
     useEffect(() => {
         setSessionId(generateSessionId());
-        console.log("Generated session Id = " + sessionId);
     }, []);
 
     useEffect(() => {
@@ -162,6 +161,7 @@ const TextEditor = () => {
 
     function generateSessionId() {
         return 'session-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+        console.log("Generated session Id = " + sessionId);
     }
 
     return (
