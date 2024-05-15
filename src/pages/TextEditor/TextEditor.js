@@ -58,10 +58,10 @@ const TextEditor = () => {
                                 }
                             }
                         }
+                        insertAtIndex(receivedMessage.insertedIndex, receivedMessage.insertedChar);
 
 
                         //if (receivedMessage.sessionId === sessionId) return;
-                        //insertAtIndex(receivedMessage.insertedIndex, receivedMessage.insertedChar);
 
                     });
                 }
