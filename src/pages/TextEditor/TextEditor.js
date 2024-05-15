@@ -180,7 +180,9 @@ const TextEditor = () => {
 
         if (character === '\n') 
         {
+            
             SpaceFlag = true;
+
         }
         
         buffer = buffer.substring(0, index) + character + buffer.substring(index);
