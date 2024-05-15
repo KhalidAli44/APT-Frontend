@@ -78,9 +78,11 @@ const TextEditor = () => {
                                     if (receivedMessage.insertedChar.length === 1 && JSON.parse(pending[i]).insertedChar.length === 1) {
                                         if (receivedMessage.insertedIndex <= JSON.parse(pending[i]).insertedIndex) {
                                             receivedMessage.insertedIndex++;
+                                            console.log("1-");
                                         }
                                         else {
                                             JSON.parse(pending[i]).insertedIndex--;
+                                            console.log("2-");
                                         }
                                     }
                                     else if (receivedMessage.insertedChar.length === 1 && JSON.parse(pending[i]).insertedChar === "delete") {
@@ -109,6 +111,8 @@ const TextEditor = () => {
                                     }
                                 }
                             }
+
+                            console.log("final char: ", + receivedMessage.insertedChar + " final index: " + receivedMessage.insertedIndex);
 
                             if (receivedMessage.insertedChar.length === 1) 
                                 insertAtIndex(receivedMessage.insertedIndex, receivedMessage.insertedChar);
