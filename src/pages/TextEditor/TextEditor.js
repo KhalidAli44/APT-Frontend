@@ -264,7 +264,7 @@ const TextEditor = () => {
         let plainText = buffer.replace(/<[^>]+>/g, '');
         setContent(buffer);
         editorRef.current.setText(plainText);
-        //editorRef.current.setSelection(index + 1);
+        editorRef.current.setSelection(index + 1);
     }
 
     function deleteAtIndex(index, character) {
@@ -274,7 +274,7 @@ const TextEditor = () => {
         let plainText = buffer.replace(/<[^>]+>/g, '');
         setContent(buffer);
         editorRef.current.setText(plainText);
-        //editorRef.current.setSelection(index + 1);
+        editorRef.current.setSelection(index + 1);
     }
 
     function generateSessionId() {
