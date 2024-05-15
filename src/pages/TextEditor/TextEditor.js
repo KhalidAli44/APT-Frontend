@@ -23,8 +23,7 @@ const TextEditor = () => {
     let buffer = content;
     let SpaceFlag = false;
 
-    var pending = [];
-    var changes = [];
+    var messages = [];
 
     useEffect(() => {
         n = n + 1;
@@ -154,7 +153,7 @@ const TextEditor = () => {
                    
                 } else {
                     insertedIndex = insertedIndex - 1;
-                } 
+                }
             } else if (change.type === 'delete') {
                 insertedChar = '';
                 insertedIndex = insertedIndex - 1;
@@ -178,7 +177,7 @@ const TextEditor = () => {
                 index = index + 1;
                 SpaceFlag = false;
             }
-
+            
         if (character === '\n') 
         {
             SpaceFlag = true;
@@ -197,6 +196,7 @@ const TextEditor = () => {
         console.log("Generated session Id gedan = " + x);
         return x;
     }
+
     return (
         <div>
             <div className='header header-Texteditor'>
