@@ -27,8 +27,7 @@ const TextEditor = () => {
     var pending = [];
 
     useEffect(() => {
-        fetchContent()
-        console.log("after fetch: " + buffer);
+        fetchContent();
     }, []);
 
     const fetchContent = async () => {
@@ -67,11 +66,15 @@ const TextEditor = () => {
                     if (stompClientRef.current) {
                         stompClientRef.current.subscribe(`/all/broadcast/${documentId}`, (message) => {
                             const receivedMessage = JSON.parse(message.body);
+                            
                             // console.log("receivedMessage = " + JSON.stringify(receivedMessage));
                             // console.log("pending of 0 = " + JSON.stringify(JSON.parse(pending[0])));
                             if (pending.length > 0) {
                                 if (JSON.stringify(receivedMessage) === JSON.stringify(JSON.parse(pending[0]))) {
                                     pending.shift();
+                                    if (pending.length !== 0) {
+                                        handleSendMessage(JSON.parse(pending[0]).insertedIndex, JSON.parse(pending[0]).insertedChar);
+                                    }
                                     return;
                                 }
                                 for (let i = 0; i < pending.length; i++) {
@@ -81,7 +84,7 @@ const TextEditor = () => {
                                             console.log("1-");
                                         }
                                         else {
-                                            receivedMessage.insertedIndex--;
+                                            receivedMessage.insertedIndex++;
                                             console.log("2-");
                                         }
                                     }
@@ -110,6 +113,10 @@ const TextEditor = () => {
                                         }
                                     }
                                 }
+                            }
+
+                            if (pending.length !== 0) {
+                                handleSendMessage(JSON.parse(pending[0]).insertedIndex, JSON.parse(pending[0]).insertedChar);
                             }
 
                             console.log("final char: ", + receivedMessage.insertedChar + " final index: " + receivedMessage.insertedIndex);
@@ -240,9 +247,11 @@ const TextEditor = () => {
             }
 
             console.log("text change: sessionId = " + sessionId);
-            handleSendMessage(insertedIndex, insertedChar);
 
             pending.push(JSON.stringify({ insertedIndex, insertedChar, sessionId }));
+            if (pending.length === 1) {
+                handleSendMessage(insertedIndex, insertedChar);
+            }
             console.log(editorRef.current.getText());
             buffer = editorRef.current.getText();
             handleSave();
@@ -265,7 +274,7 @@ const TextEditor = () => {
         let plainText = buffer.replace(/<[^>]+>/g, '');
         setContent(buffer);
         editorRef.current.setText(plainText);
-        editorRef.current.setSelection(index + 1);
+        //editorRef.current.setSelection(index + 1);
     }
 
     function deleteAtIndex(index, character) {
@@ -275,7 +284,7 @@ const TextEditor = () => {
         let plainText = buffer.replace(/<[^>]+>/g, '');
         setContent(buffer);
         editorRef.current.setText(plainText);
-        editorRef.current.setSelection(index + 1);
+        //editorRef.current.setSelection(index + 1);
     }
 
     function generateSessionId() {
