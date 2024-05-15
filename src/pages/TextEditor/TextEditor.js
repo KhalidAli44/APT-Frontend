@@ -66,15 +66,11 @@ const TextEditor = () => {
                     if (stompClientRef.current) {
                         stompClientRef.current.subscribe(`/all/broadcast/${documentId}`, (message) => {
                             const receivedMessage = JSON.parse(message.body);
-                            
                             // console.log("receivedMessage = " + JSON.stringify(receivedMessage));
                             // console.log("pending of 0 = " + JSON.stringify(JSON.parse(pending[0])));
                             if (pending.length > 0) {
                                 if (JSON.stringify(receivedMessage) === JSON.stringify(JSON.parse(pending[0]))) {
-                                    let temp = pending.shift();
-                                    if (pending.length !== 0) {
-                                        handleSendMessage(JSON.parse(pending[0]).insertedIndex, JSON.parse(pending[0]).insertedChar);
-                                    }
+                                    pending.shift();
                                     return;
                                 }
                                 for (let i = 0; i < pending.length; i++) {
@@ -113,10 +109,6 @@ const TextEditor = () => {
                                         }
                                     }
                                 }
-                            }
-
-                            if (pending.length !== 0) {
-                                handleSendMessage(JSON.parse(pending[0]).insertedIndex, JSON.parse(pending[0]).insertedChar);
                             }
 
                             console.log("final char: ", + receivedMessage.insertedChar + " final index: " + receivedMessage.insertedIndex);
@@ -249,9 +241,6 @@ const TextEditor = () => {
             console.log("text change: sessionId = " + sessionId);
 
             pending.push(JSON.stringify({ insertedIndex, insertedChar, sessionId }));
-            if (pending.length === 1) {
-                handleSendMessage(insertedIndex, insertedChar);
-            }
             console.log(editorRef.current.getText());
             buffer = editorRef.current.getText();
             handleSave();
