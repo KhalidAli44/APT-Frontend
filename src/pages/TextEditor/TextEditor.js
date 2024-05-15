@@ -28,6 +28,7 @@ const TextEditor = () => {
 
     useEffect(() => {
         fetchContent()
+        console.log("after fetch: " + buffer);
     }, []);
 
     const fetchContent = async () => {
@@ -37,8 +38,12 @@ const TextEditor = () => {
                 throw new Error('Failed to fetch document content');
             }
             const data = await response.text();
-            setContent(data);
             buffer = data;
+            let plainText = buffer.replace(/<[^>]+>/g, '');
+            editorRef.current.setText(plainText);
+            buffer = plainText;
+            setContent(plainText);
+
         } catch (error) {
             console.error('Error fetching document content:', error);
         }
@@ -141,6 +146,7 @@ const TextEditor = () => {
             editorRef.current.on('text-change', handleTextChange);
 
             editorRef.current.setText('');
+            console.log("before pasting content: " + buffer);
             editorRef.current.clipboard.dangerouslyPasteHTML(content);
 
             console.log("can edit = " + canEdit)
@@ -152,14 +158,14 @@ const TextEditor = () => {
         }
     }, [content, canEdit]);
 
-    useEffect(() => {
-        console.log("buffer2 = " + buffer);
-        setContent(buffer);
-        const plainText = buffer.replace(/<[^>]+>/g, '');
-        editorRef.current.setText(plainText);
-        editorRef.current.setSelection(plainText.length);
-        console.log("plainText = " + plainText);
-    }, [buffer]);
+    // useEffect(() => {
+    //     console.log("buffer2 = " + buffer);
+    //     const plainText = buffer.replace(/<[^>]+>/g, '');
+    //     setContent(buffer);
+    //     editorRef.current.setText(plainText);
+    //     editorRef.current.setSelection(plainText.length);
+    //     console.log("plainText = " + plainText);
+    // }, [content]);
 
     const handleSave = () => {
         const newContent = editorRef.current.root.innerHTML;
@@ -252,8 +258,8 @@ const TextEditor = () => {
 
         buffer = buffer.substring(0, index) + character + buffer.substring(index);
 
-        setContent(buffer);
         let plainText = buffer.replace(/<[^>]+>/g, '');
+        setContent(buffer);
         editorRef.current.setText(plainText);
         editorRef.current.setSelection(index + 1);
     }
@@ -262,8 +268,8 @@ const TextEditor = () => {
 
         buffer = buffer.substring(0, index - 1) + buffer.substring(index);
 
-        setContent(buffer);
         let plainText = buffer.replace(/<[^>]+>/g, '');
+        setContent(buffer);
         editorRef.current.setText(plainText);
         editorRef.current.setSelection(index + 1);
     }
