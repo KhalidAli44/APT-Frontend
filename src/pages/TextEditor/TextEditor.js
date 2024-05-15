@@ -13,7 +13,7 @@ const TextEditor = () => {
     const documentId = queryParams.get('documentId');
     const filename = queryParams.get('filename');
     const author = queryParams.get('author');
-    const [content, setContent] = useState(queryParams.get('content'));
+    const [content, setContent] = useState('');
     const canEdit = queryParams.get('canEdit');
 
     const editorRef = useRef(null);
@@ -25,6 +25,23 @@ const TextEditor = () => {
     let SpaceFlag = false;
 
     var pending = [];
+
+    useEffect(() => {
+        fetchContent()
+    }, []);
+
+    const fetchContent = async () => {
+        try {
+            const response = await fetch(`https://apt-backend.onrender.com/documents/content/${documentId}`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch document content');
+            }
+            const data = await response.text();
+            setContent(data);
+        } catch (error) {
+            console.error('Error fetching document content:', error);
+        }
+    };
 
     useEffect(() => {
         n = n + 1;
@@ -109,7 +126,6 @@ const TextEditor = () => {
             }
         }
     }, [content, canEdit]);
-    
 
     useEffect(() => {
         console.log("buffer2 = " + buffer);
