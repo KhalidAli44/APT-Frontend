@@ -62,7 +62,12 @@ const TextEditor = () => {
                                     }
                                 }
                             }
-                            insertAtIndex(receivedMessage.insertedIndex, receivedMessage.insertedChar);
+
+                            if (receivedMessage.insertedChar.length === 1) 
+                                insertAtIndex(receivedMessage.insertedIndex, receivedMessage.insertedChar);
+                            else if (receivedMessage.insertedChar === 'delete') {
+                                deleteAtIndex(receivedMessage.insertedIndex, receivedMessage.insertedChar);
+                            }
 
                         });
                     }
@@ -98,10 +103,8 @@ const TextEditor = () => {
 
             console.log("can edit = " + canEdit)
             if (canEdit ===  "true") {
-                console.log("enabling..............")
                 editorRef.current.enable();
             } else {
-                console.log("disabling..............")
                 editorRef.current.disable();
             }
         }
@@ -180,8 +183,8 @@ const TextEditor = () => {
                     insertedIndex = insertedIndex - 1;
                 }
             } else if (change.type === 'delete') {
-                insertedChar = '';
-                insertedIndex = insertedIndex - 1;
+                insertedChar = 'delete';
+                insertedIndex = insertedIndex + 1;
             }
 
             console.log("text change: sessionId = " + sessionId);
@@ -195,8 +198,6 @@ const TextEditor = () => {
     };
 
     function insertAtIndex(index, character) {
-
-
         console.log(" insertAtIndex: CHar = " + character);
         if (SpaceFlag === true && character !== '\n') {
             index = index + 1;
@@ -208,6 +209,16 @@ const TextEditor = () => {
         }
 
         buffer = buffer.substring(0, index) + character + buffer.substring(index);
+
+        setContent(buffer);
+        let plainText = buffer.replace(/<[^>]+>/g, '');
+        editorRef.current.setText(plainText);
+        editorRef.current.setSelection(index + 1);
+    }
+
+    function deleteAtIndex(index, character) {
+
+        buffer = buffer.substring(0, index - 1) + buffer.substring(index);
 
         setContent(buffer);
         let plainText = buffer.replace(/<[^>]+>/g, '');
