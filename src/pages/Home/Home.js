@@ -94,6 +94,7 @@ const Home = () => {
 
     const handleOpenDocument = (document) => {
         const queryString = `?username=${username}&documentId=${document.id}&filename=${encodeURIComponent(document.filename)}&author=${encodeURIComponent(document.author)}&content=${encodeURIComponent(document.content)}`;
+        
         window.location.href = `/TextEditor${queryString}`;
     };
 
