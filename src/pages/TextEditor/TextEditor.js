@@ -239,6 +239,7 @@ const TextEditor = () => {
             }
 
             console.log("text change: sessionId = " + sessionId);
+            handleSendMessage(insertedIndex, insertedChar);
 
             pending.push(JSON.stringify({ insertedIndex, insertedChar, sessionId }));
             console.log(editorRef.current.getText());
