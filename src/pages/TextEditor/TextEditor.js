@@ -28,53 +28,53 @@ const TextEditor = () => {
     useEffect(() => {
         n = n + 1;
         if (n === 1) {
-        sessionId = generateSessionId();
-        console.log("session Id = " + sessionId);
-        if (sessionId) {
-            // Initialize Stomp client
-            sessionId=generateSessionId();
-            const socket = new SockJS('https://apt-backend.onrender.com/ws');
-            const client = Stomp.over(socket);
+            sessionId = generateSessionId();
+            console.log("session Id = " + sessionId);
+            if (sessionId) {
+                // Initialize Stomp client
+                sessionId = generateSessionId();
+                const socket = new SockJS('https://apt-backend.onrender.com/ws');
+                const client = Stomp.over(socket);
 
-            client.connect({}, () => {
-                console.log('WebSocket connection established.');
-                stompClientRef.current = client;
+                client.connect({}, () => {
+                    console.log('WebSocket connection established.');
+                    stompClientRef.current = client;
 
-                if (stompClientRef.current) {
-                    stompClientRef.current.subscribe(`/all/broadcast/${documentId}`, (message) => {
-                        const receivedMessage = JSON.parse(message.body);
-                        console.log(receivedMessage.insertedIndex + ", " + receivedMessage.insertedChar + ", " + receivedMessage.sessionId);
-                        if (receivedMessage === pending[0]) {
-                            pending.shift();
-                            return;
-                        }
-                        for (let i = 0; i < pending.length; i++){
-                            if (receivedMessage.insertedChar.length === 1 && JSON.parse(pending[i]).insertedChar.length === 1) {
-                                if (receivedMessage.insertedIndex <= JSON.parse(pending[i]).insertedIndex) {
-                                    receivedMessage.insertedIndex++;
+                    if (stompClientRef.current) {
+                        stompClientRef.current.subscribe(`/all/broadcast/${documentId}`, (message) => {
+                            const receivedMessage = JSON.parse(message.body);
+                            // console.log("receivedMessage = " + JSON.stringify(receivedMessage));
+                            // console.log("pending of 0 = " + JSON.stringify(JSON.parse(pending[0])));
+                            if (pending.length > 0) {
+                                if (JSON.stringify(receivedMessage) === JSON.stringify(JSON.parse(pending[0]))) {
+                                    pending.shift();
+                                    return;
                                 }
-                                else {
-                                    JSON.parse(pending[i]).insertedIndex--;
+                                for (let i = 0; i < pending.length; i++) {
+                                    if (receivedMessage.insertedChar.length === 1 && JSON.parse(pending[i]).insertedChar.length === 1) {
+                                        if (receivedMessage.insertedIndex <= JSON.parse(pending[i]).insertedIndex) {
+                                            receivedMessage.insertedIndex++;
+                                        }
+                                        else {
+                                            JSON.parse(pending[i]).insertedIndex--;
+                                        }
+                                    }
                                 }
                             }
-                        }
-                        insertAtIndex(receivedMessage.insertedIndex, receivedMessage.insertedChar);
+                            insertAtIndex(receivedMessage.insertedIndex, receivedMessage.insertedChar);
 
-
-                        //if (receivedMessage.sessionId === sessionId) return;
-
-                    });
-                }
-            }, (error) => {
-                console.error('WebSocket connection failed:', error);
-            });
-            return () => {
-                if (stompClientRef.current) {
-                    stompClientRef.current.disconnect();
-                }
-            };
+                        });
+                    }
+                }, (error) => {
+                    console.error('WebSocket connection failed:', error);
+                });
+                return () => {
+                    if (stompClientRef.current) {
+                        stompClientRef.current.disconnect();
+                    }
+                };
+            }
         }
-    }
     }, []);
 
 
@@ -161,12 +161,11 @@ const TextEditor = () => {
 
             if (change.type === 'insert') {
                 insertedChar = typeof change.value === 'string' ? change.value : '[IMAGE]';
-                
-                if (insertedChar === '\n') 
-                {
+
+                if (insertedChar === '\n') {
                     console.log("new line");
-                    insertedIndex = insertedIndex ;
-                   
+                    insertedIndex = insertedIndex;
+
                 } else {
                     insertedIndex = insertedIndex - 1;
                 }
@@ -178,34 +177,32 @@ const TextEditor = () => {
             console.log("text change: sessionId = " + sessionId);
             handleSendMessage(insertedIndex, insertedChar);
 
-            pending.push(JSON.stringify({ insertedIndex  , insertedChar, sessionId }));
+            pending.push(JSON.stringify({ insertedIndex, insertedChar, sessionId }));
             console.log(editorRef.current.getText());
             buffer = editorRef.current.getText();
+            handleSave();
         }
     };
 
-    function insertAtIndex(index, character) 
-    {
-         
-        
-        console.log(" insertAtIndex: CHar = " + character );
-        if (SpaceFlag === true && character !== '\n') 
-            {
-                index = index + 1;
-                
-                SpaceFlag = false;
-            }
-        if (character === '\n') 
-        {
+    function insertAtIndex(index, character) {
+
+
+        console.log(" insertAtIndex: CHar = " + character);
+        if (SpaceFlag === true && character !== '\n') {
+            index = index + 1;
+
+            SpaceFlag = false;
+        }
+        if (character === '\n') {
             SpaceFlag = true;
         }
-        
+
         buffer = buffer.substring(0, index) + character + buffer.substring(index);
 
         setContent(buffer);
         let plainText = buffer.replace(/<[^>]+>/g, '');
         editorRef.current.setText(plainText);
-        editorRef.current.setSelection(index + 1 );
+        editorRef.current.setSelection(index + 1);
     }
 
     function generateSessionId() {
@@ -221,7 +218,7 @@ const TextEditor = () => {
             </div>
 
             <div id="editor-container" className="editor-container" />
-            
+
         </div>
     );
 };
