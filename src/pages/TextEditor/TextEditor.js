@@ -109,6 +109,7 @@ const TextEditor = () => {
             }
         }
     }, [content, canEdit]);
+    
 
     useEffect(() => {
         console.log("buffer2 = " + buffer);
