@@ -24,7 +24,6 @@ const TextEditor = () => {
     let SpaceFlag = false;
 
     var pending = [];
-    var changes = [];
 
     useEffect(() => {
         n = n + 1;
