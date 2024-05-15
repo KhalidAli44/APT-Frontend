@@ -38,6 +38,7 @@ const TextEditor = () => {
             }
             const data = await response.text();
             setContent(data);
+            buffer = data;
         } catch (error) {
             console.error('Error fetching document content:', error);
         }
@@ -75,6 +76,30 @@ const TextEditor = () => {
                                         }
                                         else {
                                             JSON.parse(pending[i]).insertedIndex--;
+                                        }
+                                    }
+                                    else if (receivedMessage.insertedChar.length === 1 && JSON.parse(pending[i]).insertedChar === "delete") {
+                                        if (receivedMessage.insertedIndex <= JSON.parse(pending[i]).insertedIndex) {
+                                            JSON.parse(pending[i]).insertedIndex++;
+                                        }
+                                        else {
+                                            receivedMessage.insertedIndex--;
+                                        }
+                                    }
+                                    else if (receivedMessage.insertedChar === "delete" && JSON.parse(pending[i]).insertedChar.length === 1) {
+                                        if (receivedMessage.insertedIndex <= JSON.parse(pending[i]).insertedIndex) {
+                                            JSON.parse(pending[i]).insertedIndex--;
+                                        }
+                                        else {
+                                            receivedMessage.insertedIndex++;
+                                        }
+                                    }
+                                    else if (receivedMessage.insertedChar === "delete" && JSON.parse(pending[i]).insertedChar === "delete") {
+                                        if (receivedMessage.insertedIndex <= JSON.parse(pending[i]).insertedIndex) {
+                                            JSON.parse(pending[i]).insertedIndex--;
+                                        }
+                                        else {
+                                            receivedMessage.insertedIndex--;
                                         }
                                     }
                                 }
