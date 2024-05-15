@@ -71,7 +71,7 @@ const TextEditor = () => {
                             // console.log("pending of 0 = " + JSON.stringify(JSON.parse(pending[0])));
                             if (pending.length > 0) {
                                 if (JSON.stringify(receivedMessage) === JSON.stringify(JSON.parse(pending[0]))) {
-                                    pending.shift();
+                                    let temp = pending.shift();
                                     if (pending.length !== 0) {
                                         handleSendMessage(JSON.parse(pending[0]).insertedIndex, JSON.parse(pending[0]).insertedChar);
                                     }
