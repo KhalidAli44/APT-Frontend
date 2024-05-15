@@ -177,8 +177,8 @@ const TextEditor = () => {
                 index = index + 1;
                 SpaceFlag = false; 
             }
-        
-        if (character === '\n' && SpaceFlag === false) 
+            
+        if (character === '\n') 
         {
             SpaceFlag = true;
         }
