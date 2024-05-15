@@ -14,6 +14,7 @@ const TextEditor = () => {
     const filename = queryParams.get('filename');
     const author = queryParams.get('author');
     const [content, setContent] = useState(queryParams.get('content'));
+    const canEdit = queryParams.get('canEdit');
 
     const editorRef = useRef(null);
     const stompClientRef = useRef(null);
@@ -94,8 +95,17 @@ const TextEditor = () => {
 
             editorRef.current.setText('');
             editorRef.current.clipboard.dangerouslyPasteHTML(content);
+
+            console.log("can edit = " + canEdit)
+            if (canEdit ===  "true") {
+                console.log("enabling..............")
+                editorRef.current.enable();
+            } else {
+                console.log("disabling..............")
+                editorRef.current.disable();
+            }
         }
-    }, [content]);
+    }, [content, canEdit]);
 
     useEffect(() => {
         console.log("buffer2 = " + buffer);

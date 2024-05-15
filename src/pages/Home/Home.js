@@ -92,9 +92,9 @@ const Home = () => {
         }
     };
 
-    const handleOpenDocument = (document) => {
-        const queryString = `?username=${username}&documentId=${document.id}&filename=${encodeURIComponent(document.filename)}&author=${encodeURIComponent(document.author)}&content=${encodeURIComponent(document.content)}`;
-        
+    const handleOpenDocument = (document, canEdit) => {
+        const queryString = `?username=${username}&documentId=${document.id}&filename=${encodeURIComponent(document.filename)}&author=${encodeURIComponent(document.author)}&content=${encodeURIComponent(document.content)}&canEdit=${canEdit}`;
+
         window.location.href = `/TextEditor${queryString}`;
     };
 
@@ -235,9 +235,9 @@ const Home = () => {
                             {documents.map(document => (
                                 <li className='document-list' key={document.id}>
                                     
-                                        <p onClick={() => handleOpenDocument(document)}>{document.filename}</p>
+                                        <p onClick={() => handleOpenDocument(document, true)}>{document.filename}</p>
                                         <div className='buttons-container'>
-                                        <button onClick={() => handleOpenDocument(document)}>Edit</button>
+                                        <button onClick={() => handleOpenDocument(document, true)}>Edit</button>
                                             <button onClick={() => handleRenameModalOpen(document)}>Rename</button>
                                             <button onClick={() => handleManagePermissions(document)}>Manage</button>
                                             <button onClick={() => handleSendModalOpen(document)}>Send</button>
@@ -257,9 +257,9 @@ const Home = () => {
                         <ul>
                             {enabledSharedDocuments.map(document => (
                                 <li key={document.id}>
-                                    <p onClick={() => handleOpenDocument(document)}>{document.filename}</p>
+                                    <p onClick={() => handleOpenDocument(document, true)}>{document.filename}</p>
                                     <div className='buttons-container buttons-container-shared'>
-                                            <button onClick={() => handleOpenDocument(document)}>Edit</button>
+                                            <button onClick={() => handleOpenDocument(document, true)}>Edit</button>
                                             <button onClick={() => handleRenameModalOpen(document)}>Rename</button>
                                             <button onClick={() => handleSendModalOpen(document)}>Send</button>
                                         </div>
@@ -267,7 +267,7 @@ const Home = () => {
                             ))}
                             {disabledSharedDocuments.map(document => (
                                 <li key={document.id}>
-                                    <span onClick={() => handleOpenDocument(document)}>{document.filename}</span>
+                                    <span onClick={() => handleOpenDocument(document, false)}>{document.filename}</span>
                                     <p><i>(View Only)</i></p>
                                 </li>
                             ))}
