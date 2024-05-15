@@ -77,11 +77,11 @@ const TextEditor = () => {
                                 for (let i = 0; i < pending.length; i++) {
                                     if (receivedMessage.insertedChar.length === 1 && JSON.parse(pending[i]).insertedChar.length === 1) {
                                         if (receivedMessage.insertedIndex <= JSON.parse(pending[i]).insertedIndex) {
-                                            receivedMessage.insertedIndex++;
+                                            JSON.parse(pending[i]).insertedIndex++;
                                             console.log("1-");
                                         }
                                         else {
-                                            JSON.parse(pending[i]).insertedIndex--;
+                                            receivedMessage.insertedIndex--;
                                             console.log("2-");
                                         }
                                     }
