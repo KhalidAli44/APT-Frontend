@@ -23,7 +23,8 @@ const TextEditor = () => {
     let buffer = content;
     let SpaceFlag = false;
 
-    var messages = [];
+    var pending = [];
+    var changes = [];
 
     useEffect(() => {
         n = n + 1;
