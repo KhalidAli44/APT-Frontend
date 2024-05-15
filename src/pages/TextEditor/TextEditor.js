@@ -174,10 +174,9 @@ const TextEditor = () => {
         console.log(" insertAtIndex: CHar = " + character );
         if (SpaceFlag === true && character !== '\n') 
             {
-                index = index + 1;
-                SpaceFlag = false; 
+                index = index + 1;            
+                SpaceFlag = false;
             }
-            
         if (character === '\n') 
         {
             SpaceFlag = true;
