@@ -68,11 +68,14 @@ const TextEditor = () => {
                             const receivedMessage = JSON.parse(message.body);
                             // console.log("receivedMessage = " + JSON.stringify(receivedMessage));
                             // console.log("pending of 0 = " + JSON.stringify(JSON.parse(pending[0])));
-                            if (pending.length > 0) {
-                                if (JSON.stringify(receivedMessage) === JSON.stringify(JSON.parse(pending[0]))) {
-                                    pending.shift();
+                            for (let i = 0; i < pending.length; i++) {
+                                if (JSON.stringify(receivedMessage) === JSON.stringify(JSON.parse(pending[i]))) {
+                                    removeAtIndex(pending, i);
+                                    console.log("NOP");
                                     return;
                                 }
+                            }
+                            if (pending.length > 0) {
                                 for (let i = 0; i < pending.length; i++) {
                                     if (receivedMessage.insertedChar.length === 1 && JSON.parse(pending[i]).insertedChar.length === 1) {
                                         if (receivedMessage.insertedIndex <= JSON.parse(pending[i]).insertedIndex) {
@@ -247,6 +250,14 @@ const TextEditor = () => {
             handleSave();
         }
     };
+
+    function removeAtIndex(array, index) {
+        if (index < 0 || index >= array.length) {
+            return array;
+        }
+        array.splice(index, 1);
+        return array;
+    }
 
     function insertAtIndex(index, character) {
         console.log(" insertAtIndex: CHar = " + character);
