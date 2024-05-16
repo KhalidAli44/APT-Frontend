@@ -278,7 +278,7 @@ const TextEditor = () => {
         setContent(buffer);
         editorRef.current.setText(plainText);
 
-        if (index < localIndex)
+        if (index <= localIndex)
             localIndex++;
         editorRef.current.setSelection(localIndex);
     }
@@ -291,7 +291,7 @@ const TextEditor = () => {
         setContent(buffer);
         editorRef.current.setText(plainText);
 
-        if (index < localIndex)
+        if (index <= localIndex)
             localIndex--;
         editorRef.current.setSelection(localIndex);
     }
