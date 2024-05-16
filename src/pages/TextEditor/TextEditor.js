@@ -278,8 +278,10 @@ const TextEditor = () => {
         setContent(buffer);
         editorRef.current.setText(plainText);
 
-        if (index <= localIndex)
+        if (index <= localIndex) {
+            console.log("shift +");
             localIndex++;
+        }
         editorRef.current.setSelection(localIndex);
     }
 
@@ -291,8 +293,10 @@ const TextEditor = () => {
         setContent(buffer);
         editorRef.current.setText(plainText);
 
-        if (index <= localIndex)
+        if (index <= localIndex) {
+            console.log("shift -");
             localIndex--;
+        }
         editorRef.current.setSelection(localIndex);
     }
 
