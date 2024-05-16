@@ -23,6 +23,7 @@ const TextEditor = () => {
     let n = 0;
     let buffer = content;
     let SpaceFlag = false;
+    let localIndex = 0;
 
     var pending = [];
 
@@ -241,6 +242,7 @@ const TextEditor = () => {
                 insertedIndex = insertedIndex + 1;
             }
 
+            localIndex = editorRef.current.getSelection();
             console.log("text change: sessionId = " + sessionId);
             handleSendMessage(insertedIndex, insertedChar);
 
@@ -275,7 +277,10 @@ const TextEditor = () => {
         let plainText = buffer.replace(/<[^>]+>/g, '');
         setContent(buffer);
         editorRef.current.setText(plainText);
-        //editorRef.current.setSelection(index + 1);
+
+        if (index < localIndex)
+            localIndex++;
+        editorRef.current.setSelection(localIndex);
     }
 
     function deleteAtIndex(index, character) {
@@ -285,7 +290,10 @@ const TextEditor = () => {
         let plainText = buffer.replace(/<[^>]+>/g, '');
         setContent(buffer);
         editorRef.current.setText(plainText);
-        //editorRef.current.setSelection(index + 1);
+
+        if (index < localIndex)
+            localIndex--;
+        editorRef.current.setSelection(localIndex);
     }
 
     function generateSessionId() {
