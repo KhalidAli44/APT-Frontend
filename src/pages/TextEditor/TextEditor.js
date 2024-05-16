@@ -242,7 +242,10 @@ const TextEditor = () => {
                 insertedIndex = insertedIndex + 1;
             }
 
-            localIndex = editorRef.current.getSelection();
+            console.log("prev selection = " + localIndex);
+            localIndex = editorRef.current.getSelection().index;
+            localIndex = parseInt(localIndex, 10); 
+            console.log("selection = " + localIndex);
             console.log("text change: sessionId = " + sessionId);
             handleSendMessage(insertedIndex, insertedChar);
 
